@@ -8,17 +8,11 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Height="144" Margin="10,10,282,0" TextWrapping="Wrap" Text="Login to Mastodon" VerticalAlignment="Top" FontSize="72"/>
-        <TextBlock HorizontalAlignment="Left" Height="40.389" Margin="127.718,234.094,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95.799" FontSize="24" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto">
-            <Run Text="Server"/>
-            <Run Text=":"/>
-        </TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="127.718,296.494,0,303.117" TextWrapping="Wrap" Text="User:" Width="95.799" FontSize="24" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False" d:LayoutRounding="Auto" d:LayoutOverrides="TopPosition, BottomPosition">
-        </TextBlock>
-        <TextBlock HorizontalAlignment="Left" Height="41" Margin="104,0,0,243" TextWrapping="Wrap" Text="Password:" VerticalAlignment="Bottom" Width="120" FontSize="24" RenderTransformOrigin="0.5,0.5"/>
-        <TextBox Height="40" Margin="229,234,282,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-        <TextBox Margin="229,296,282,304" TextWrapping="Wrap" Text="" d:LayoutOverrides="TopPosition, BottomPosition"/>
-        <PasswordBox Margin="229,0,282,243" Height="40" VerticalAlignment="Bottom"/>
-        <Button Content="Login&#xD;&#xA;" HorizontalAlignment="Stretch" Height="56" VerticalAlignment="Bottom" FontSize="22"/>
+        <TextBlock Height="144" Margin="10,10,282,0" TextWrapping="Wrap" Text="Login" VerticalAlignment="Top" FontSize="22"/>
+        <TextBox Name="ServerBox" Height="40"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Server" Margin="0,161,0,0"/>
+        <TextBox Name="UserNameBox" TextWrapping="Wrap" Text="" PlaceholderText="Username" Margin="0,226,0,0" Height="40" VerticalAlignment="Top" d:LayoutOverrides="LeftPosition, RightPosition" />
+        <PasswordBox Name="PasswordHereBox" Margin="0,298,0,302" PlaceholderText="Password" d:LayoutOverrides="TopPosition, BottomPosition"/>
+        <Button Name="LoginButton" Click="LoginButton_Click" Content="Login&#xD;&#xA;" HorizontalAlignment="Stretch" Height="70" VerticalAlignment="Bottom" FontSize="22"/>
+        <TextBlock Height="45" Margin="229,159,510,0" TextWrapping="Wrap" Name="FailedTextBox" VerticalAlignment="Top" Foreground="Red" FontSize="22"/>
     </Grid>
 </Page>
