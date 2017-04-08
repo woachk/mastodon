@@ -1,0 +1,17 @@
+﻿<UserControl
+    x:Class="MastodonUWA.Toot"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MastodonUWA"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+        <TextBlock Name="TootContents" Text="Toot number 1" HorizontalAlignment="Left" Height="244" VerticalAlignment="Top" Width="400" Margin="0,56,0,0"/>
+        <TextBlock Name="UserName" Text="@tooter" HorizontalAlignment="Left" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="334"/>
+        <Image Name="UserImage" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="66"/>
+    </Grid>
+</UserControl>
