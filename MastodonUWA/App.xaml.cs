@@ -69,12 +69,15 @@ namespace MastodonUWA
                     // paramètre
                     var folder = ApplicationData.Current.LocalFolder;
                     var file = folder.GetFileAsync("auth.txt");
-                    file.AsTask().Wait();
-                    if (file.AsTask().Result == null)
+                    try
+                    {
+                        file.AsTask().Wait();
+                    }
+                    catch
                     {
                         rootFrame.Navigate(typeof(AuthPage), e.Arguments);
                     }
-                    else
+                    if (file != null)
                     {
                         rootFrame.Navigate(typeof(MainPage), e.Arguments);
                     }
