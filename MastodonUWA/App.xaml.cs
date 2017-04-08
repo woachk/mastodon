@@ -76,6 +76,9 @@ namespace MastodonUWA
                     catch
                     {
                         rootFrame.Navigate(typeof(AuthPage), e.Arguments);
+                        AuthPage auth = (AuthPage)rootFrame.Content;
+                        Window.Current.Activate();
+                        return;
                     }
                     if (file != null)
                     {
