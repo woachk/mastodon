@@ -19,6 +19,6 @@
         <TextBox Height="40" Margin="229,234,282,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
         <TextBox Margin="229,296,282,304" TextWrapping="Wrap" Text="" d:LayoutOverrides="TopPosition, BottomPosition"/>
         <PasswordBox Margin="229,0,282,243" Height="40" VerticalAlignment="Bottom"/>
-        <Button Content="Login&#xD;&#xA;" HorizontalAlignment="Stretch" Height="56" Margin="346,0,484,150" VerticalAlignment="Bottom" FontSize="22"/>
+        <Button Content="Login&#xD;&#xA;" HorizontalAlignment="Stretch" Height="56" VerticalAlignment="Bottom" FontSize="22"/>
     </Grid>
 </Page>
