@@ -20,12 +20,12 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="MenuButton2" FontFamily="Segoe MDL2 Assets" Content="&#xE80F;"
-                        Width="50" Height="50" Background="Transparent"/>
+                        Width="50" Height="50" Background="Transparent" Click="MenuButton2_Click"/>
                     <TextBlock Text="Local toots" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="MenuButton4" FontFamily="Segoe MDL2 Assets" Content="&#xE712;"
-                        Width="50" Height="50" Background="Transparent"/>
+                        Width="50" Height="50" Background="Transparent" Click="MenuButton4_Click" />
                     <TextBlock Text="Network Toots" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
@@ -39,7 +39,11 @@
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
                 <Grid HorizontalAlignment="Center">
                     <e:RefreshableListView x:Name="TootContainer">
-                        <StackPanel x:Name="Toots" />
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsStackPanel/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
                     </e:RefreshableListView>
                 </Grid>
             </ScrollViewer>

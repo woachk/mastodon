@@ -26,16 +26,31 @@ namespace MastodonUWA
     {
         public string getServerName()
         {
-                var serverfile = ApplicationData.Current.LocalFolder.GetFileAsync("server.txt");
-                serverfile.AsTask().Wait();
-                var serverfile_o = serverfile.GetResults();
-                var ioop = FileIO.ReadTextAsync(serverfile_o);
-                ioop.AsTask().Wait();
-                return ioop.GetResults();
+            var serverfile = ApplicationData.Current.LocalFolder.GetFileAsync("server.txt");
+            serverfile.AsTask().Wait();
+            var serverfile_o = serverfile.GetResults();
+            var ioop = FileIO.ReadTextAsync(serverfile_o);
+            ioop.AsTask().Wait();
+            return ioop.GetResults();
         }
         public MainPage()
         {
             this.InitializeComponent();
+        }
+        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        {
+            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        }
+
+        private void MenuButton4_Click(object sender, RoutedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(MainPage), "PublicTimeline");
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            var settings = (string)e.Parameter;
             AuthenticateClass token = new AuthenticateClass();
             token.appname = null;
             var authfile = ApplicationData.Current.LocalFolder.GetFileAsync("auth.txt");
@@ -45,20 +60,34 @@ namespace MastodonUWA
             ioop.AsTask().Wait();
             token.token = ioop.GetResults();
             token.server = getServerName();
-            List<StatusClass> tootlist= StatusClass.getTimeline(token);
-            for (int i = 0;  i < tootlist.Count; i++)
+            List<StatusClass> tootlist = null;
+            if (settings == "PublicTimeline")
+            {
+                tootlist = StatusClass.getPublicTimeline(token);
+            }
+            else if (settings == "LocalPublicTimeline")
+            {
+                tootlist = StatusClass.getLocalPublicTimeline(token);
+            }
+            else
+            {
+                tootlist = StatusClass.getTimeline(token);
+            }
+            for (int i = 0; i < tootlist.Count; i++)
             {
                 Toot toot;
                 if (tootlist[i].account.acct != null)
                 {
                     toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].uri);
-                    Toots.Children.Add(toot);
+                    TootContainer.Items.Add(toot);
                 }
             }
         }
-        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+
+        private void MenuButton2_Click(object sender, RoutedEventArgs e)
         {
-            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(MainPage), "LocalPublicTimeline");
         }
     }
 }
