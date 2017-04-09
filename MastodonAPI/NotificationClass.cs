@@ -82,6 +82,7 @@ namespace MastodonAPI
                         }
                         if (notification.type == "follow")
                         {
+                            notifications.Add(notification);
                             notification = new NotificationClass();
                             notification.status = new StatusClass();
                             notification.account = new AccountClass();
@@ -122,6 +123,7 @@ namespace MastodonAPI
                                     {
                                         notification.status.reblogged = reader.Value.ToString();
                                     }
+                                    notifications.Add(notification);
                                     notification = new NotificationClass();
                                     notification.status = new StatusClass();
                                     notification.account = new AccountClass();
