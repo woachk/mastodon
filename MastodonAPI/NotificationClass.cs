@@ -95,6 +95,7 @@ namespace MastodonAPI
                         {
                             if (reader.Value != null)
                             {
+                                
                                 if (reader.Value.ToString() == "id")
                                 {
                                     reader.Read();
@@ -143,21 +144,20 @@ namespace MastodonAPI
                                             {
                                                 reader.Read();
                                                 notification.status.account.avatar = reader.Value.ToString();
-                                                break;
                                             }
                                             else if (reader.Value.ToString() == "statuses_count")
                                             {
                                                 reader.Read();
                                                 notification.status.account.statuses_count = reader.Value.ToString();
+                                                notifications.Add(notification);
+                                                notification = new NotificationClass();
+                                                notification.account = new AccountClass();
+                                                notification.status.account = new AccountClass();
                                                 break;
                                             }
                                         }
                                     }
                                 }
-                                notifications.Add(notification);
-                                notification = new NotificationClass();
-                                notification.account = new AccountClass();
-                                notification.status.account = new AccountClass();
                             }
                         }
                     }
