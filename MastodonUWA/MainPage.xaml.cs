@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using MastodonAPI;
 
 namespace MastodonUWA
 {
@@ -26,6 +27,12 @@ namespace MastodonUWA
         public MainPage()
         {
             this.InitializeComponent();
+            AuthenticateClass token = new AuthenticateClass();
+            StatusClass[] tootlist= StatusClass.getTimeline(token);
+            for (int i = 0;  i < tootlist.GetLength(1); i++)
+            {
+                Toot toot = new Toot(tootlist[i].)
+            }
         }
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {

@@ -38,12 +38,7 @@
         <SplitView.Content>
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
                 <Grid HorizontalAlignment="Center">
-                    <e:RefreshableListView>
-                        <local:Toot x:Name="Toot1" MinHeight="40" MaxHeight="150" />
-                        <local:Toot x:Name="Toot2" MinHeight="40" MaxHeight="150"/>
-                        <local:Toot x:Name="Toot3" MinHeight="40" MaxHeight="150" />
-                        <local:Toot x:Name="Toot4" MinHeight="40" MaxHeight="150" />
-                        <local:Toot x:Name="Toot5" MinHeight="40" MaxHeight="150" />
+                    <e:RefreshableListView x:Name="TootContainer">
                     </e:RefreshableListView>
                 </Grid>
             </ScrollViewer>

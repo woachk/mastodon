@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MastodonAPI
 {
-    class StatusClass
+    public class StatusClass
     {
         string id;
         string uri;
@@ -18,7 +18,7 @@ namespace MastodonAPI
         string in_reply_to_id;
         string in_reply_to_account_id;
         StatusClass reblog;
-        string content;
+        public string content;
         string created_at;
         string reblogs_count;
         string favorites_count;
@@ -62,6 +62,7 @@ namespace MastodonAPI
                     reader.Read();
                     names[i].content = reader.Value.ToString();
                 }
+
                 // ugly code warning
                 if (reader.Value.ToString() == "application")
                 {

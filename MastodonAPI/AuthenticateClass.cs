@@ -39,5 +39,9 @@ namespace MastodonAPI
                 }
             }
         }
+        public AuthenticateClass()
+        {
+            return;
+        }
     }
 }
