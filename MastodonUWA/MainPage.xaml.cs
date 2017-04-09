@@ -61,25 +61,68 @@ namespace MastodonUWA
             token.token = ioop.GetResults();
             token.server = getServerName();
             List<StatusClass> tootlist = null;
-            if (settings == "PublicTimeline")
+            if (settings != "notifications")
             {
-                tootlist = StatusClass.getPublicTimeline(token);
-            }
-            else if (settings == "LocalPublicTimeline")
-            {
-                tootlist = StatusClass.getLocalPublicTimeline(token);
+                if (settings == "PublicTimeline")
+                {
+                    tootlist = StatusClass.getPublicTimeline(token);
+                }
+                else if (settings == "LocalPublicTimeline")
+                {
+                    tootlist = StatusClass.getLocalPublicTimeline(token);
+                }
+                else
+                {
+                    tootlist = StatusClass.getTimeline(token);
+                }
+                for (int i = 0; i < tootlist.Count; i++)
+                {
+                    Toot toot;
+                    if (tootlist[i].account.acct != null)
+                    {
+                        toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].uri);
+                        TootContainer.Items.Add(toot);
+                    }
+                }
             }
             else
             {
-                tootlist = StatusClass.getTimeline(token);
-            }
-            for (int i = 0; i < tootlist.Count; i++)
-            {
-                Toot toot;
-                if (tootlist[i].account.acct != null)
+                List<NotificationClass> notifications = NotificationClass.getNotifications(token);
+                for (int i = 0; i < notifications.Count; i++)
                 {
-                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].uri);
-                    TootContainer.Items.Add(toot);
+                    if (notifications[i].id != null)
+                    {
+                        if (notifications[i].type == "favourite")
+                        {
+                            TextBlock block = new TextBlock();
+                            Toot toot;
+                            block.Text = notifications[i].account.display_name + " favourited your post.";
+                            toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].uri);
+                            TootContainer.Items.Add(block);
+                            TootContainer.Items.Add(toot);
+                        }
+                        if (notifications[i].type == "reblog")
+                        {
+                            TextBlock block = new TextBlock();
+                            Toot toot;
+                            block.Text = notifications[i].account.display_name + " boosted your post.";
+                            toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].uri);
+                            TootContainer.Items.Add(block);
+                            TootContainer.Items.Add(toot);
+                        }
+                        if (notifications[i].type == "follow")
+                        {
+                            TextBlock block = new TextBlock();
+                            block.Text = notifications[i].account.display_name + " now follows you.";
+                            TootContainer.Items.Add(block);
+                        }
+                        if (notifications[i].type == "mention")
+                        {
+                            Toot toot;
+                            toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].uri);
+                            TootContainer.Items.Add(toot);
+                        }
+                    }
                 }
             }
         }
@@ -88,6 +131,12 @@ namespace MastodonUWA
         {
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(MainPage), "LocalPublicTimeline");
+        }
+
+        private void MenuButton3_Click(object sender, RoutedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(MainPage), "notifications");
         }
     }
 }

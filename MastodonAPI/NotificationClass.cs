@@ -52,7 +52,10 @@ namespace MastodonAPI
                     else if (reader.Value.ToString() == "account")
                     {
                         reader.Read();
-                        notification.id = reader.Value.ToString();
+                        if (reader.Value != null)
+                        {
+                            notification.id = reader.Value.ToString();
+                        }
                     }
                     else if (reader.Value.ToString() == "account")
                     {
@@ -122,7 +125,6 @@ namespace MastodonAPI
                                 }
                                 else if (reader.Value.ToString() == "account")
                                 {
-                                    reader.Read();
                                     while (reader.Read())
                                     {
                                         if (reader.Value != null)
@@ -132,18 +134,18 @@ namespace MastodonAPI
                                                 reader.Read();
                                                 notification.status.account.acct = reader.Value.ToString();
                                             }
-                                            if (reader.Value.ToString() == "display_name")
+                                            else if (reader.Value.ToString() == "display_name")
                                             {
                                                 reader.Read();
                                                 notification.status.account.display_name = reader.Value.ToString();
                                             }
-                                            if (reader.Value.ToString() == "avatar")
+                                            else if (reader.Value.ToString() == "avatar")
                                             {
                                                 reader.Read();
                                                 notification.status.account.avatar = reader.Value.ToString();
                                                 break;
                                             }
-                                            if (reader.Value.ToString() == "statuses_count")
+                                            else if (reader.Value.ToString() == "statuses_count")
                                             {
                                                 reader.Read();
                                                 notification.status.account.statuses_count = reader.Value.ToString();
@@ -151,11 +153,11 @@ namespace MastodonAPI
                                             }
                                         }
                                     }
-                                    notifications.Add(notification);
-                                    notification = new NotificationClass();
-                                    notification.account = new AccountClass();
-                                    notification.status.account = new AccountClass();
                                 }
+                                notifications.Add(notification);
+                                notification = new NotificationClass();
+                                notification.account = new AccountClass();
+                                notification.status.account = new AccountClass();
                             }
                         }
                     }

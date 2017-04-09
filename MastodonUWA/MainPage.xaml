@@ -30,7 +30,7 @@
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="MenuButton3" FontFamily="Segoe MDL2 Assets" Content="&#xE895;"
-                        Width="50" Height="50" Background="Transparent"/>
+                        Width="50" Height="50" Background="Transparent" Click="MenuButton3_Click"/>
                     <TextBlock Text="Notifications" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
             </StackPanel>
