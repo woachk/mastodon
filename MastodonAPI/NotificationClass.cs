@@ -21,7 +21,7 @@ namespace MastodonAPI
             List<NotificationClass> notifications = new List<NotificationClass>();
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
-            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/timelines/public?local=true");
+            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/notifications");
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
