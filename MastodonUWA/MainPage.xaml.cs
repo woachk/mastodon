@@ -97,7 +97,7 @@ namespace MastodonUWA
                             TextBlock block = new TextBlock();
                             Toot toot;
                             block.Text = notifications[i].account.display_name + " favourited your post.";
-                            toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].uri);
+                            toot = new Toot(notifications[i].account.acct, notifications[i].account.display_name, notifications[i].status.content, notifications[i].account.avatar, notifications[i].status.uri);
                             TootContainer.Items.Add(block);
                             TootContainer.Items.Add(toot);
                         }
@@ -106,7 +106,7 @@ namespace MastodonUWA
                             TextBlock block = new TextBlock();
                             Toot toot;
                             block.Text = notifications[i].account.display_name + " boosted your post.";
-                            toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].uri);
+                            toot = new Toot(notifications[i].account.acct, notifications[i].account.display_name, notifications[i].status.content, notifications[i].account.avatar, notifications[i].status.uri);
                             TootContainer.Items.Add(block);
                             TootContainer.Items.Add(toot);
                         }
@@ -119,7 +119,7 @@ namespace MastodonUWA
                         if (notifications[i].type == "mention")
                         {
                             Toot toot;
-                            toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].uri);
+                            toot = new Toot(notifications[i].account.acct, notifications[i].account.display_name, notifications[i].status.content, notifications[i].account.avatar, notifications[i].status.uri);
                             TootContainer.Items.Add(toot);
                         }
                     }
