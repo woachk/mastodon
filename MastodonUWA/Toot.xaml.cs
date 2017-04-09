@@ -30,7 +30,6 @@ namespace MastodonUWA
             TootContents.Text = contents;
             UserName.Text = display_name;
             UserImage.Source = new BitmapImage(new Uri(avatar));
-
         }
     }
 }

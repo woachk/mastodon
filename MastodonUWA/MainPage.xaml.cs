@@ -24,14 +24,32 @@ namespace MastodonUWA
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public string getServerName()
+        {
+                var serverfile = ApplicationData.Current.LocalFolder.GetFileAsync("server.txt");
+                serverfile.AsTask().Wait();
+                var serverfile_o = serverfile.GetResults();
+                var ioop = FileIO.ReadTextAsync(serverfile_o);
+                ioop.AsTask().Wait();
+                return ioop.GetResults();
+        }
         public MainPage()
         {
             this.InitializeComponent();
             AuthenticateClass token = new AuthenticateClass();
-            StatusClass[] tootlist= StatusClass.getTimeline(token);
-            for (int i = 0;  i < tootlist.GetLength(1); i++)
+            token.appname = null;
+            var authfile = ApplicationData.Current.LocalFolder.GetFileAsync("auth.txt");
+            authfile.AsTask().Wait();
+            var tokenfile = authfile.GetResults();
+            var ioop = FileIO.ReadTextAsync(tokenfile);
+            ioop.AsTask().Wait();
+            token.token = ioop.GetResults();
+            token.server = getServerName();
+            List<StatusClass> tootlist= StatusClass.getTimeline(token);
+            for (int i = 0;  i < tootlist.Count; i++)
             {
-                Toot toot = new Toot(tootlist[i].)
+                Toot toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar);
+                Toots.Children.Add(toot);
             }
         }
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -14,7 +15,7 @@ namespace MastodonAPI
         string id;
         string uri;
         string url;
-        //string account;
+        public AccountClass account;
         string in_reply_to_id;
         string in_reply_to_account_id;
         StatusClass reblog;
@@ -29,7 +30,7 @@ namespace MastodonAPI
         string visiblity;
         //string media_attachments;
         ApplicationClass application;
-        static public StatusClass[] getTimeline(AuthenticateClass token)
+        static public List<StatusClass> getTimeline(AuthenticateClass token)
         {
             List<StatusClass> names = new List<StatusClass>();
             HttpClient client = new HttpClient();
@@ -42,6 +43,10 @@ namespace MastodonAPI
             int i = 0;
             while (!reader.Read())
             {
+                if (reader.Value.ToString() == "StartArray")
+                {
+                    Debugger.Break();
+                }
                 if (reader.Value.ToString() == "id")
                 {
                     reader.Read();
@@ -56,13 +61,52 @@ namespace MastodonAPI
                 {
                     reader.Read();
                     names[i].url = reader.Value.ToString();
+
+                }
+                if (reader.Value.ToString() == "account")
+                {
+                    reader.Read();
+                    while(!reader.Read())
+                    {
+                        if (reader.Value.ToString() == "acct")
+                        {
+                            reader.Read();
+                            names[i].account.acct = reader.Value.ToString();
+                        }
+                        if (reader.Value.ToString() == "display_name")
+                        {
+                            reader.Read();
+                            names[i].account.display_name = reader.Value.ToString();
+                        }
+                        if (reader.Value.ToString() == "avatar")
+                        {
+                            reader.Read();
+                            names[i].account.avatar = reader.Value.ToString();
+                        }
+                        if (reader.Value.ToString() == "statuses_count")
+                        {
+                            reader.Read();
+                            names[i].account.statuses_count = reader.Value.ToString();
+                            break;
+                        }
+                    }
                 }
                 if (reader.Value.ToString() == "content")
                 {
                     reader.Read();
                     names[i].content = reader.Value.ToString();
                 }
-
+                if (reader.Value.ToString() == "content")
+                {
+                    reader.Read();
+                    names[i].content = reader.Value.ToString();
+                }
+                if (reader.Value.ToString() == "reblogged")
+                {
+                    reader.Read();
+                    names[i].content = reader.Value.ToString();
+                    i++;
+                }
                 // ugly code warning
                 if (reader.Value.ToString() == "application")
                 {
@@ -77,7 +121,7 @@ namespace MastodonAPI
                     i++;
                 }
             }
-            return names.ToArray();
+            return names;
         }
     }
 }

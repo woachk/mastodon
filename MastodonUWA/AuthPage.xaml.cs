@@ -46,9 +46,11 @@ namespace MastodonUWA
             var clientid = await ApplicationData.Current.LocalFolder.CreateFileAsync("apptoken_clientid.txt");
             var clientsecret = await ApplicationData.Current.LocalFolder.CreateFileAsync("apptoken_clientsecret.txt");
             var authfile = await ApplicationData.Current.LocalFolder.CreateFileAsync("auth.txt");
+            var serverfile = await ApplicationData.Current.LocalFolder.CreateFileAsync("server.txt");
             await FileIO.WriteTextAsync(clientid, apptoken.client_id);
             await FileIO.WriteTextAsync(clientsecret, apptoken.client_secret);
             await FileIO.WriteTextAsync(authfile, oauth_token.token);
+            await FileIO.WriteTextAsync(serverfile, servername);
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(MainPage));
         }

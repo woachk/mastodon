@@ -39,6 +39,7 @@
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
                 <Grid HorizontalAlignment="Center">
                     <e:RefreshableListView x:Name="TootContainer">
+                        <StackPanel x:Name="Toots" />
                     </e:RefreshableListView>
                 </Grid>
             </ScrollViewer>
