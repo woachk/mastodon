@@ -48,8 +48,12 @@ namespace MastodonUWA
             List<StatusClass> tootlist= StatusClass.getTimeline(token);
             for (int i = 0;  i < tootlist.Count; i++)
             {
-                Toot toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar);
-                Toots.Children.Add(toot);
+                Toot toot;
+                if (tootlist[i].account.acct != null)
+                {
+                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].uri);
+                    Toots.Children.Add(toot);
+                }
             }
         }
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)

@@ -20,15 +20,17 @@ namespace MastodonUWA
 {
     public sealed partial class Toot : UserControl
     {
+        public string toot_id;
         public Toot()
         {
             this.InitializeComponent();
         }
-        public Toot(string username, string display_name, string contents, string avatar)
+        public Toot(string username, string display_name, string contents, string avatar, string id)
         {
             this.InitializeComponent();
-            TootContents.Text = contents;
-            UserName.Text = display_name;
+            TootContents.NavigateToString(contents);
+            UserName.Text = display_name + "\n" + "@" + username;
+            toot_id = id;
             UserImage.Source = new BitmapImage(new Uri(avatar));
         }
     }

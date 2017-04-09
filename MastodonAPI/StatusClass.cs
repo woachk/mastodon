@@ -13,7 +13,7 @@ namespace MastodonAPI
     public class StatusClass
     {
         string id;
-        string uri;
+        public string uri;
         string url;
         public AccountClass account;
         string in_reply_to_id;
@@ -40,9 +40,10 @@ namespace MastodonAPI
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
             JsonTextReader reader = new JsonTextReader(new StringReader(json));
+            StatusClass status = new StatusClass();
+            status.account = new AccountClass();
             while (reader.Read())
             {
-                StatusClass status = new StatusClass();
                 if (reader.Value != null)
                 {
                     if (reader.Value.ToString() == "id")
@@ -50,70 +51,71 @@ namespace MastodonAPI
                         reader.Read();
                         status.id = reader.Value.ToString();
                     }
-                    if (reader.Value.ToString() == "uri")
+                    else if (reader.Value.ToString() == "uri")
                     {
                         reader.Read();
                         status.uri = reader.Value.ToString();
                     }
-                    if (reader.Value.ToString() == "url")
+                    else if (reader.Value.ToString() == "url")
                     {
                         reader.Read();
                         status.url = reader.Value.ToString();
-
                     }
-                    if (reader.Value.ToString() == "account")
-                    {
-                        reader.Read();
-                        while (!reader.Read())
-                        {
-                            if (reader.Value.ToString() == "acct")
-                            {
-                                reader.Read();
-                                status.account.acct = reader.Value.ToString();
-                            }
-                            if (reader.Value.ToString() == "display_name")
-                            {
-                                reader.Read();
-                                status.account.display_name = reader.Value.ToString();
-                            }
-                            if (reader.Value.ToString() == "avatar")
-                            {
-                                reader.Read();
-                                status.account.avatar = reader.Value.ToString();
-                            }
-                            if (reader.Value.ToString() == "statuses_count")
-                            {
-                                reader.Read();
-                                status.account.statuses_count = reader.Value.ToString();
-                                break;
-                            }
-                        }
-                    }
-                    if (reader.Value.ToString() == "content")
+                    else if (reader.Value.ToString() == "content")
                     {
                         reader.Read();
                         status.content = reader.Value.ToString();
                     }
-                    if (reader.Value.ToString() == "reblogged")
+                    else if (reader.Value.ToString() == "reblogged")
                     {
                         reader.Read();
                         if (reader.Value != null)
                         {
                             status.reblogged = reader.Value.ToString();
                         }
+                        names.Add(status);
+                        status = new StatusClass();
+                        status.account = new AccountClass();
                     }
-                    /* if (reader.Value.ToString() == "application")
+                    /* else if (reader.Value.ToString() == "application")
                     {
                         reader.Read();
-                        // name
                         reader.Read();
                         status.application.name = reader.Value.ToString();
                         reader.Read();
-                        // website
-                        reader.Read();
-                        status.application.website = reader.Value.ToString();
-                        names.Add(status);
                     } */
+                    else if (reader.Value.ToString() == "account")
+                    {
+                        reader.Read();
+                        while (reader.Read())
+                        {
+                            if (reader.Value != null)
+                            {
+                                if (reader.Value.ToString() == "acct")
+                                {
+                                    reader.Read();
+                                    status.account.acct = reader.Value.ToString();
+                                }
+                                if (reader.Value.ToString() == "display_name")
+                                {
+                                    reader.Read();
+                                    status.account.display_name = reader.Value.ToString();
+                                }
+                                if (reader.Value.ToString() == "avatar")
+                                {
+                                    reader.Read();
+                                    status.account.avatar = reader.Value.ToString();
+                                    break;
+                                }
+                                if (reader.Value.ToString() == "statuses_count")
+                                {
+                                    reader.Read();
+                                    status.account.statuses_count = reader.Value.ToString();
+                                    break;
+                                } 
+                            }
+                        }
+                    }
                 }
             }
             return names;
