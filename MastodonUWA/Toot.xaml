@@ -15,8 +15,8 @@
         <Image Name="UserImage" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="66"/>
         <Grid HorizontalAlignment="Stretch" Height="40" VerticalAlignment="Bottom">
             <Button Name="Answer" Content="Answer" HorizontalAlignment="Left" />
-            <Button Name="Retoot" Content="Retoot" HorizontalAlignment="Center" />
-            <Button Name="Boost" Content="Boost" HorizontalAlignment="Right" />
+            <Button Name="Retoot" FontFamily="Segoe MDL2 Assets" Content="&#xE8EB;" HorizontalAlignment="Center" />
+            <Button Name="Favorites" Content="Favorites" HorizontalAlignment="Right" />
         </Grid>
     </Grid>
 </UserControl>

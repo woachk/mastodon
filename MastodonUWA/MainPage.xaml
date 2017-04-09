@@ -8,31 +8,36 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
-               CompactPaneLength="50" OpenPaneLength="150">
+               CompactPaneLength="50" OpenPaneLength="200">
         <SplitView.Pane>
             <StackPanel Background="Gray">
                 <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
                     Width="50" Height="50" Background="Transparent" Click="HamburgerButton_Click"/>
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="MenuButton1" FontFamily="Segoe MDL2 Assets" Content="&#xE825;"
+                    <Button x:Name="MenuButton1" FontFamily="Segoe MDL2 Assets" Content="&#xE710;"
                     Width="50" Height="50" Background="Transparent"/>
-                    <TextBlock Text="Button 1" FontSize="18" VerticalAlignment="Center" />
+                    <TextBlock Text="New toot" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="MenuButton2" FontFamily="Segoe MDL2 Assets" Content="&#xE10F;"
+                    <Button x:Name="MenuButton2" FontFamily="Segoe MDL2 Assets" Content="&#xE80F;"
                         Width="50" Height="50" Background="Transparent"/>
-                    <TextBlock Text="Button 2" FontSize="18" VerticalAlignment="Center" />
+                    <TextBlock Text="Local toots" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="MenuButton3" FontFamily="Segoe MDL2 Assets" Content="&#xE1D6;"
+                    <Button x:Name="MenuButton4" FontFamily="Segoe MDL2 Assets" Content="&#xE712;"
                         Width="50" Height="50" Background="Transparent"/>
-                    <TextBlock Text="Button 3" FontSize="18" VerticalAlignment="Center" />
+                    <TextBlock Text="Network Toots" FontSize="18" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="MenuButton3" FontFamily="Segoe MDL2 Assets" Content="&#xE895;"
+                        Width="50" Height="50" Background="Transparent"/>
+                    <TextBlock Text="Notifications" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
             </StackPanel>
         </SplitView.Pane>
         <SplitView.Content>
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
-                <Grid>
+                <Grid HorizontalAlignment="Center">
                     <e:RefreshableListView>
                         <local:Toot x:Name="Toot1" MinHeight="40" MaxHeight="150" />
                         <local:Toot x:Name="Toot2" MinHeight="40" MaxHeight="150"/>
