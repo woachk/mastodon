@@ -9,7 +9,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid>
+    <Grid Background="White">
         <WebView Name="TootContents" HorizontalAlignment="Left" Height="194" VerticalAlignment="Top" Width="400" Margin="0,61,0,0"/>
         <TextBlock x:Name="UserName" HorizontalAlignment="Left" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="334" Text=""/>
         <Image Name="UserImage" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="66"/>
