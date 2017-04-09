@@ -10,7 +10,7 @@
     d:DesignWidth="400">
 
     <Grid>
-        <TextBlock Name="TootContents" Text="Toot number 1" HorizontalAlignment="Left" Height="200" VerticalAlignment="Top" Width="400" Margin="0,56,0,0"/>
+        <TextBlock Name="TootContents" Text="Toot number 1" HorizontalAlignment="Left" Height="194" VerticalAlignment="Top" Width="400" Margin="0,61,0,0"/>
         <TextBlock Name="UserName" Text="@tooter" HorizontalAlignment="Left" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="334"/>
         <Image Name="UserImage" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="66"/>
         <Grid HorizontalAlignment="Stretch" Height="40" VerticalAlignment="Bottom">

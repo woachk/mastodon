@@ -7,16 +7,41 @@
     xmlns:e="using:RefreshableListView"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
-        <Grid>
-            <e:RefreshableListView>
-                <local:Toot x:Name="Toot1" MinHeight="40" MaxHeight="100" />
-                <local:Toot x:Name="Toot2" MinHeight="40" MaxHeight="100"/>
-                <local:Toot x:Name="Toot3" MinHeight="40" MaxHeight="100" />
-                <local:Toot x:Name="Toot4" MinHeight="40" MaxHeight="100" />
-                <local:Toot x:Name="Toot5" MinHeight="40" MaxHeight="100" />
-            </e:RefreshableListView>
-        </Grid>
-    </ScrollViewer>
+    <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
+               CompactPaneLength="50" OpenPaneLength="150">
+        <SplitView.Pane>
+            <StackPanel Background="Gray">
+                <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
+                    Width="50" Height="50" Background="Transparent" Click="HamburgerButton_Click"/>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="MenuButton1" FontFamily="Segoe MDL2 Assets" Content="&#xE825;"
+                    Width="50" Height="50" Background="Transparent"/>
+                    <TextBlock Text="Button 1" FontSize="18" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="MenuButton2" FontFamily="Segoe MDL2 Assets" Content="&#xE10F;"
+                        Width="50" Height="50" Background="Transparent"/>
+                    <TextBlock Text="Button 2" FontSize="18" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="MenuButton3" FontFamily="Segoe MDL2 Assets" Content="&#xE1D6;"
+                        Width="50" Height="50" Background="Transparent"/>
+                    <TextBlock Text="Button 3" FontSize="18" VerticalAlignment="Center" />
+                </StackPanel>
+            </StackPanel>
+        </SplitView.Pane>
+        <SplitView.Content>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
+                <Grid>
+                    <e:RefreshableListView>
+                        <local:Toot x:Name="Toot1" MinHeight="40" MaxHeight="150" />
+                        <local:Toot x:Name="Toot2" MinHeight="40" MaxHeight="150"/>
+                        <local:Toot x:Name="Toot3" MinHeight="40" MaxHeight="150" />
+                        <local:Toot x:Name="Toot4" MinHeight="40" MaxHeight="150" />
+                        <local:Toot x:Name="Toot5" MinHeight="40" MaxHeight="150" />
+                    </e:RefreshableListView>
+                </Grid>
+            </ScrollViewer>
+        </SplitView.Content>
+    </SplitView>
 </Page>
