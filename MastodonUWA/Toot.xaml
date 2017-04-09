@@ -14,9 +14,9 @@
         <TextBlock Name="UserName" Text="@tooter" HorizontalAlignment="Left" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="334"/>
         <Image Name="UserImage" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="66"/>
         <Grid HorizontalAlignment="Stretch" Height="40" VerticalAlignment="Bottom">
-            <Button Name="Answer" Content="Answer" HorizontalAlignment="Left" />
+            <Button Name="Answer" FontFamily="Segoe MDL2 Assets" Content="&#xE8CA;" HorizontalAlignment="Left" />
             <Button Name="Retoot" FontFamily="Segoe MDL2 Assets" Content="&#xE8EB;" HorizontalAlignment="Center" />
-            <Button Name="Favorites" Content="Favorites" HorizontalAlignment="Right" />
+            <Button Name="Favorites" FontFamily="Segoe MDL2 Assets" Content="&#xE734;" HorizontalAlignment="Right" />
         </Grid>
     </Grid>
 </UserControl>
