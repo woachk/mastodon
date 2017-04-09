@@ -12,9 +12,9 @@ namespace MastodonAPI
 {
     public class StatusClass
     {
-        string id;
+        public string id;
         public string uri;
-        string url;
+        public string url;
         public AccountClass account;
         string in_reply_to_id;
         string in_reply_to_account_id;
@@ -23,7 +23,7 @@ namespace MastodonAPI
         string created_at;
         string reblogs_count;
         string favorites_count;
-        string reblogged;
+        public string reblogged;
         string favourited;
         string sensitive;
         string spoiler_text;
@@ -257,13 +257,6 @@ namespace MastodonAPI
                         status = new StatusClass();
                         status.account = new AccountClass();
                     }
-                    /* else if (reader.Value.ToString() == "application")
-                    {
-                        reader.Read();
-                        reader.Read();
-                        status.application.name = reader.Value.ToString();
-                        reader.Read();
-                    } */
                     else if (reader.Value.ToString() == "account")
                     {
                         reader.Read();
