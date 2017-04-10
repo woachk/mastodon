@@ -307,6 +307,40 @@ namespace MastodonAPI
             }
             return names;
         }
+        static public StatusClass postStatus(AuthenticateClass token, string content, string in_reply_to_id, string media_ids, string sensitive, string spoiler_text)
+        {
+            StatusClass status = new StatusClass();
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
+            string request = "content=" + content;
+            if (content == null)
+            {
+                return null;
+            }
+            if (in_reply_to_id != null)
+            {
+                request = request + "&in_reply_to_id=" + in_reply_to_id;
+            }
+            if (media_ids != null)
+            {
+                request = request + "&media_ids=" + media_ids;
+            }
+            if (sensitive != null)
+            {
+                request = request + "&sensitive=" + sensitive;
+            }
+            if (spoiler_text != null)
+            {
+                request = request + "&spoiler_text=" + spoiler_text;
+            }
+            HttpContent request_content = new ByteArrayContent(System.Text.Encoding.UTF8.GetBytes(request));
+            Task<HttpResponseMessage> msg = client.PostAsync("https://" + token.server + "/api/v1/statuses", request_content);
+            status.content = content;
+            status.in_reply_to_id = in_reply_to_id;
+            status.sensitive = sensitive;
+            status.spoiler_text = spoiler_text;
+            return status;
+        }
     }
 }
 
