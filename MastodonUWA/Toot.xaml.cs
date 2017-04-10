@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -60,6 +61,14 @@ namespace MastodonUWA
             name = username;
             displayname = display_name;
             avatarpath = avatar;
+            if (reblogged != null)
+            {
+                Retoot.Background = new SolidColorBrush(Windows.UI.Colors.Green);
+            }
+            if (favourited != null)
+            {
+                Favorites.Background = new SolidColorBrush(Windows.UI.Colors.Yellow);
+            }
             if (avatar[0] == 'h') // HACK!!!
             {
                 UserImage.Source = new BitmapImage(new Uri(avatar));
@@ -113,6 +122,34 @@ namespace MastodonUWA
             {
                 args.Cancel = true;
             }
+        }
+
+        private void Retoot_Click(object sender, RoutedEventArgs e)
+        {
+            var authfile = ApplicationData.Current.LocalFolder.GetFileAsync("auth.txt");
+            authfile.AsTask().Wait();
+            var tokenfile = authfile.GetResults();
+            var ioop = FileIO.ReadTextAsync(tokenfile);
+            AuthenticateClass token = new AuthenticateClass();
+            ioop.AsTask().Wait();
+            token.token = ioop.GetResults();
+            token.server = MainPage.getServerName();
+            StatusClass.boost_toot(toot_id, null);
+            Retoot.Background = new SolidColorBrush(Windows.UI.Colors.Green);
+        }
+
+        private void Favorites_Click(object sender, RoutedEventArgs e)
+        {
+            var authfile = ApplicationData.Current.LocalFolder.GetFileAsync("auth.txt");
+            authfile.AsTask().Wait();
+            var tokenfile = authfile.GetResults();
+            var ioop = FileIO.ReadTextAsync(tokenfile);
+            AuthenticateClass token = new AuthenticateClass();
+            ioop.AsTask().Wait();
+            token.token = ioop.GetResults();
+            token.server = MainPage.getServerName();
+            StatusClass.favourite_toot(toot_id, token);
+            Favorites.Background = new SolidColorBrush(Windows.UI.Colors.Yellow);
         }
     }
 }

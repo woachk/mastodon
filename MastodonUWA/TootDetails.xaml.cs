@@ -53,19 +53,20 @@ namespace MastodonUWA
             ioop.AsTask().Wait();
             token.token = ioop.GetResults();
             token.server = MainPage.getServerName();
-            List<StatusClass>[] statuses = StatusClass.GetStatus(token, toot_id);
+            List<StatusClass>[] statuses = StatusClass.GetStatusContext(token, toot_id);
             List<StatusClass> tootlist = statuses[0];
             for (int i = 0; i < tootlist.Count; i++)
             {
                 Toot toot;
                 if (tootlist[i].account.acct != null)
                 {
-                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id);
+                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id, tootlist[i].reblogged, tootlist[i].favourited);
                     TootContainer.Items.Add(toot);
                 }
             }
             tootlist = statuses[1];
-            Toot firstoot = new Toot(toot_id.account.acct, toot_id.account.display_name, toot_id.content, toot_id.account.avatar, toot_id.id);
+            toot_id = StatusClass.GetStatus(token,toot_id);
+            Toot firstoot = new Toot(toot_id.account.acct, toot_id.account.display_name, toot_id.content, toot_id.account.avatar, toot_id.id, toot_id.reblogged, toot_id.favourited);
             firstoot.Height = 300;
             TootContainer.Items.Add(firstoot);
             for (int i = 0; i < tootlist.Count; i++)
@@ -73,7 +74,7 @@ namespace MastodonUWA
                 Toot toot;
                 if (tootlist[i].account.acct != null)
                 {
-                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id);
+                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id, tootlist[i].reblogged, tootlist[i].favourited);
                     TootContainer.Items.Add(toot);
                 }
             }

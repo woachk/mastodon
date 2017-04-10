@@ -123,7 +123,7 @@ namespace MastodonUWA
                              // Insert at the beginning
                                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
                                 {
-                                    Toot toot = new Toot(status.account.acct, status.account.display_name, status.content, status.account.avatar, status.id);
+                                    Toot toot = new Toot(status.account.acct, status.account.display_name, status.content, status.account.avatar, status.id, status.reblogged, status.favourited);
                                     TootContainer.Items.Insert(0, toot);
                                 }));
                         }
