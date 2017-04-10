@@ -96,5 +96,17 @@ namespace MastodonUWA
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(TootDetails), status);
         }
+
+        private void TootContents_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
+        {
+            if (args.Uri == null)
+            {
+
+            }
+            else
+            {
+                args.Cancel = true;
+            }
+        }
     }
 }
