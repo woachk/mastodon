@@ -173,5 +173,10 @@ SetBodyOverFlowHiddenString });
         }
         // now call the function!
         SetBodyOverFlowHidden();";
+        private async void RecWeb_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
     }
 }
+
