@@ -38,7 +38,7 @@ namespace MastodonAPI
         string reblogs_count;
         string favorites_count;
         public string reblogged;
-        string favourited;
+        public string favourited;
         string sensitive;
         string spoiler_text;
         string visiblity;

@@ -46,7 +46,7 @@ namespace MastodonUWA
         {
             this.InitializeComponent();
         }
-        public Toot(string username, string display_name, string contents, string avatar, string id)
+        public Toot(string username, string display_name, string contents, string avatar, string id, string reblogged, string favourited)
         {
             this.InitializeComponent();
             content = contents;

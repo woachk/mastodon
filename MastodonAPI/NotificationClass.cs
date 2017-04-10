@@ -130,9 +130,14 @@ namespace MastodonAPI
                                 else if (reader.Value.ToString() == "reblogged")
                                 {
                                     reader.Read();
+                                    notification.status.content = reader.Value.ToString();
+                                }
+                                else if (reader.Value.ToString() == "favourited")
+                                {
+                                    reader.Read();
                                     if (reader.Value != null)
                                     {
-                                        notification.status.reblogged = reader.Value.ToString();
+                                        notification.status.favourited = reader.Value.ToString();
                                     }
                                     if (notification.status.account.display_name == null)
                                     {
