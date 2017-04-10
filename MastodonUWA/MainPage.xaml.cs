@@ -110,7 +110,7 @@ namespace MastodonUWA
                  string text = st.ReadLine();
                      if (text == null)
                      {
-
+                         msg = await client.GetStreamAsync(baseuri); // reset the connection
                      }
                      else if ((text.ToArray())[0] != ':')
                      {
