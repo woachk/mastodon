@@ -109,6 +109,9 @@
     <Compile Include="Toot.xaml.cs">
       <DependentUpon>Toot.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WritingToot.xaml.cs">
+      <DependentUpon>WritingToot.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -179,6 +182,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Toot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WritingToot.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
