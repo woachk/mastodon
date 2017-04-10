@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MastodonAPI;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -37,6 +38,10 @@ namespace MastodonUWA
     public sealed partial class Toot : UserControl
     {
         public string toot_id;
+        public string content;
+        string name;
+        string displayname;
+        string avatarpath;
         public Toot()
         {
             this.InitializeComponent();
@@ -44,9 +49,13 @@ namespace MastodonUWA
         public Toot(string username, string display_name, string contents, string avatar, string id)
         {
             this.InitializeComponent();
+            content = contents;
             TootContents.NavigateToString(contents);
             UserName.Text = display_name + "\n" + "@" + username;
             toot_id = id;
+            name = username;
+            displayname = display_name;
+            avatarpath = avatar;
             if (avatar[0] == 'h') // HACK!!!
             {
                 UserImage.Source = new BitmapImage(new Uri(avatar));
@@ -61,6 +70,36 @@ namespace MastodonUWA
         {
             var contentDialog = new WritingToot(toot_id);
             await contentDialog.ShowAsync();
+        }
+
+        private void TootContents_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            StatusClass status = new StatusClass();
+            status.id = toot_id;
+            status.content = content;
+            status.account.acct = name;
+            status.account.display_name = displayname;
+            status.account.avatar = avatarpath;
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(TootDetails), status);
+        }
+
+        private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            StatusClass status = new StatusClass();
+            status.account = new AccountClass();
+            status.id = toot_id;
+            status.content = content;
+            status.account.acct = name;
+            status.account.display_name = displayname;
+            status.account.avatar = avatarpath;
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(TootDetails), status);
+        }
+
+        private void Grid_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+
         }
     }
 }

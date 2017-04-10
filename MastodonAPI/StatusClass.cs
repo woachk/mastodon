@@ -420,11 +420,13 @@ namespace MastodonAPI
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
-            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "GET /api/v1/statuses/:" + ogstatus.id + "/context");
+            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/statuses/" + ogstatus.id + "/context");
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
             List<StatusClass>[] statuses = new List<StatusClass>[2];
+            statuses[0] = new List<StatusClass>();
+            statuses[1] = new List<StatusClass>();
             StatusClass status = new StatusClass();
             status.account = new AccountClass();
             int i = 0;
@@ -503,11 +505,14 @@ namespace MastodonAPI
                             }
                         }
                     }
-                    if (reader.Value.ToString() == "descendants")
+                    if (reader.Value != null)
                     {
-                        i++;
-                        status = new StatusClass();
-                        status.account = new AccountClass();
+                        if (reader.Value.ToString() == "descendants")
+                        {
+                            i++;
+                            status = new StatusClass();
+                            status.account = new AccountClass();
+                        }
                     }
                 }
             }
