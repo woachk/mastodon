@@ -6,14 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300"
+    d:DesignHeight="350"
     d:DesignWidth="400">
 
     <Grid BorderThickness="1" BorderBrush="LightGray"  IsTapEnabled="True" Tapped="Grid_Tapped">
-        <WebView Name="TootContents" HorizontalAlignment="Left" Height="194" VerticalAlignment="Top" Width="400" Margin="0,61,0,0" NavigationStarting="TootContents_NavigationStarting" />
+        <WebView Name="TootContents" HorizontalAlignment="Left" Height="194" VerticalAlignment="Top" Width="400" Margin="0,61,0,20" NavigationStarting="TootContents_NavigationStarting" NavigationCompleted="TootContents_NavigationCompleted" />
         <TextBlock x:Name="UserName" HorizontalAlignment="Left" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="334" Text=""/>
         <Image Name="UserImage" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="66"/>
-        <Grid HorizontalAlignment="Stretch" Height="29" VerticalAlignment="Bottom">
+        <Grid HorizontalAlignment="Stretch" Height="20" VerticalAlignment="Bottom">
             <Button BorderThickness="0" Name="Answer" FontFamily="Segoe MDL2 Assets" Content="&#xE8CA;" HorizontalAlignment="Left" Click="Answer_Click"/>
             <Button Click="Retoot_Click" BorderThickness="0" Name="Retoot" FontFamily="Segoe MDL2 Assets" Content="&#xE8EB;" HorizontalAlignment="Center" />
             <Button Click="Favorites_Click" BorderThickness="0" Name="Favorites" FontFamily="Segoe MDL2 Assets" Content="&#xE734;" HorizontalAlignment="Right" />

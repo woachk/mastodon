@@ -115,6 +115,7 @@
     <Compile Include="UserDetails.xaml.cs">
       <DependentUpon>UserDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WebContentHelper.cs" />
     <Compile Include="WritingToot.xaml.cs">
       <DependentUpon>WritingToot.xaml</DependentUpon>
     </Compile>

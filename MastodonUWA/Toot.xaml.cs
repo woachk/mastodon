@@ -53,7 +53,8 @@ namespace MastodonUWA
         {
             this.InitializeComponent();
             content = contents;
-            TootContents.NavigateToString(contents);
+            string htcontent = WebContentHelper.WrapHtml(content, TootContents.Width, TootContents.Height);
+            TootContents.NavigateToString(htcontent);
             UserName.Text = display_name + "\n" + "@" + username;
             toot_id = id;
             reblog = reblogged;
@@ -77,6 +78,8 @@ namespace MastodonUWA
             {
                 UserImage.Source = new BitmapImage(new Uri("https://" + MainPage.getServerName() + avatar));
             }
+            TootContents.Settings.IsJavaScriptEnabled = false;
+            TootContents.Settings.IsIndexedDBEnabled = false;
         }
 
         private async void Answer_Click(object sender, RoutedEventArgs e)
@@ -151,5 +154,21 @@ namespace MastodonUWA
             StatusClass.favourite_toot(toot_id, token);
             Favorites.Background = new SolidColorBrush(Windows.UI.Colors.Yellow);
         }
+        private async void TootContents_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs
+args)
+        {
+            string returnStr = await
+           TootContents.InvokeScriptAsync("eval", new string[] {
+SetBodyOverFlowHiddenString });
+        }
+        string SetBodyOverFlowHiddenString =
+       @"function SetBodyOverFlowHidden()
+        {
+            document.body.style.overflow =
+       'hidden';
+            return 'Set Style to hidden';
+        }
+        // now call the function!
+        SetBodyOverFlowHidden();";
     }
 }
