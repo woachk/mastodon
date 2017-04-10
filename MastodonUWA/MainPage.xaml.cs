@@ -102,8 +102,9 @@ namespace MastodonUWA
              {
                  while (1 == 1)
                  {
-                     HttpResponseMessage msg = await client.GetAsync(baseuri);
-                     string text = await msg.Content.ReadAsStringAsync();
+                     var msg = await client.GetStreamAsync(baseuri);
+                     var st = new StreamReader(msg);
+                     string text = st.ReadLine();
                      if ((text.ToArray())[0] != ':')
                      {
                          string[] text2 = text.Split('\n');
