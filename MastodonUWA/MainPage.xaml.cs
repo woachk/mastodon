@@ -164,5 +164,11 @@ namespace MastodonUWA
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(SettingsPage), e);
         }
+
+        private async void MenuButton1_Click(object sender, RoutedEventArgs e)
+        {
+            var contentDialog = new WritingToot();
+            await contentDialog.ShowAsync();
+        }
     }
 }
