@@ -47,7 +47,14 @@ namespace MastodonUWA
             TootContents.NavigateToString(contents);
             UserName.Text = display_name + "\n" + "@" + username;
             toot_id = id;
-            UserImage.Source = new BitmapImage(new Uri(avatar));
+            if (avatar[0] == 'h') // HACK!!!
+            {
+                UserImage.Source = new BitmapImage(new Uri(avatar));
+            }
+            else
+            {
+                UserImage.Source = new BitmapImage(new Uri("https://" + MainPage.getServerName() + avatar));
+            }
         }
 
         private async void Answer_Click(object sender, RoutedEventArgs e)

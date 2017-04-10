@@ -43,7 +43,7 @@ namespace MastodonUWA
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        public string getServerName()
+        public static string getServerName()
         {
             var serverfile = ApplicationData.Current.LocalFolder.GetFileAsync("server.txt");
             serverfile.AsTask().Wait();
