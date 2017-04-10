@@ -152,5 +152,17 @@ namespace MastodonUWA
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(MainPage), "notifications");
         }
+
+        private void MenuButton5_Click(object sender, RoutedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(MainPage), "Timeline");
+        }
+
+        private void MenuButton6_Click(object sender, RoutedEventArgs e)
+        {
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(SettingsPage), e);
+        }
     }
 }
