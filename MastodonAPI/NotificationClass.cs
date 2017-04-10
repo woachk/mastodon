@@ -177,5 +177,135 @@ namespace MastodonAPI
             }
             return notifications;
         }
+        static public NotificationClass parseNotification(string json)
+        {
+            NotificationClass notification = new NotificationClass();
+            notification.account = new AccountClass();
+            notification.status = new StatusClass();
+            notification.status.account = new AccountClass();
+            JsonTextReader reader = new JsonTextReader(new StringReader(json));
+            while (reader.Read())
+            {
+                if (reader.Value != null)
+                {
+                    if (reader.Value.ToString() == "id")
+                    {
+                        reader.Read();
+                        notification.id = reader.Value.ToString();
+                    }
+                    else if (reader.Value.ToString() == "type")
+                    {
+                        reader.Read();
+                        notification.type = reader.Value.ToString();
+                    }
+                    else if (reader.Value.ToString() == "created_at")
+                    {
+                        reader.Read();
+                        notification.created_at = reader.Value.ToString();
+                    }
+                    else if (reader.Value.ToString() == "account")
+                    {
+                        reader.Read();
+                        while (reader.Read())
+                        {
+                            if (reader.Value != null)
+                            {
+                                if (reader.Value.ToString() == "acct")
+                                {
+                                    reader.Read();
+                                    notification.account.acct = reader.Value.ToString();
+                                }
+                                else if (reader.Value.ToString() == "display_name")
+                                {
+                                    reader.Read();
+                                    notification.account.display_name = reader.Value.ToString();
+                                }
+                                else if (reader.Value.ToString() == "avatar")
+                                {
+                                    reader.Read();
+                                    notification.account.avatar = reader.Value.ToString();
+                                    break;
+                                }
+                            }
+                        }
+                        if (notification.type == "follow")
+                        {
+                            if (notification.status.account.display_name == null)
+                            {
+                                notification.status.account.display_name = notification.status.account.acct;
+                            }
+                        }
+                    }
+                    else if (reader.Value.ToString() == "status" && notification.type != "follow")
+                    {
+                        while (reader.Read())
+                        {
+                            if (reader.Value != null)
+                            {
+                                if (reader.Value.ToString() == "id")
+                                {
+                                    reader.Read();
+                                    notification.status.id = reader.Value.ToString();
+                                }
+                                else if (reader.Value.ToString() == "uri")
+                                {
+                                    reader.Read();
+                                    notification.status.uri = reader.Value.ToString();
+                                }
+                                else if (reader.Value.ToString() == "url")
+                                {
+                                    reader.Read();
+                                    notification.status.url = reader.Value.ToString();
+                                }
+                                else if (reader.Value.ToString() == "content")
+                                {
+                                    reader.Read();
+                                    notification.status.content = reader.Value.ToString();
+                                }
+                                else if (reader.Value.ToString() == "reblogged")
+                                {
+                                    reader.Read();
+                                    if (reader.Value != null)
+                                    {
+                                        notification.status.reblogged = reader.Value.ToString();
+                                    }
+                                    if (notification.status.account.display_name == null)
+                                    {
+                                        notification.status.account.display_name = notification.status.account.acct;
+                                    }
+                                    break;
+                                }
+                                else if (reader.Value.ToString() == "account")
+                                {
+                                    while (reader.Read())
+                                    {
+                                        if (reader.Value != null)
+                                        {
+                                            if (reader.Value.ToString() == "acct")
+                                            {
+                                                reader.Read();
+                                                notification.status.account.acct = reader.Value.ToString();
+                                            }
+                                            else if (reader.Value.ToString() == "display_name")
+                                            {
+                                                reader.Read();
+                                                notification.status.account.display_name = reader.Value.ToString();
+                                            }
+                                            else if (reader.Value.ToString() == "avatar")
+                                            {
+                                                reader.Read();
+                                                notification.status.account.avatar = reader.Value.ToString();
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return notification;
+        }
     }
 }

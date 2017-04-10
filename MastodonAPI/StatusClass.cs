@@ -343,6 +343,79 @@ namespace MastodonAPI
             status.spoiler_text = spoiler_text;
             return status;
         }
+        static public StatusClass parseToot(string json)
+        {
+            StatusClass status = new StatusClass();
+            status.account = new AccountClass();
+            JsonTextReader reader = new JsonTextReader(new StringReader(json));
+            while (reader.Read())
+            {
+                if (reader.Value != null)
+                {
+                    if (reader.Value.ToString() == "id")
+                    {
+                        reader.Read();
+                        status.id = reader.Value.ToString();
+                    }
+                    else if (reader.Value.ToString() == "uri")
+                    {
+                        reader.Read();
+                        status.uri = reader.Value.ToString();
+                    }
+                    else if (reader.Value.ToString() == "url")
+                    {
+                        reader.Read();
+                        status.url = reader.Value.ToString();
+                    }
+                    else if (reader.Value.ToString() == "content")
+                    {
+                        reader.Read();
+                        status.content = reader.Value.ToString();
+                    }
+                    else if (reader.Value.ToString() == "reblogged")
+                    {
+                        reader.Read();
+                        if (reader.Value != null)
+                        {
+                            status.reblogged = reader.Value.ToString();
+                        }
+                    }
+                    else if (reader.Value.ToString() == "account")
+                    {
+                        reader.Read();
+                        while (reader.Read())
+                        {
+                            if (reader.Value != null)
+                            {
+                                if (reader.Value.ToString() == "acct")
+                                {
+                                    reader.Read();
+                                    status.account.acct = reader.Value.ToString();
+                                }
+                                if (reader.Value.ToString() == "display_name")
+                                {
+                                    reader.Read();
+                                    status.account.display_name = reader.Value.ToString();
+                                }
+                                if (reader.Value.ToString() == "avatar")
+                                {
+                                    reader.Read();
+                                    status.account.avatar = reader.Value.ToString();
+                                    break;
+                                }
+                                if (reader.Value.ToString() == "statuses_count")
+                                {
+                                    reader.Read();
+                                    status.account.statuses_count = reader.Value.ToString();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return status;
+        }
     }
 }
 

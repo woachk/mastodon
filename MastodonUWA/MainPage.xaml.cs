@@ -101,17 +101,60 @@ namespace MastodonUWA
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
             IAsyncAction tootrefresh = ThreadPool.RunAsync(async (source) =>
              {
-                 var msg = await client.GetStreamAsync(baseuri);
-                 while (1 == 1)
-                 {
-                     var st = new StreamReader(msg);
-                     string text = st.ReadLine();
+             var msg = await client.GetStreamAsync(baseuri);
+             while (1 == 1)
+             {
+                 var st = new StreamReader(msg);
+                 string text = st.ReadLine();
                      if ((text.ToArray())[0] != ':')
                      {
-                         string[] text2 = text.Split(':');
-                         string text3 = st.ReadLine();
-                         string stdata = (text2[1].Skip(5)).ToString();
-                         Debugger.Break();
+                        string[] text2 = text.Split(':');
+                        string text3 = st.ReadLine();
+                        string stdata = new string((text3.Skip(5)).ToArray());
+                        if (text2[1] == " update")
+                         {
+                             StatusClass status = StatusClass.parseToot(stdata);
+                             // Insert at the beginning
+                             TootContainer.Items.Insert(0,status);
+                        }
+                        else if (text2[1] == " notification")
+                         {
+                             NotificationClass notification = NotificationClass.parseNotification(stdata);
+                             if (notification.id != null)
+                             {
+                                 if (notification.type == "favourite")
+                                 {
+                                     TextBlock block = new TextBlock();
+                                     Toot toot;
+                                     block.Text = notification.account.display_name + " favourited your post.";
+                                     toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.uri);
+                                     TootContainer.Items.Insert(0,block);
+                                     TootContainer.Items.Insert(0,toot);
+                                 }
+                                 if (notification.type == "reblog")
+                                 {
+                                     TextBlock block = new TextBlock();
+                                     Toot toot;
+                                     block.Text = notification.account.display_name + " boosted your post.";
+                                     toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.uri);
+                                     TootContainer.Items.Insert(0,block);
+                                     TootContainer.Items.Insert(0,toot);
+                                 }
+                                 if (notification.type == "follow")
+                                 {
+                                     TextBlock block = new TextBlock();
+                                     block.Text = notification.account.display_name + " now follows you.";
+                                     TootContainer.Items.Insert(0,block);
+                                 }
+                                 if (notification.type == "mention")
+                                 {
+                                     Toot toot;
+                                     toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.uri);
+                                     TootContainer.Items.Insert(0,toot);
+                                 }
+                             }
+                         }
+                        Debugger.Break();
                      }
                  }
              }
