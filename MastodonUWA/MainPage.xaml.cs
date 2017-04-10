@@ -108,7 +108,11 @@ namespace MastodonUWA
              {
                  var st = new StreamReader(msg);
                  string text = st.ReadLine();
-                     if ((text.ToArray())[0] != ':')
+                     if (text == null)
+                     {
+
+                     }
+                     else if ((text.ToArray())[0] != ':')
                      {
                         string[] text2 = text.Split(':');
                         string text3 = st.ReadLine();
