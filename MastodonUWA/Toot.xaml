@@ -9,14 +9,14 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid Background="White">
+    <Grid BorderThickness="1" BorderBrush="Blue">
         <WebView Name="TootContents" HorizontalAlignment="Left" Height="194" VerticalAlignment="Top" Width="400" Margin="0,61,0,0"/>
         <TextBlock x:Name="UserName" HorizontalAlignment="Left" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="334" Text=""/>
         <Image Name="UserImage" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="66"/>
         <Grid HorizontalAlignment="Stretch" Height="29" VerticalAlignment="Bottom">
-            <Button Name="Answer" FontFamily="Segoe MDL2 Assets" Content="&#xE8CA;" HorizontalAlignment="Left" />
-            <Button Name="Retoot" FontFamily="Segoe MDL2 Assets" Content="&#xE8EB;" HorizontalAlignment="Center" />
-            <Button Name="Favorites" FontFamily="Segoe MDL2 Assets" Content="&#xE734;" HorizontalAlignment="Right" />
+            <Button BorderThickness="0" Name="Answer" FontFamily="Segoe MDL2 Assets" Content="&#xE8CA;" HorizontalAlignment="Left" />
+            <Button BorderThickness="0" Name="Retoot" FontFamily="Segoe MDL2 Assets" Content="&#xE8EB;" HorizontalAlignment="Center" />
+            <Button BorderThickness="0" Name="Favorites" FontFamily="Segoe MDL2 Assets" Content="&#xE734;" HorizontalAlignment="Right" />
         </Grid>
     </Grid>
 </UserControl>
