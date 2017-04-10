@@ -312,7 +312,7 @@ namespace MastodonAPI
             StatusClass status = new StatusClass();
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
-            string request = "content=" + content;
+            string request = "status=" + content;
             if (content == null)
             {
                 return null;
