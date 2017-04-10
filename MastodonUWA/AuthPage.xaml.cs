@@ -45,7 +45,7 @@ namespace MastodonUWA
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string servername = ServerBox.Text;
-            ApplicationTokenClass apptoken = new ApplicationTokenClass(servername, "MastodonClient", "read write follow", "urn:ietf:wg:oauth:2.0:oob");
+            ApplicationTokenClass apptoken = new ApplicationTokenClass(servername, "Mastodon for Windows 10", "read write follow", "urn:ietf:wg:oauth:2.0:oob");
             AuthenticateClass oauth_token = new AuthenticateClass(apptoken, UserNameBox.Text, PasswordHereBox.Password);
             if (apptoken.client_id == null)
             {

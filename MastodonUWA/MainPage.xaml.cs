@@ -34,6 +34,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Windows.System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace MastodonUWA
 {
@@ -100,17 +101,17 @@ namespace MastodonUWA
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
             IAsyncAction tootrefresh = ThreadPool.RunAsync(async (source) =>
              {
+                 var msg = await client.GetStreamAsync(baseuri);
                  while (1 == 1)
                  {
-                     var msg = await client.GetStreamAsync(baseuri);
                      var st = new StreamReader(msg);
                      string text = st.ReadLine();
                      if ((text.ToArray())[0] != ':')
                      {
-                         string[] text2 = text.Split('\n');
-                         string[] text3 = text2[0].Split(':');
+                         string[] text2 = text.Split(':');
+                         string text3 = st.ReadLine();
                          string stdata = (text2[1].Skip(5)).ToString();
-
+                         Debugger.Break();
                      }
                  }
              }
@@ -152,7 +153,7 @@ namespace MastodonUWA
                             TextBlock block = new TextBlock();
                             Toot toot;
                             block.Text = notifications[i].account.display_name + " favourited your post.";
-                            toot = new Toot(notifications[i].account.acct, notifications[i].account.display_name, notifications[i].status.content, notifications[i].account.avatar, notifications[i].status.uri);
+                            toot = new Toot(notifications[i].status.account.acct, notifications[i].status.account.display_name, notifications[i].status.content, notifications[i].status.account.avatar, notifications[i].status.uri);
                             TootContainer.Items.Add(block);
                             TootContainer.Items.Add(toot);
                         }
@@ -161,7 +162,7 @@ namespace MastodonUWA
                             TextBlock block = new TextBlock();
                             Toot toot;
                             block.Text = notifications[i].account.display_name + " boosted your post.";
-                            toot = new Toot(notifications[i].account.acct, notifications[i].account.display_name, notifications[i].status.content, notifications[i].account.avatar, notifications[i].status.uri);
+                            toot = new Toot(notifications[i].status.account.acct, notifications[i].status.account.display_name, notifications[i].status.content, notifications[i].status.account.avatar, notifications[i].status.uri);
                             TootContainer.Items.Add(block);
                             TootContainer.Items.Add(toot);
                         }
@@ -174,7 +175,7 @@ namespace MastodonUWA
                         if (notifications[i].type == "mention")
                         {
                             Toot toot;
-                            toot = new Toot(notifications[i].account.acct, notifications[i].account.display_name, notifications[i].status.content, notifications[i].account.avatar, notifications[i].status.uri);
+                            toot = new Toot(notifications[i].status.account.acct, notifications[i].status.account.display_name, notifications[i].status.content, notifications[i].status.account.avatar, notifications[i].status.uri);
                             TootContainer.Items.Add(toot);
                         }
                     }
