@@ -46,7 +46,9 @@
             </StackPanel>
         </SplitView.Pane>
         <SplitView.Content>
-            
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <Image Name="bgimage"></Image>
+            </Grid>
         </SplitView.Content>
     </SplitView>
 </Page>

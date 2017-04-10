@@ -137,7 +137,7 @@ namespace MastodonUWA
             ioop.AsTask().Wait();
             token.token = ioop.GetResults();
             token.server = MainPage.getServerName();
-            StatusClass.boost_toot(toot_id, null);
+            StatusClass.boost_toot(toot_id, token);
             Retoot.Background = new SolidColorBrush(Windows.UI.Colors.Green);
         }
 

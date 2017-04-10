@@ -20,7 +20,7 @@ namespace MastodonAPI
 {
     public class AccountClass
     {
-        string id;
+        public string id;
         string username;
         public string acct;
         public string display_name;
@@ -33,5 +33,6 @@ namespace MastodonAPI
         string followers_count;
         string following_count;
         public string statuses_count;
+
     }
 }

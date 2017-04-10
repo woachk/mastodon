@@ -118,6 +118,11 @@ namespace MastodonAPI
                                     reader.Read();
                                     status.account.acct = reader.Value.ToString();
                                 }
+                                else if (reader.Value.ToString() == "id")
+                                {
+                                    reader.Read();
+                                    status.account.acct = reader.Value.ToString();
+                                }
                                 if (reader.Value.ToString() == "display_name")
                                 {
                                     reader.Read();
@@ -216,6 +221,11 @@ namespace MastodonAPI
                                     reader.Read();
                                     status.account.acct = reader.Value.ToString();
                                 }
+                                else if (reader.Value.ToString() == "id")
+                                {
+                                    reader.Read();
+                                    status.account.acct = reader.Value.ToString();
+                                }
                                 if (reader.Value.ToString() == "display_name")
                                 {
                                     reader.Read();
@@ -303,6 +313,11 @@ namespace MastodonAPI
                             if (reader.Value != null)
                             {
                                 if (reader.Value.ToString() == "acct")
+                                {
+                                    reader.Read();
+                                    status.account.acct = reader.Value.ToString();
+                                }
+                                else if (reader.Value.ToString() == "id")
                                 {
                                     reader.Read();
                                     status.account.acct = reader.Value.ToString();
@@ -424,6 +439,11 @@ namespace MastodonAPI
                                     reader.Read();
                                     status.account.acct = reader.Value.ToString();
                                 }
+                                else if (reader.Value.ToString() == "id")
+                                {
+                                    reader.Read();
+                                    status.account.acct = reader.Value.ToString();
+                                }
                                 if (reader.Value.ToString() == "display_name")
                                 {
                                     reader.Read();
@@ -521,6 +541,11 @@ namespace MastodonAPI
                             if (reader.Value != null)
                             {
                                 if (reader.Value.ToString() == "acct")
+                                {
+                                    reader.Read();
+                                    status.account.acct = reader.Value.ToString();
+                                }
+                                else if (reader.Value.ToString() == "id")
                                 {
                                     reader.Read();
                                     status.account.acct = reader.Value.ToString();
@@ -648,6 +673,11 @@ namespace MastodonAPI
                             if (reader.Value != null)
                             {
                                 if (reader.Value.ToString() == "acct")
+                                {
+                                    reader.Read();
+                                    status.account.acct = reader.Value.ToString();
+                                }
+                                else if (reader.Value.ToString() == "id")
                                 {
                                     reader.Read();
                                     status.account.acct = reader.Value.ToString();
