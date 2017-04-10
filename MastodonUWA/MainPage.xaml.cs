@@ -139,7 +139,7 @@ namespace MastodonUWA
                                          TextBlock block = new TextBlock();
                                          Toot toot;
                                          block.Text = notification.account.display_name + " favourited your post.";
-                                         toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.uri, notification.status.reblogged, notification.status.favourited);
+                                         toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.id, notification.status.reblogged, notification.status.favourited);
                                          TootContainer.Items.Insert(0, block);
                                          TootContainer.Items.Insert(0, toot);
                                      }));
@@ -151,7 +151,7 @@ namespace MastodonUWA
                                          TextBlock block = new TextBlock();
                                          Toot toot;
                                          block.Text = notification.account.display_name + " boosted your post.";
-                                         toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.uri, notification.status.reblogged, notification.status.favourited);
+                                         toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.id, notification.status.reblogged, notification.status.favourited);
                                          TootContainer.Items.Insert(0, block);
                                          TootContainer.Items.Insert(0, toot);
                                      }));
@@ -170,7 +170,7 @@ namespace MastodonUWA
                                      await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
                                      {
                                          Toot toot;
-                                         toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.uri, notification.status.reblogged, notification.status.favourited);
+                                         toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.id, notification.status.reblogged, notification.status.favourited);
                                          TootContainer.Items.Insert(0, toot);
                                      }));
                                  }
@@ -217,7 +217,7 @@ namespace MastodonUWA
                             TextBlock block = new TextBlock();
                             Toot toot;
                             block.Text = notifications[i].account.display_name + " favourited your post.";
-                            toot = new Toot(notifications[i].status.account.acct, notifications[i].status.account.display_name, notifications[i].status.content, notifications[i].status.account.avatar, notifications[i].status.uri, notifications[i].status.reblogged, notifications[i].status.favourited);
+                            toot = new Toot(notifications[i].status.account.acct, notifications[i].status.account.display_name, notifications[i].status.content, notifications[i].status.account.avatar, notifications[i].status.id, notifications[i].status.reblogged, notifications[i].status.favourited);
                             TootContainer.Items.Add(block);
                             TootContainer.Items.Add(toot);
                         }
@@ -226,7 +226,7 @@ namespace MastodonUWA
                             TextBlock block = new TextBlock();
                             Toot toot;
                             block.Text = notifications[i].account.display_name + " boosted your post.";
-                            toot = new Toot(notifications[i].status.account.acct, notifications[i].status.account.display_name, notifications[i].status.content, notifications[i].status.account.avatar, notifications[i].status.uri, notifications[i].status.reblogged, notifications[i].status.favourited);
+                            toot = new Toot(notifications[i].status.account.acct, notifications[i].status.account.display_name, notifications[i].status.content, notifications[i].status.account.avatar, notifications[i].status.id, notifications[i].status.reblogged, notifications[i].status.favourited);
                             TootContainer.Items.Add(block);
                             TootContainer.Items.Add(toot);
                         }
@@ -239,7 +239,7 @@ namespace MastodonUWA
                         if (notifications[i].type == "mention")
                         {
                             Toot toot;
-                            toot = new Toot(notifications[i].status.account.acct, notifications[i].status.account.display_name, notifications[i].status.content, notifications[i].status.account.avatar, notifications[i].status.uri, notifications[i].status.reblogged, notifications[i].status.favourited);
+                            toot = new Toot(notifications[i].status.account.acct, notifications[i].status.account.display_name, notifications[i].status.content, notifications[i].status.account.avatar, notifications[i].status.id, notifications[i].status.reblogged, notifications[i].status.favourited);
                             TootContainer.Items.Add(toot);
                         }
                     }
