@@ -66,6 +66,7 @@ namespace MastodonUWA
             }
             tootlist = statuses[1];
             Toot firstoot = new Toot(toot_id.account.acct, toot_id.account.display_name, toot_id.content, toot_id.account.avatar, toot_id.id);
+            firstoot.Height = 300;
             TootContainer.Items.Add(firstoot);
             for (int i = 0; i < tootlist.Count; i++)
             {

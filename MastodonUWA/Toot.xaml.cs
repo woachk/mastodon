@@ -96,10 +96,5 @@ namespace MastodonUWA
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(TootDetails), status);
         }
-
-        private void Grid_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
-        {
-
-        }
     }
 }
