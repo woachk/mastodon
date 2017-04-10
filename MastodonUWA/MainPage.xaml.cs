@@ -30,6 +30,10 @@ using Windows.Storage;
 */
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 using MastodonAPI;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Windows.System.Threading;
+using System.Threading.Tasks;
 
 namespace MastodonUWA
 {
@@ -75,6 +79,42 @@ namespace MastodonUWA
             token.token = ioop.GetResults();
             token.server = getServerName();
             List<StatusClass> tootlist = null;
+            string baseuri = "https://" + token.server;
+            if (settings == "notifications")
+            {
+                baseuri = baseuri + "/api/v1/streaming/user";
+            }
+            else if (settings == "PublicTimeline")
+            {
+                baseuri = baseuri + "/api/v1/streaming/public";
+            }
+            else if (settings == "LocalPublicTimeline")
+            {
+                baseuri = baseuri + "/api/v1/streaming/public?local=true";
+            }
+            else
+            {
+                baseuri = baseuri + "/api/v1/streaming/user";
+            }
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
+            IAsyncAction tootrefresh = ThreadPool.RunAsync(async (source) =>
+             {
+                 while (1 == 1)
+                 {
+                     HttpResponseMessage msg = await client.GetAsync(baseuri);
+                     string text = await msg.Content.ReadAsStringAsync();
+                     if ((text.ToArray())[0] != ':')
+                     {
+                         string[] text2 = text.Split('\n');
+                         string[] text3 = text2[0].Split(':');
+                         string stdata = (text2[1].Skip(5)).ToString();
+
+                     }
+                 }
+             }
+                );
+
             if (settings != "notifications")
             {
                 if (settings == "PublicTimeline")
