@@ -14,7 +14,7 @@
         <TextBlock x:Name="UserName" HorizontalAlignment="Left" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="334" Text=""/>
         <Image Name="UserImage" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="66"/>
         <Grid HorizontalAlignment="Stretch" Height="29" VerticalAlignment="Bottom">
-            <Button BorderThickness="0" Name="Answer" FontFamily="Segoe MDL2 Assets" Content="&#xE8CA;" HorizontalAlignment="Left" />
+            <Button BorderThickness="0" Name="Answer" FontFamily="Segoe MDL2 Assets" Content="&#xE8CA;" HorizontalAlignment="Left" Click="Answer_Click"/>
             <Button BorderThickness="0" Name="Retoot" FontFamily="Segoe MDL2 Assets" Content="&#xE8EB;" HorizontalAlignment="Center" />
             <Button BorderThickness="0" Name="Favorites" FontFamily="Segoe MDL2 Assets" Content="&#xE734;" HorizontalAlignment="Right" />
         </Grid>

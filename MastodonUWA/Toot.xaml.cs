@@ -49,5 +49,11 @@ namespace MastodonUWA
             toot_id = id;
             UserImage.Source = new BitmapImage(new Uri(avatar));
         }
+
+        private async void Answer_Click(object sender, RoutedEventArgs e)
+        {
+            var contentDialog = new WritingToot(toot_id);
+            await contentDialog.ShowAsync();
+        }
     }
 }

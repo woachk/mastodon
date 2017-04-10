@@ -35,9 +35,15 @@ namespace MastodonUWA
 {
     public sealed partial class WritingToot : ContentDialog
     {
+        public string in_reply_to_id;
         public WritingToot()
         {
             this.InitializeComponent();
+        }
+        public WritingToot(string replyto)
+        {
+            this.InitializeComponent();
+            in_reply_to_id = replyto;
         }
         public string getServerName()
         {
@@ -60,7 +66,7 @@ namespace MastodonUWA
             ioop.AsTask().Wait();
             token.token = ioop.GetResults();
             token.server = getServerName();
-            StatusClass.postStatus(token, TootContents.Text, null, null, null, null);
+            StatusClass.postStatus(token, TootContents.Text, in_reply_to_id, null, null, null);
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
