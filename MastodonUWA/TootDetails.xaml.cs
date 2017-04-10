@@ -1,10 +1,12 @@
-﻿using System;
+﻿using MastodonAPI;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -39,6 +41,41 @@ namespace MastodonUWA
         public TootDetails()
         {
             this.InitializeComponent();
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            StatusClass toot_id = (StatusClass)e.Parameter;
+            var authfile = ApplicationData.Current.LocalFolder.GetFileAsync("auth.txt");
+            authfile.AsTask().Wait();
+            var tokenfile = authfile.GetResults();
+            var ioop = FileIO.ReadTextAsync(tokenfile);
+            AuthenticateClass token = new AuthenticateClass();
+            ioop.AsTask().Wait();
+            token.token = ioop.GetResults();
+            token.server = MainPage.getServerName();
+            List<StatusClass>[] statuses = StatusClass.GetStatus(token, toot_id);
+            List<StatusClass> tootlist = statuses[0];
+            for (int i = 0; i < tootlist.Count; i++)
+            {
+                Toot toot;
+                if (tootlist[i].account.acct != null)
+                {
+                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id);
+                    TootContainer.Items.Add(toot);
+                }
+            }
+            tootlist = statuses[1];
+            Toot firstoot = new Toot(toot_id.account.acct, toot_id.account.display_name, toot_id.content, toot_id.account.avatar, toot_id.id);
+            TootContainer.Items.Add(firstoot);
+            for (int i = 0; i < tootlist.Count; i++)
+            {
+                Toot toot;
+                if (tootlist[i].account.acct != null)
+                {
+                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id);
+                    TootContainer.Items.Add(toot);
+                }
+            }
         }
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {

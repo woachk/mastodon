@@ -416,6 +416,103 @@ namespace MastodonAPI
             }
             return status;
         }
+        static public List<StatusClass>[] GetStatus(AuthenticateClass token, StatusClass ogstatus)
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
+            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "GET /api/v1/statuses/:" + ogstatus.id + "/context");
+            message.Wait();
+            HttpResponseMessage msg = message.Result;
+            String json = (msg.Content).ReadAsStringAsync().Result;
+            List<StatusClass>[] statuses = new List<StatusClass>[2];
+            StatusClass status = new StatusClass();
+            status.account = new AccountClass();
+            int i = 0;
+            JsonTextReader reader = new JsonTextReader(new StringReader(json));
+            while (reader.Read())
+            {
+                if (reader.Value != null)
+                {
+                    if (reader.Value.ToString() == "id")
+                    {
+                        reader.Read();
+                        status.id = reader.Value.ToString();
+                    }
+                    else if (reader.Value.ToString() == "uri")
+                    {
+                        reader.Read();
+                        status.uri = reader.Value.ToString();
+                    }
+                    else if (reader.Value.ToString() == "url")
+                    {
+                        reader.Read();
+                        status.url = reader.Value.ToString();
+                    }
+                    else if (reader.Value.ToString() == "content")
+                    {
+                        reader.Read();
+                        status.content = reader.Value.ToString();
+                    }
+                    else if (reader.Value.ToString() == "reblogged")
+                    {
+                        reader.Read();
+                        if (reader.Value != null)
+                        {
+                            status.reblogged = reader.Value.ToString();
+                        }
+                        statuses[i].Add(status);
+                        status = new StatusClass();
+                        status.account = new AccountClass();
+                    }
+                    /* else if (reader.Value.ToString() == "application")
+                    {
+                        reader.Read();
+                        reader.Read();
+                        status.application.name = reader.Value.ToString();
+                        reader.Read();
+                    } */
+                    else if (reader.Value.ToString() == "account")
+                    {
+                        reader.Read();
+                        while (reader.Read())
+                        {
+                            if (reader.Value != null)
+                            {
+                                if (reader.Value.ToString() == "acct")
+                                {
+                                    reader.Read();
+                                    status.account.acct = reader.Value.ToString();
+                                }
+                                if (reader.Value.ToString() == "display_name")
+                                {
+                                    reader.Read();
+                                    status.account.display_name = reader.Value.ToString();
+                                }
+                                if (reader.Value.ToString() == "avatar")
+                                {
+                                    reader.Read();
+                                    status.account.avatar = reader.Value.ToString();
+                                    break;
+                                }
+                                if (reader.Value.ToString() == "statuses_count")
+                                {
+                                    reader.Read();
+                                    status.account.statuses_count = reader.Value.ToString();
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (reader.Value.ToString() == "descendants")
+                    {
+                        i++;
+                        status = new StatusClass();
+                        status.account = new AccountClass();
+                    }
+                }
+            }
+            return statuses;
+        }
     }
 }
 
