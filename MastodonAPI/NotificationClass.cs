@@ -84,16 +84,16 @@ namespace MastodonAPI
                                 {
                                     reader.Read();
                                     notification.account.avatar = reader.Value.ToString();
-                                }
-                                else if (reader.Value.ToString() == "statuses_count")
-                                {
-                                    reader.Read();
-                                    notification.account.statuses_count = reader.Value.ToString();
+                                    break;
                                 }
                             }
                         }
                         if (notification.type == "follow")
                         {
+                            if (notification.status.account.display_name == null)
+                            {
+                                notification.status.account.display_name = notification.status.account.acct;
+                            }
                             notifications.Add(notification);
                             notification = new NotificationClass();
                             notification.status = new StatusClass();
@@ -134,6 +134,16 @@ namespace MastodonAPI
                                     {
                                         notification.status.reblogged = reader.Value.ToString();
                                     }
+                                    if (notification.status.account.display_name == null)
+                                    {
+                                        notification.status.account.display_name = notification.status.account.acct;
+                                    }
+                                    notifications.Add(notification);
+                                    notification = new NotificationClass();
+                                    notification.status = new StatusClass();
+                                    notification.account = new AccountClass();
+                                    notification.status.account = new AccountClass();
+                                    break;
                                 }
                                 else if (reader.Value.ToString() == "account")
                                 {
@@ -159,11 +169,6 @@ namespace MastodonAPI
                                             }
                                         }
                                     }
-                                    notifications.Add(notification);
-                                    notification = new NotificationClass();
-                                    notification.status = new StatusClass();
-                                    notification.account = new AccountClass();
-                                    notification.status.account = new AccountClass();
                                 }
                             }
                         }
