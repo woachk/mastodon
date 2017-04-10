@@ -87,7 +87,15 @@ namespace MastodonAPI
                         {
                             status.reblogged = reader.Value.ToString();
                         }
-                        names.Add(status);
+                    }
+                    else if (reader.Value.ToString() == "favourited")
+                    {
+                        reader.Read();
+                        if (reader.Value != null)
+                        {
+                            status.favourited = reader.Value.ToString();
+                        }
+                        statuses[i].Add(status);
                         status = new StatusClass();
                         status.account = new AccountClass();
                     }
@@ -177,7 +185,15 @@ namespace MastodonAPI
                         {
                             status.reblogged = reader.Value.ToString();
                         }
-                        names.Add(status);
+                    }
+                    else if (reader.Value.ToString() == "favourited")
+                    {
+                        reader.Read();
+                        if (reader.Value != null)
+                        {
+                            status.favourited = reader.Value.ToString();
+                        }
+                        statuses[i].Add(status);
                         status = new StatusClass();
                         status.account = new AccountClass();
                     }
@@ -267,7 +283,15 @@ namespace MastodonAPI
                         {
                             status.reblogged = reader.Value.ToString();
                         }
-                        names.Add(status);
+                    }
+                    else if (reader.Value.ToString() == "favourited")
+                    {
+                        reader.Read();
+                        if (reader.Value != null)
+                        {
+                            status.favourited = reader.Value.ToString();
+                        }
+                        statuses[i].Add(status);
                         status = new StatusClass();
                         status.account = new AccountClass();
                     }
@@ -380,6 +404,17 @@ namespace MastodonAPI
                             status.reblogged = reader.Value.ToString();
                         }
                     }
+                    else if (reader.Value.ToString() == "favourited")
+                    {
+                        reader.Read();
+                        if (reader.Value != null)
+                        {
+                            status.favourited = reader.Value.ToString();
+                        }
+                        statuses[i].Add(status);
+                        status = new StatusClass();
+                        status.account = new AccountClass();
+                    }
                     else if (reader.Value.ToString() == "account")
                     {
                         reader.Read();
@@ -461,6 +496,14 @@ namespace MastodonAPI
                         if (reader.Value != null)
                         {
                             status.reblogged = reader.Value.ToString();
+                        }
+                    }
+                    else if (reader.Value.ToString() == "favourited")
+                    {
+                        reader.Read();
+                        if (reader.Value != null)
+                        {
+                            status.favourited = reader.Value.ToString();
                         }
                         statuses[i].Add(status);
                         status = new StatusClass();
