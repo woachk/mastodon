@@ -42,6 +42,8 @@ namespace MastodonUWA
         string name;
         string displayname;
         string avatarpath;
+        string reblog;
+        string fav;
         public Toot()
         {
             this.InitializeComponent();
@@ -53,6 +55,8 @@ namespace MastodonUWA
             TootContents.NavigateToString(contents);
             UserName.Text = display_name + "\n" + "@" + username;
             toot_id = id;
+            reblog = reblogged;
+            fav = favourited;
             name = username;
             displayname = display_name;
             avatarpath = avatar;
@@ -89,6 +93,8 @@ namespace MastodonUWA
             StatusClass status = new StatusClass();
             status.account = new AccountClass();
             status.id = toot_id;
+            status.reblogged = reblog;
+            status.favourited = fav;
             status.content = content;
             status.account.acct = name;
             status.account.display_name = displayname;
