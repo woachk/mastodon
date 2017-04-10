@@ -109,6 +109,12 @@
     <Compile Include="Toot.xaml.cs">
       <DependentUpon>Toot.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TootDetails.xaml.cs">
+      <DependentUpon>TootDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserDetails.xaml.cs">
+      <DependentUpon>UserDetails.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WritingToot.xaml.cs">
       <DependentUpon>WritingToot.xaml</DependentUpon>
     </Compile>
@@ -182,6 +188,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Toot.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TootDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserDetails.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
