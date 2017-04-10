@@ -35,6 +35,8 @@ using System.Net.Http.Headers;
 using Windows.System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Windows.UI.Core;
+using Windows.ApplicationModel.Core;
 
 namespace MastodonUWA
 {
@@ -115,7 +117,11 @@ namespace MastodonUWA
                          {
                              StatusClass status = StatusClass.parseToot(stdata);
                              // Insert at the beginning
-                             TootContainer.Items.Insert(0,status);
+                                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
+                                {
+                                    Toot toot = new Toot(status.account.acct, status.account.display_name, status.content, status.account.avatar, status.id);
+                                    TootContainer.Items.Insert(0, toot);
+                                }));
                         }
                         else if (text2[1] == " notification")
                          {
@@ -124,37 +130,48 @@ namespace MastodonUWA
                              {
                                  if (notification.type == "favourite")
                                  {
-                                     TextBlock block = new TextBlock();
-                                     Toot toot;
-                                     block.Text = notification.account.display_name + " favourited your post.";
-                                     toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.uri);
-                                     TootContainer.Items.Insert(0,block);
-                                     TootContainer.Items.Insert(0,toot);
+                                     await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
+                                     {
+                                         TextBlock block = new TextBlock();
+                                         Toot toot;
+                                         block.Text = notification.account.display_name + " favourited your post.";
+                                         toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.uri);
+                                         TootContainer.Items.Insert(0, block);
+                                         TootContainer.Items.Insert(0, toot);
+                                     }));
                                  }
                                  if (notification.type == "reblog")
                                  {
-                                     TextBlock block = new TextBlock();
-                                     Toot toot;
-                                     block.Text = notification.account.display_name + " boosted your post.";
-                                     toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.uri);
-                                     TootContainer.Items.Insert(0,block);
-                                     TootContainer.Items.Insert(0,toot);
+                                     await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
+                                     {
+                                         TextBlock block = new TextBlock();
+                                         Toot toot;
+                                         block.Text = notification.account.display_name + " boosted your post.";
+                                         toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.uri);
+                                         TootContainer.Items.Insert(0, block);
+                                         TootContainer.Items.Insert(0, toot);
+                                     }));
                                  }
                                  if (notification.type == "follow")
                                  {
-                                     TextBlock block = new TextBlock();
-                                     block.Text = notification.account.display_name + " now follows you.";
-                                     TootContainer.Items.Insert(0,block);
+                                     await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
+                                     {
+                                         TextBlock block = new TextBlock();
+                                         block.Text = notification.account.display_name + " now follows you.";
+                                         TootContainer.Items.Insert(0, block);
+                                     }));
                                  }
                                  if (notification.type == "mention")
-                                 {
-                                     Toot toot;
-                                     toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.uri);
-                                     TootContainer.Items.Insert(0,toot);
+                                 { 
+                                     await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
+                                     {
+                                         Toot toot;
+                                         toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.uri);
+                                         TootContainer.Items.Insert(0, toot);
+                                     }));
                                  }
                              }
                          }
-                        Debugger.Break();
                      }
                  }
              }
@@ -225,7 +242,6 @@ namespace MastodonUWA
                 }
             }
         }
-
         private void MenuButton2_Click(object sender, RoutedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
