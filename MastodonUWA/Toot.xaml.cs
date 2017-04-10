@@ -70,13 +70,16 @@ namespace MastodonUWA
             {
                 Favorites.Background = new SolidColorBrush(Windows.UI.Colors.Yellow);
             }
-            if (avatar[0] == 'h') // HACK!!!
+            if (avatar != null)
             {
-                UserImage.Source = new BitmapImage(new Uri(avatar));
-            }
-            else
-            {
-                UserImage.Source = new BitmapImage(new Uri("https://" + MainPage.getServerName() + avatar));
+                if (avatar[0] == 'h') // HACK!!!
+                {
+                    UserImage.Source = new BitmapImage(new Uri(avatar));
+                }
+                else
+                {
+                    UserImage.Source = new BitmapImage(new Uri("https://" + MainPage.getServerName() + avatar));
+                }
             }
             TootContents.Settings.IsJavaScriptEnabled = false;
             TootContents.Settings.IsIndexedDBEnabled = false;

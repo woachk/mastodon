@@ -139,7 +139,7 @@ namespace MastodonAPI
                                     reader.Read();
                                     status.account.statuses_count = reader.Value.ToString();
                                     break;
-                                } 
+                                }
                             }
                         }
                     }
