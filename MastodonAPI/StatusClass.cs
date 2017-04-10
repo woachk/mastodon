@@ -335,6 +335,8 @@ namespace MastodonAPI
             }
             HttpContent request_content = new ByteArrayContent(System.Text.Encoding.UTF8.GetBytes(request));
             Task<HttpResponseMessage> msg = client.PostAsync("https://" + token.server + "/api/v1/statuses", request_content);
+            HttpResponseMessage message = msg.Result;
+            string json = (message.Content).ReadAsStringAsync().Result;
             status.content = content;
             status.in_reply_to_id = in_reply_to_id;
             status.sensitive = sensitive;

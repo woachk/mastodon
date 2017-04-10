@@ -46,6 +46,7 @@
         </SplitView.Pane>
         <SplitView.Content>
             <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Button Name="ResetButton" Content="Reset application data" Click="ResetButton_Click" HorizontalAlignment="Left" VerticalAlignment="Top" />
             </Grid>
         </SplitView.Content>
     </SplitView>

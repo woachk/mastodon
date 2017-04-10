@@ -65,5 +65,15 @@ namespace MastodonUWA
             var contentDialog = new WritingToot();
             await contentDialog.ShowAsync();
         }
+
+        private async void ResetButton_Click(object sender, RoutedEventArgs e)
+        {
+            var files = await Windows.Storage.ApplicationData.Current.LocalFolder.GetFilesAsync();
+            for (int i = 0; i < files.Count; i++)
+            {
+                await files[i].DeleteAsync();
+            }
+            Application.Current.Exit();
+        }
     }
 }
