@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MastodonAPI
 {
-    class NotificationClass_new
+    public class NotificationClass_new
     {
         static public dynamic getNotifications(AuthenticateClass token)
         {
