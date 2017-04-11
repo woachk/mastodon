@@ -84,7 +84,58 @@ namespace MastodonUWA
             TootContents.Settings.IsJavaScriptEnabled = false;
             TootContents.Settings.IsIndexedDBEnabled = false;
         }
-
+        public Toot(string username, string display_name, string contents, string avatar, string id, string reblogged, string favourited, int principal)
+        {
+            this.InitializeComponent();
+            content = contents;
+            string htcontent = WebContentHelper.WrapHtml(content, TootContents.Width, TootContents.Height);
+            TootContents.NavigateToString(htcontent);
+            UserName.Text = display_name + "\n" + "@" + username;
+            toot_id = id;
+            reblog = reblogged;
+            fav = favourited;
+            name = username;
+            displayname = display_name;
+            avatarpath = avatar;
+            if (reblogged == "1")
+            {
+                Retoot.Foreground = new SolidColorBrush(Windows.UI.Colors.Green);
+            }
+            if (favourited == "1")
+            {
+                Favorites.Foreground = new SolidColorBrush(Windows.UI.Colors.Yellow);
+            }
+            if (avatar != null)
+            {
+                if (avatar[0] == 'h') // HACK!!!
+                {
+                    UserImage.Source = new BitmapImage(new Uri(avatar));
+                }
+                else
+                {
+                    UserImage.Source = new BitmapImage(new Uri("https://" + MainPage.getServerName() + avatar));
+                }
+            }
+            TootContents.Settings.IsJavaScriptEnabled = false;
+            TootContents.Settings.IsIndexedDBEnabled = false;
+            if (principal != 1)
+            {
+                var isDark = Application.Current.RequestedTheme == ApplicationTheme.Dark;
+                // doesn't work
+                if (!isDark)
+                {
+                    Background = new SolidColorBrush(Windows.UI.Colors.LightGray);
+                }
+                else
+                {
+                    Background = new SolidColorBrush(Windows.UI.Colors.DarkGray);
+                }
+            }
+            else
+            {
+                RecWeb.Visibility = Visibility.Collapsed;
+            }
+        }
         private async void Answer_Click(object sender, RoutedEventArgs e)
         {
             var contentDialog = new WritingToot(toot_id);

@@ -60,13 +60,13 @@ namespace MastodonUWA
                 Toot toot;
                 if (tootlist[i].account.acct != null)
                 {
-                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id, tootlist[i].reblogged, tootlist[i].favourited);
+                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id, tootlist[i].reblogged, tootlist[i].favourited,0);
                     TootContainer.Items.Add(toot);
                 }
             }
             tootlist = statuses[1];
             //toot_id = StatusClass.GetStatus(token,toot_id);
-            Toot firstoot = new Toot(toot_id.account.acct, toot_id.account.display_name, toot_id.content, toot_id.account.avatar, toot_id.id, toot_id.reblogged, toot_id.favourited);
+            Toot firstoot = new Toot(toot_id.account.acct, toot_id.account.display_name, toot_id.content, toot_id.account.avatar, toot_id.id, toot_id.reblogged, toot_id.favourited,1);
             firstoot.Height = 300;
             TootContainer.Items.Add(firstoot);
             for (int i = 0; i < tootlist.Count; i++)
@@ -74,7 +74,7 @@ namespace MastodonUWA
                 Toot toot;
                 if (tootlist[i].account.acct != null)
                 {
-                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id, tootlist[i].reblogged, tootlist[i].favourited);
+                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id, tootlist[i].reblogged, tootlist[i].favourited,0);
                     TootContainer.Items.Add(toot);
                 }
             }

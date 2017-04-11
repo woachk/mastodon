@@ -7,9 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="350"
-    d:DesignWidth="400">
+    d:DesignWidth="390">
 
-    <Grid BorderThickness="1" BorderBrush="LightGray" IsTapEnabled="True" Tapped="Grid_Tapped">
+    <Grid IsTapEnabled="True" Tapped="Grid_Tapped">
         <WebView Name="TootContents" HorizontalAlignment="Left" Height="194" VerticalAlignment="Top" Width="400" Margin="0,61,0,20" NavigationStarting="TootContents_NavigationStarting" NavigationCompleted="TootContents_NavigationCompleted" />
         <Rectangle Margin="0,61,0,20" Height="{Binding Height, ElementName=TootContents}" Name="RecWeb" VerticalAlignment="Top" Fill ="#00000000" Width="400" Tapped="RecWeb_Tapped" />
         <TextBlock x:Name="UserName" HorizontalAlignment="Left" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="334" Text=""/>
