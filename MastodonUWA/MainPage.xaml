@@ -48,10 +48,10 @@
         <SplitView.Content>
             <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
                 <Grid HorizontalAlignment="Center">
-                    <e:RefreshableListView x:Name="TootContainer">
+                    <e:RefreshableListView x:Name="TootContainer" ShowsScrollingPlaceholders="true" ItemsSource="{Binding}" >
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <ItemsStackPanel/>
+                                <ItemsStackPanel ItemsUpdatingScrollMode="KeepLastItemInView" />
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
                     </e:RefreshableListView>

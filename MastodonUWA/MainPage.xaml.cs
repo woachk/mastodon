@@ -38,6 +38,7 @@ using System.Diagnostics;
 using Windows.UI.Core;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Background;
+using System.Collections.ObjectModel;
 
 namespace MastodonUWA
 {
@@ -46,6 +47,7 @@ namespace MastodonUWA
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        Collection<object> TootCollectionBind; 
         IAsyncAction tootrefresh;
         public static string getServerName()
         {
@@ -78,6 +80,8 @@ namespace MastodonUWA
             {
                 SPanel.Background = new SolidColorBrush(Windows.UI.Colors.DarkGray);
             }
+            TootCollectionBind = new Collection<object>();
+            TootContainer.DataContext = TootCollectionBind;
             base.OnNavigatedTo(e);
             var settings = (string)e.Parameter;
             AuthenticateClass token = new AuthenticateClass();
@@ -131,8 +135,9 @@ namespace MastodonUWA
                              // Insert at the beginning
                                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
                                 {
+                                    var firstItem = TootContainer.Items[0];
                                     Toot toot = new Toot(status.account.acct, status.account.display_name, status.content, status.account.avatar, status.id, status.reblogged, status.favourited);
-                                    TootContainer.Items.Insert(0, toot);
+                                    TootCollectionBind.Add(toot);
                                 }));
                         }
                         else if (text2[1] == " notification")
@@ -148,8 +153,8 @@ namespace MastodonUWA
                                          Toot toot;
                                          block.Text = notification.account.display_name + " favourited your post.";
                                          toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.id, notification.status.reblogged, notification.status.favourited);
-                                         TootContainer.Items.Insert(0, block);
-                                         TootContainer.Items.Insert(0, toot);
+                                         TootCollectionBind.Add(toot);
+                                         TootCollectionBind.Add(toot);
                                      }));
                                  }
                                  if (notification.type == "reblog")
@@ -160,8 +165,8 @@ namespace MastodonUWA
                                          Toot toot;
                                          block.Text = notification.account.display_name + " boosted your post.";
                                          toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.id, notification.status.reblogged, notification.status.favourited);
-                                         TootContainer.Items.Insert(0, block);
-                                         TootContainer.Items.Insert(0, toot);
+                                         TootCollectionBind.Add(toot);
+                                         TootCollectionBind.Add(toot);
                                      }));
                                  }
                                  if (notification.type == "follow")
@@ -170,7 +175,7 @@ namespace MastodonUWA
                                      {
                                          TextBlock block = new TextBlock();
                                          block.Text = notification.account.display_name + " now follows you.";
-                                         TootContainer.Items.Insert(0, block);
+                                         TootCollectionBind.Add(block);
                                      }));
                                  }
                                  if (notification.type == "mention")
@@ -179,7 +184,7 @@ namespace MastodonUWA
                                      {
                                          Toot toot;
                                          toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.id, notification.status.reblogged, notification.status.favourited);
-                                         TootContainer.Items.Insert(0, toot);
+                                         TootCollectionBind.Add(toot);
                                      }));
                                  }
                              }
@@ -203,20 +208,20 @@ namespace MastodonUWA
                 {
                     tootlist = StatusClass.getTimeline(token);
                 }
-                for (int i = 0; i < tootlist.Count; i++)
+                for (int i = tootlist.Count -1 ; i >= 0; i--)
                 {
                     Toot toot;
                     if (tootlist[i].account.acct != null)
                     {
                         toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id, tootlist[i].reblogged, tootlist[i].favourited);
-                        TootContainer.Items.Add(toot);
+                        TootCollectionBind.Add(toot);
                     }
                 }
             }
             else
             {
                 List<NotificationClass> notifications = NotificationClass.getNotifications(token);
-                for (int i = 0; i < notifications.Count; i++)
+                for (int i = notifications.Count - 1; i >= 0; i--)
                 {
                     if (notifications[i].id != null)
                     {
@@ -226,8 +231,8 @@ namespace MastodonUWA
                             Toot toot;
                             block.Text = notifications[i].account.display_name + " favourited your post.";
                             toot = new Toot(notifications[i].status.account.acct, notifications[i].status.account.display_name, notifications[i].status.content, notifications[i].status.account.avatar, notifications[i].status.id, notifications[i].status.reblogged, notifications[i].status.favourited);
-                            TootContainer.Items.Add(block);
-                            TootContainer.Items.Add(toot);
+                            TootCollectionBind.Add(block);
+                            TootCollectionBind.Add(toot);
                         }
                         if (notifications[i].type == "reblog")
                         {
@@ -235,20 +240,20 @@ namespace MastodonUWA
                             Toot toot;
                             block.Text = notifications[i].account.display_name + " boosted your post.";
                             toot = new Toot(notifications[i].status.account.acct, notifications[i].status.account.display_name, notifications[i].status.content, notifications[i].status.account.avatar, notifications[i].status.id, notifications[i].status.reblogged, notifications[i].status.favourited);
-                            TootContainer.Items.Add(block);
-                            TootContainer.Items.Add(toot);
+                            TootCollectionBind.Add(block);
+                            TootCollectionBind.Add(toot);
                         }
                         if (notifications[i].type == "follow")
                         {
                             TextBlock block = new TextBlock();
                             block.Text = notifications[i].account.display_name + " now follows you.";
-                            TootContainer.Items.Add(block);
+                            TootCollectionBind.Add(block);
                         }
                         if (notifications[i].type == "mention")
                         {
                             Toot toot;
                             toot = new Toot(notifications[i].status.account.acct, notifications[i].status.account.display_name, notifications[i].status.content, notifications[i].status.account.avatar, notifications[i].status.id, notifications[i].status.reblogged, notifications[i].status.favourited);
-                            TootContainer.Items.Add(toot);
+                            TootCollectionBind.Add(toot);
                         }
                     }
                 }
