@@ -70,7 +70,7 @@ namespace MastodonUWA
                 }
             }
             tootlist = statuses[1];
-            //toot_id = StatusClass.GetStatus(token,toot_id);
+            toot_id = StatusClass.GetStatus(token,toot_id);
             Toot firstoot = new Toot(toot_id.account.acct, toot_id.account.display_name, toot_id.content, toot_id.account.avatar, toot_id.id, toot_id.reblogged, toot_id.favourited,1);
             firstoot.Height = 300;
             TootContainer.Items.Add(firstoot);
