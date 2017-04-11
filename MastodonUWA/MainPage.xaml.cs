@@ -121,18 +121,8 @@ namespace MastodonUWA
                  var st = new StreamReader(msg);
                  string text = st.ReadLine();
                      if (text == null)
-                     {
-                         try
-                         {
-                             msg = await client.GetStreamAsync(baseuri); // reset the connection
-                         }
-                         catch
-                         {
-                             if (Debugger.IsAttached)
-                             {
-                                 Debugger.Break();
-                             }
-                         }
+                     { 
+                        msg = await client.GetStreamAsync(baseuri); // reset the connection
                      }
                      else if (text == "")
                      {
