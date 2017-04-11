@@ -93,7 +93,8 @@ namespace MastodonUWA
             ioop.AsTask().Wait();
             token.token = ioop.GetResults();
             token.server = getServerName();
-            List<StatusClass> tootlist = null;
+            //List<StatusClass> tootlist = null;
+            dynamic tootlist;
             string baseuri = "https://" + token.server;
             if (settings == "notifications")
             {
@@ -141,11 +142,18 @@ namespace MastodonUWA
                              {
                                  stdata = stdata + st.ReadLine();
                              }
-                             StatusClass status = StatusClass.parseToot(stdata);
+                             dynamic status = StatusClass_new.parseToot(stdata);
+                             string acct = status.account.acct;
+                             string dname = status.account.display_name;
+                             string content = status.content;
+                             string avatar = status.account.avatar;
+                             string id = ((int)status.id).ToString();
+                             string reblogged = status.reblogged;
+                             string favourited = status.favourited;
                              // Insert at the beginning
-                                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
+                             await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
                                 {
-                                    Toot toot = new Toot(status.account.acct, status.account.display_name, status.content, status.account.avatar, status.id, status.reblogged, status.favourited);
+                                    Toot toot = new Toot(acct, dname, content, avatar, id, reblogged, favourited);
                                     TootCollectionBind.Add(toot);
                                 }));
                         }
@@ -207,22 +215,30 @@ namespace MastodonUWA
             {
                 if (settings == "PublicTimeline")
                 {
-                    tootlist = StatusClass.getPublicTimeline(token);
+                    //tootlist = StatusClass.getPublicTimeline(token);
+                    tootlist = StatusClass_new.GetPublicTimeline(token);
                 }
                 else if (settings == "LocalPublicTimeline")
                 {
-                    tootlist = StatusClass.getLocalPublicTimeline(token);
+                    tootlist = StatusClass_new.GetPublicLocalTimeline(token);
                 }
                 else
                 {
-                    tootlist = StatusClass.getTimeline(token);
+                    tootlist = StatusClass_new.GetTimeline(token);
                 }
                 for (int i = tootlist.Count -1 ; i >= 0; i--)
                 {
                     Toot toot;
                     if (tootlist[i].account.acct != null)
                     {
-                        toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id, tootlist[i].reblogged, tootlist[i].favourited);
+                        string acct = tootlist[i].account.acct;
+                        string dname = tootlist[i].account.display_name;
+                        string content = tootlist[i].content;
+                        string avatar = tootlist[i].account.avatar;
+                        string id = ((int)tootlist[i].id).ToString();
+                        string reblogged = tootlist[i].reblogged;
+                        string favourited = tootlist[i].favourited;
+                        toot = new Toot(acct, dname, content, avatar, id, reblogged, favourited);
                         TootCollectionBind.Add(toot);
                     }
                 }

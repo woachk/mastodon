@@ -49,7 +49,7 @@ namespace MastodonUWA
             {
                 SPanel.Background = new SolidColorBrush(Windows.UI.Colors.DarkGray);
             }
-            StatusClass toot_id = (StatusClass)e.Parameter;
+            dynamic toot_id = (StatusClass)e.Parameter;
             var authfile = ApplicationData.Current.LocalFolder.GetFileAsync("auth.txt");
             authfile.AsTask().Wait();
             var tokenfile = authfile.GetResults();
@@ -58,19 +58,26 @@ namespace MastodonUWA
             ioop.AsTask().Wait();
             token.token = ioop.GetResults();
             token.server = MainPage.getServerName();
-            List<StatusClass>[] statuses = StatusClass.GetStatusContext(token, toot_id);
-            List<StatusClass> tootlist = statuses[0];
+            dynamic statuses = StatusClass_new.GetStatusContext(token, toot_id);
+            dynamic tootlist = statuses[0];
             for (int i = 0; i < tootlist.Count; i++)
             {
                 Toot toot;
                 if (tootlist[i].account.acct != null)
                 {
-                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id, tootlist[i].reblogged, tootlist[i].favourited,0);
+                    string acct = tootlist.account.acct;
+                    string dname = tootlist.account.display_name;
+                    string content = tootlist.content;
+                    string avatar = tootlist.account.avatar;
+                    string id = ((int)tootlist.id).ToString();
+                    string reblogged = tootlist.reblogged;
+                    string favourited = tootlist.favourited;
+                    toot = new Toot(acct,dname, content, avatar, id, reblogged, favourited,0);
                     TootContainer.Items.Add(toot);
                 }
             }
             tootlist = statuses[1];
-            toot_id = StatusClass.GetStatus(token,toot_id);
+            toot_id = StatusClass_new.GetStatus(token,toot_id);
             Toot firstoot = new Toot(toot_id.account.acct, toot_id.account.display_name, toot_id.content, toot_id.account.avatar, toot_id.id, toot_id.reblogged, toot_id.favourited,1);
             firstoot.Height = 300;
             TootContainer.Items.Add(firstoot);
@@ -79,7 +86,14 @@ namespace MastodonUWA
                 Toot toot;
                 if (tootlist[i].account.acct != null)
                 {
-                    toot = new Toot(tootlist[i].account.acct, tootlist[i].account.display_name, tootlist[i].content, tootlist[i].account.avatar, tootlist[i].id, tootlist[i].reblogged, tootlist[i].favourited,0);
+                    string acct = tootlist.account.acct;
+                    string dname = tootlist.account.display_name;
+                    string content = tootlist.content;
+                    string avatar = tootlist.account.avatar;
+                    string id = ((int)tootlist.id).ToString();
+                    string reblogged = tootlist.reblogged;
+                    string favourited = tootlist.favourited;
+                    toot = new Toot(acct, dname, content, avatar, id, reblogged, favourited, 0);
                     TootContainer.Items.Add(toot);
                 }
             }

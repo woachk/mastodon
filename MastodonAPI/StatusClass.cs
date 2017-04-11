@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MastodonAPI
 {
-    class StatusClass_new
+    public class StatusClass_new
     {
         public string id { get; set; }
         public string uri { get; set; }
@@ -34,13 +34,13 @@ namespace MastodonAPI
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
-            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/statuses/" + ogstatus.id + "/context");
+            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/statuses/" + ogstatus.id);
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
             return parseToot(json);
         }
-        static public List<dynamic> GetTimeline(AuthenticateClass token, StatusClass ogstatus)
+        static public dynamic GetTimeline(AuthenticateClass token)
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
@@ -49,9 +49,9 @@ namespace MastodonAPI
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
             dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
-            return (List<dynamic>)obj;
+            return obj;
         }
-        static public List<dynamic> GetLocalTimeline(AuthenticateClass token, StatusClass ogstatus)
+        static public dynamic GetPublicTimeline(AuthenticateClass token)
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
@@ -60,9 +60,9 @@ namespace MastodonAPI
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
             dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
-            return (List<dynamic>)obj;
+            return obj;
         }
-        static public List<dynamic> GetPublicLocalTimeline(AuthenticateClass token)
+        static public dynamic GetPublicLocalTimeline(AuthenticateClass token)
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
@@ -71,7 +71,18 @@ namespace MastodonAPI
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
             dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
-            return (List<dynamic>)obj;
+            return obj;
+        }
+        static public dynamic GetStatusContext(AuthenticateClass token, dynamic ogstatus)
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
+            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/statuses/" + ogstatus.id + "/context");
+            message.Wait();
+            HttpResponseMessage msg = message.Result;
+            String json = (msg.Content).ReadAsStringAsync().Result;
+            dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
+            return obj;
         }
     }
 }
