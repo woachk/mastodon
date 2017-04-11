@@ -141,7 +141,7 @@ namespace MastodonUWA
             token.token = ioop.GetResults();
             token.server = MainPage.getServerName();
             StatusClass.boost_toot(toot_id, token);
-            Retoot.Background = new SolidColorBrush(Windows.UI.Colors.Green);
+            Retoot.Foreground = new SolidColorBrush(Windows.UI.Colors.Green);
         }
 
         private void Favorites_Click(object sender, RoutedEventArgs e)
@@ -155,7 +155,7 @@ namespace MastodonUWA
             token.token = ioop.GetResults();
             token.server = MainPage.getServerName();
             StatusClass.favourite_toot(toot_id, token);
-            Favorites.Background = new SolidColorBrush(Windows.UI.Colors.Yellow);
+            Favorites.Foreground = new SolidColorBrush(Windows.UI.Colors.Yellow);
         }
         private async void TootContents_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs
 args)
