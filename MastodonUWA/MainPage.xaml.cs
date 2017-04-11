@@ -70,6 +70,11 @@ namespace MastodonUWA
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            var isDark = Application.Current.RequestedTheme == ApplicationTheme.Dark;
+            if (isDark)
+            {
+                SPanel.Background = new SolidColorBrush(Windows.UI.Colors.DarkGray);
+            }
             base.OnNavigatedTo(e);
             var settings = (string)e.Parameter;
             AuthenticateClass token = new AuthenticateClass();

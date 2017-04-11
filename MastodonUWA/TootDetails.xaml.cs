@@ -44,6 +44,11 @@ namespace MastodonUWA
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            var isDark = Application.Current.RequestedTheme == ApplicationTheme.Dark;
+            if (isDark)
+            {
+                SPanel.Background = new SolidColorBrush(Windows.UI.Colors.DarkGray);
+            }
             StatusClass toot_id = (StatusClass)e.Parameter;
             var authfile = ApplicationData.Current.LocalFolder.GetFileAsync("auth.txt");
             authfile.AsTask().Wait();
