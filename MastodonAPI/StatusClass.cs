@@ -99,6 +99,17 @@ namespace MastodonAPI
                             status.favourited = "1";
                         }
                     }
+                    else if (reader.Value.ToString() == "mentions")
+                    {
+                        while (true)
+                        {
+                            reader.Read();
+                            if (reader.TokenType == JsonToken.EndArray)
+                            {
+                                break;
+                            }
+                        } 
+                    }
                     /* else if (reader.Value.ToString() == "application")
                     {
                         reader.Read();
@@ -189,6 +200,17 @@ namespace MastodonAPI
                         if (reader.Value != null)
                         {
                             status.reblogged = reader.Value.ToString();
+                        }
+                    }
+                    else if (reader.Value.ToString() == "mentions")
+                    {
+                        while (true)
+                        {
+                            reader.Read();
+                            if (reader.TokenType == JsonToken.EndArray)
+                            {
+                                break;
+                            }
                         }
                     }
                     else if (reader.Value.ToString() == "favourited")
@@ -292,6 +314,17 @@ namespace MastodonAPI
                         if (reader.Value != null)
                         {
                             status.reblogged = reader.Value.ToString();
+                        }
+                    }
+                    else if (reader.Value.ToString() == "mentions")
+                    {
+                        while (true)
+                        {
+                            reader.Read();
+                            if (reader.TokenType == JsonToken.EndArray)
+                            {
+                                break;
+                            }
                         }
                     }
                     else if (reader.Value.ToString() == "favourited")
@@ -406,6 +439,17 @@ namespace MastodonAPI
                         reader.Read();
                         status.url = reader.Value.ToString();
                     }
+                    else if (reader.Value.ToString() == "mentions")
+                    {
+                        while (true)
+                        {
+                            reader.Read();
+                            if (reader.TokenType == JsonToken.EndArray)
+                            {
+                                break;
+                            }
+                        }
+                    }
                     else if (reader.Value.ToString() == "content")
                     {
                         reader.Read();
@@ -506,6 +550,17 @@ namespace MastodonAPI
                     {
                         reader.Read();
                         status.content = reader.Value.ToString();
+                    }
+                    else if (reader.Value.ToString() == "mentions")
+                    {
+                        while (true)
+                        {
+                            reader.Read();
+                            if (reader.TokenType == JsonToken.EndArray)
+                            {
+                                break;
+                            }
+                        }
                     }
                     else if (reader.Value.ToString() == "reblogged")
                     {
@@ -618,6 +673,7 @@ namespace MastodonAPI
             StatusClass status = new StatusClass();
             status.account = new AccountClass();
             JsonTextReader reader = new JsonTextReader(new StringReader(json));
+            bool t = false;
             while (reader.Read())
             {
                 if (reader.Value != null)
@@ -641,6 +697,17 @@ namespace MastodonAPI
                     {
                         reader.Read();
                         status.content = reader.Value.ToString();
+                    }
+                    else if (reader.Value.ToString() == "mentions")
+                    {
+                        while (true)
+                        {
+                            reader.Read();
+                            if (reader.TokenType == JsonToken.EndArray)
+                            {
+                                break;
+                            }
+                        }
                     }
                     else if (reader.Value.ToString() == "reblogged")
                     {
