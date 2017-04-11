@@ -13,6 +13,6 @@
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
     <Grid>
-        <TextBox Name="TootContents"></TextBox>
+        <TextBox Name="TootContents" AcceptsReturn="True"></TextBox>
     </Grid>
 </ContentDialog>
