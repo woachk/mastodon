@@ -59,26 +59,33 @@ namespace MastodonUWA
             token.token = ioop.GetResults();
             token.server = MainPage.getServerName();
             dynamic statuses = StatusClass_new.GetStatusContext(token, toot_id);
-            dynamic tootlist = statuses[0];
+            dynamic tootlist = statuses.ancestors;
             for (int i = 0; i < tootlist.Count; i++)
             {
                 Toot toot;
                 if (tootlist[i].account.acct != null)
                 {
-                    string acct = tootlist.account.acct;
-                    string dname = tootlist.account.display_name;
-                    string content = tootlist.content;
-                    string avatar = tootlist.account.avatar;
-                    string id = ((int)tootlist.id).ToString();
-                    string reblogged = tootlist.reblogged;
-                    string favourited = tootlist.favourited;
+                    string acct = tootlist[i].account.acct;
+                    string dname = tootlist[i].account.display_name;
+                    string content = tootlist[i].content;
+                    string avatar = tootlist[i].account.avatar;
+                    string id = ((int)tootlist[i].id).ToString();
+                    string reblogged = tootlist[i].reblogged;
+                    string favourited = tootlist[i].favourited;
                     toot = new Toot(acct,dname, content, avatar, id, reblogged, favourited,0);
                     TootContainer.Items.Add(toot);
                 }
             }
-            tootlist = statuses[1];
+            tootlist = statuses.descendants;
             toot_id = StatusClass_new.GetStatus(token,toot_id);
-            Toot firstoot = new Toot(toot_id.account.acct, toot_id.account.display_name, toot_id.content, toot_id.account.avatar, toot_id.id, toot_id.reblogged, toot_id.favourited,1);
+            string _acct = toot_id.account.acct;
+            string _dname = toot_id.account.display_name;
+            string _content = toot_id.content;
+            string _avatar = toot_id.account.avatar;
+            string _id = ((int)toot_id.id).ToString();
+            string _reblogged = toot_id.reblogged;
+            string _favourited = toot_id.favourited;
+            Toot firstoot = new Toot(_acct, _dname, _content, _avatar, _id, _reblogged, _favourited, 0);
             firstoot.Height = 300;
             TootContainer.Items.Add(firstoot);
             for (int i = 0; i < tootlist.Count; i++)
@@ -86,13 +93,13 @@ namespace MastodonUWA
                 Toot toot;
                 if (tootlist[i].account.acct != null)
                 {
-                    string acct = tootlist.account.acct;
-                    string dname = tootlist.account.display_name;
-                    string content = tootlist.content;
-                    string avatar = tootlist.account.avatar;
-                    string id = ((int)tootlist.id).ToString();
-                    string reblogged = tootlist.reblogged;
-                    string favourited = tootlist.favourited;
+                    string acct = tootlist[i].account.acct;
+                    string dname = tootlist[i].account.display_name;
+                    string content = tootlist[i].content;
+                    string avatar = tootlist[i].account.avatar;
+                    string id = ((int)tootlist[i].id).ToString();
+                    string reblogged = tootlist[i].reblogged;
+                    string favourited = tootlist[i].favourited;
                     toot = new Toot(acct, dname, content, avatar, id, reblogged, favourited, 0);
                     TootContainer.Items.Add(toot);
                 }
