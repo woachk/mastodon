@@ -41,16 +41,23 @@ namespace MastodonAPI
             HttpResponseMessage message = msg.Result;
             json = (message.Content).ReadAsStringAsync().Result;
             JsonTextReader reader = new JsonTextReader(new StringReader(json));
-            while (reader.Read())
+            try
             {
-                if (reader.Value != null)
+                while (reader.Read())
                 {
-                    if (reader.Value.ToString() == "access_token")
+                    if (reader.Value != null)
                     {
-                        reader.Read();
-                        token = reader.Value.ToString();
+                        if (reader.Value.ToString() == "access_token")
+                        {
+                            reader.Read();
+                            token = reader.Value.ToString();
+                        }
                     }
                 }
+            }
+            catch
+            {
+                token = null;
             }
         }
         public AuthenticateClass()
