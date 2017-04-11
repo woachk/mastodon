@@ -47,7 +47,7 @@ namespace MastodonUWA
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        Collection<object> TootCollectionBind; 
+        ObservableCollection<object> TootCollectionBind; 
         IAsyncAction tootrefresh;
         public static string getServerName()
         {
@@ -80,7 +80,7 @@ namespace MastodonUWA
             {
                 SPanel.Background = new SolidColorBrush(Windows.UI.Colors.DarkGray);
             }
-            TootCollectionBind = new Collection<object>();
+            TootCollectionBind = new ObservableCollection<object>();
             TootContainer.DataContext = TootCollectionBind;
             base.OnNavigatedTo(e);
             var settings = (string)e.Parameter;
@@ -119,27 +119,32 @@ namespace MastodonUWA
              while (1 == 1)
              {
                  var st = new StreamReader(msg);
-                 string text = st.ReadLine();
+                     string text = st.ReadLine();
                      if (text == null)
                      { 
                         msg = await client.GetStreamAsync(baseuri); // reset the connection
                      }
-                     else if (text == "")
-                     {
-
-                     }
                      else if ((text.ToArray())[0] != ':')
                      {
                         string[] text2 = text.Split(':');
-                        string text3 = st.ReadLine();
-                        string stdata = new string((text3.Skip(5)).ToArray());
-                        if (text2[1] == " update")
+                        var intermediate = (text.Split('\n'));
+                        string text3 = intermediate.Aggregate((a, b) => a + b);
+                         string stdata = st.ReadLine();
+                         stdata = new string(stdata.Skip(5).ToArray());
+                         if (text2[1] == " delete")
                          {
+                             st.DiscardBufferedData();
+                         }
+                         if (text2[1] == " update")
+                         {
+                             while (stdata.Last() != '}')
+                             {
+                                 stdata = stdata + st.ReadLine();
+                             }
                              StatusClass status = StatusClass.parseToot(stdata);
                              // Insert at the beginning
                                 await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
                                 {
-                                    var firstItem = TootContainer.Items[0];
                                     Toot toot = new Toot(status.account.acct, status.account.display_name, status.content, status.account.avatar, status.id, status.reblogged, status.favourited);
                                     TootCollectionBind.Add(toot);
                                 }));
