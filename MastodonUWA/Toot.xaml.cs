@@ -133,6 +133,8 @@ namespace MastodonUWA
             }
             else
             {
+                TootContents.NavigationCompleted -= TootContents_NavigationCompleted;
+                TootContents.NavigationCompleted += TootContents_NavigationCompletedPrimaryToot;
                 RecWeb.Visibility = Visibility.Collapsed;
             }
         }
@@ -227,6 +229,11 @@ SetBodyOverFlowHiddenString });
         private async void RecWeb_Tapped(object sender, TappedRoutedEventArgs e)
         {
 
+        }
+        private async void TootContents_NavigationCompletedPrimaryToot(WebView sender, WebViewNavigationCompletedEventArgs
+args)
+        {
+            return;
         }
     }
 }

@@ -1,4 +1,17 @@
-Mastodon UWP app and library for .NET
+Mastodon UWP app
 =====================================
 
-This page will be filled later.
+This repository has a Mastodon UWP app written in C#.
+It requires Windows build 10586 (November Update or later).
+
+
+History:
+========
+
+04/11/2017: Initial release (v1.0.5.0)
+
+
+Unsupported features at this time:
+==================================
+
+Images & notifications
