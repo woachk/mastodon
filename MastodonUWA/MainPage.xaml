@@ -51,7 +51,7 @@
                     <e:RefreshableListView x:Name="TootContainer" ShowsScrollingPlaceholders="true" ItemsSource="{Binding}" >
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <ItemsStackPanel ItemsUpdatingScrollMode="KeepItemsInView" />
+                                <ItemsStackPanel ItemsUpdatingScrollMode="KeepLastItemInView" />
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
                     </e:RefreshableListView>
