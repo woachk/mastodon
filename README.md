@@ -14,8 +14,9 @@ History:
 
 04/11/2017: New JSON backend. Should fix a lot of bugs, especially in showing toot details (v1.0.7.0)
 
+04/11/2017: Initial images support. (v1.0.8.0)
 
 Unsupported features at this time:
 ==================================
 
-Images & notifications
+Push notifications.
