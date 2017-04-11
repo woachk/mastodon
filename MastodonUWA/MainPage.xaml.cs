@@ -37,6 +37,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Windows.UI.Core;
 using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.Background;
 
 namespace MastodonUWA
 {
@@ -45,6 +46,7 @@ namespace MastodonUWA
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        IAsyncAction tootrefresh;
         public static string getServerName()
         {
             var serverfile = ApplicationData.Current.LocalFolder.GetFileAsync("server.txt");
@@ -65,6 +67,7 @@ namespace MastodonUWA
 
         private void MenuButton4_Click(object sender, RoutedEventArgs e)
         {
+            tootrefresh.Cancel();
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(MainPage), "PublicTimeline");
         }
@@ -106,7 +109,7 @@ namespace MastodonUWA
             }
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
-            IAsyncAction tootrefresh = ThreadPool.RunAsync(async (source) =>
+            tootrefresh = ThreadPool.RunAsync(async (source) =>
              {
              var msg = await client.GetStreamAsync(baseuri);
              while (1 == 1)
@@ -254,23 +257,27 @@ namespace MastodonUWA
         private void MenuButton2_Click(object sender, RoutedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
+            tootrefresh.Cancel();
             rootFrame.Navigate(typeof(MainPage), "LocalPublicTimeline");
         }
 
         private void MenuButton3_Click(object sender, RoutedEventArgs e)
         {
+            tootrefresh.Cancel();
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(MainPage), "notifications");
         }
 
         private void MenuButton5_Click(object sender, RoutedEventArgs e)
         {
+            tootrefresh.Cancel();
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(MainPage), "Timeline");
         }
 
         private void MenuButton6_Click(object sender, RoutedEventArgs e)
         {
+            tootrefresh.Cancel();
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(SettingsPage), e);
         }
