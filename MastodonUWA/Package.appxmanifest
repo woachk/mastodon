@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="47375my123.Mastodonwebapp" Publisher="CN=5071ACD3-1DFE-4A29-AE93-3A0952514BC5" Version="1.0.6.0" />
+  <Identity Name="47375my123.Mastodonwebapp" Publisher="CN=5071ACD3-1DFE-4A29-AE93-3A0952514BC5" Version="1.0.7.0" />
   <mp:PhoneIdentity PhoneProductId="545fe8f7-2df4-4b0c-9b3e-f34029a05264" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Mastodon UWP</DisplayName>
