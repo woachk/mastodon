@@ -62,13 +62,13 @@ namespace MastodonUWA
             name = username;
             displayname = display_name;
             avatarpath = avatar;
-            if (reblogged != null)
+            if (reblogged == "1")
             {
-                Retoot.Background = new SolidColorBrush(Windows.UI.Colors.Green);
+                Retoot.Foreground = new SolidColorBrush(Windows.UI.Colors.Green);
             }
-            if (favourited != null)
+            if (favourited ==  "1")
             {
-                Favorites.Background = new SolidColorBrush(Windows.UI.Colors.Yellow);
+                Favorites.Foreground = new SolidColorBrush(Windows.UI.Colors.Yellow);
             }
             if (avatar != null)
             {
