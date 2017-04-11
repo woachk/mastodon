@@ -235,6 +235,24 @@ args)
         {
             return;
         }
+
+        private async void ImageShow_Click(object sender, RoutedEventArgs e)
+        {
+            StatusClass ogstatus = new StatusClass();
+            ogstatus.id = toot_id;
+            AuthenticateClass token = new AuthenticateClass();
+            token.appname = null;
+            var authfile = ApplicationData.Current.LocalFolder.GetFileAsync("auth.txt");
+            authfile.AsTask().Wait();
+            var tokenfile = authfile.GetResults();
+            var ioop = FileIO.ReadTextAsync(tokenfile);
+            ioop.AsTask().Wait();
+            token.token = ioop.GetResults();
+            token.server = MainPage.getServerName();
+            dynamic st = StatusClass_new.GetStatus(token, ogstatus);
+            var contentDialog = new ShowImage_Toot(st);
+            await contentDialog.ShowAsync();
+        }
     }
 }
 

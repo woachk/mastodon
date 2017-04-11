@@ -67,6 +67,7 @@ namespace MastodonUWA
             token.token = ioop.GetResults();
             token.server = getServerName();
             StatusClass.postStatus(token, TootContents.Text, in_reply_to_id, null, null, null);
+            Hide();
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
