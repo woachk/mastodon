@@ -122,7 +122,21 @@ namespace MastodonUWA
                  string text = st.ReadLine();
                      if (text == null)
                      {
-                         msg = await client.GetStreamAsync(baseuri); // reset the connection
+                         try
+                         {
+                             msg = await client.GetStreamAsync(baseuri); // reset the connection
+                         }
+                         catch
+                         {
+                             if (Debugger.IsAttached)
+                             {
+                                 Debugger.Break();
+                             }
+                         }
+                     }
+                     else if (text == "")
+                     {
+
                      }
                      else if ((text.ToArray())[0] != ':')
                      {
