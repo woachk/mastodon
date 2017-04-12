@@ -25,7 +25,12 @@ namespace MastodonAPI
 {
     public class NotificationClass_new
     {
-        static public dynamic getNotifications(AuthenticateClass token)
+        public string id { get; set; }
+        public string type { get; set; }
+        public string created_at { get; set; }
+        public AccountClass account { get; set; }
+        public StatusClass_new status { get; set; }
+        static public NotificationClass_new[] getNotifications(AuthenticateClass token)
         {
             List<NotificationClass> notifications = new List<NotificationClass>();
             HttpClient client = new HttpClient();
@@ -34,12 +39,12 @@ namespace MastodonAPI
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
-            dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
+            NotificationClass_new[] obj = JsonConvert.DeserializeObject<NotificationClass_new[]>(json);
             return obj;
         }
-        static public dynamic parseNotification(string json)
+        static public NotificationClass_new parseNotification(string json)
         {
-            dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
+            dynamic obj = JsonConvert.DeserializeObject<NotificationClass_new>(json);
             return obj;
         }
     }

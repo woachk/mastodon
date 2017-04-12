@@ -42,7 +42,7 @@ namespace MastodonAPI
         public string sensitive { get; set; }
         public string spoiler_text { get; set; }
         public string visiblity { get; set; }
-        public string application { get; set; }
+        public ApplicationClass application { get; set; }
         static public StatusClass_new parseToot(string json)
         {
             return JsonConvert.DeserializeObject<StatusClass_new>(json);

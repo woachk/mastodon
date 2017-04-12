@@ -221,8 +221,8 @@ namespace MastodonUWA
             }
             else
             {
-                dynamic notifications = NotificationClass_new.getNotifications(token);
-                for (int i = notifications.Count - 1; i >= 0; i--)
+                NotificationClass_new[] notifications = NotificationClass_new.getNotifications(token);
+                for (int i = notifications.Length - 1; i >= 0; i--)
                 {
                     if (notifications[i].id != null)
                     {

@@ -18,9 +18,9 @@ using System.Text;
 */
 namespace MastodonAPI
 {
-    class ApplicationClass
+    public class ApplicationClass
     {
-        public string name;
-        public string website;
+        public string name { get; set; }
+        public string website { get; set; }
     }
 }
