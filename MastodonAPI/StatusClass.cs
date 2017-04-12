@@ -68,6 +68,17 @@ namespace MastodonAPI
             StatusClass_new[] obj = JsonConvert.DeserializeObject<StatusClass_new[]>(json);
             return obj;
         }
+        static public StatusClass_new[] GetAccountStatuses(AuthenticateClass token, AccountClass account)
+        {
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
+            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/accounts/"+ account.id + "/statuses");
+            message.Wait();
+            HttpResponseMessage msg = message.Result;
+            String json = (msg.Content).ReadAsStringAsync().Result;
+            StatusClass_new[] obj = JsonConvert.DeserializeObject<StatusClass_new[]>(json);
+            return obj;
+        }
         static public StatusClass_new[] GetPublicTimeline(AuthenticateClass token)
         {
             HttpClient client = new HttpClient();

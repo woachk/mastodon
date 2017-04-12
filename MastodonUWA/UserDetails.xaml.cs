@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MastodonAPI;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=234238
@@ -37,7 +39,35 @@ namespace MastodonUWA
     /// </summary>
     public sealed partial class UserDetails : Page
     {
-        public UserDetails()
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            var isDark = Application.Current.RequestedTheme == ApplicationTheme.Dark;
+            if (isDark)
+            {
+                SPanel.Background = new SolidColorBrush(Windows.UI.Colors.Black);
+            }
+            AccountClass account = (AccountClass)e.Parameter;
+            if (account.header[0] == 'h')
+            {
+                bgimage.Source = new BitmapImage(new Uri(account.header));
+            }
+            else
+            {
+                bgimage.Source = new BitmapImage(new Uri("https://"+(GetToken.getServerName()) + account.header));
+            }
+            Tootername.Text = account.display_name + "\n" + account.acct;
+            StatusClass_new[] statuses = StatusClass_new.GetAccountStatuses(GetToken.getAuthClass(), account);
+            for (int i = 0; i < statuses.Length; i++)
+            {
+                Toot toot;
+                if (statuses[i].account.acct != null)
+                {
+                    toot = new Toot(statuses[i], 0);
+                    TootContainer.Items.Add(toot);
+                }
+            }
+        }
+            public UserDetails()
         {
             this.InitializeComponent();
         }

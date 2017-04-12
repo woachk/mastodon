@@ -5,12 +5,13 @@
     xmlns:local="using:MastodonUWA"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:e="using:RefreshableListView"
     mc:Ignorable="d">
 
     <SplitView x:Name="MySplitView" DisplayMode="CompactOverlay"  IsPaneOpen="False" 
                CompactPaneLength="50" OpenPaneLength="200">
         <SplitView.Pane>
-            <StackPanel Background="LightGray">
+            <StackPanel Name="SPanel" Background="LightGray">
                 <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
                     Width="50" Height="50" Background="Transparent" Click="HamburgerButton_Click"/>
                 <StackPanel Orientation="Horizontal">
@@ -46,9 +47,27 @@
             </StackPanel>
         </SplitView.Pane>
         <SplitView.Content>
-            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                <Image Name="bgimage"></Image>
-            </Grid>
+            <ListView HorizontalAlignment="Center">
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="163">
+                    <Image Name="bgimage"></Image>
+                </Grid>
+                <Grid Height="50">
+                    <TextBlock Name="Tootername"></TextBlock>
+                </Grid>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Width="420">
+                    <ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Auto">
+                        <Grid HorizontalAlignment="Center">
+                            <e:RefreshableListView x:Name="TootContainer">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsStackPanel/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                            </e:RefreshableListView>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </ListView>
         </SplitView.Content>
     </SplitView>
 </Page>

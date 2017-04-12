@@ -15,7 +15,7 @@
         <WebView Name="TootContents" HorizontalAlignment="Left" Height="194" VerticalAlignment="Top" Width="400" Margin="0,61,0,20" NavigationStarting="TootContents_NavigationStarting" NavigationCompleted="TootContents_NavigationCompleted" />
         <Rectangle Margin="0,61,0,20" Height="{Binding Height, ElementName=TootContents}" Name="RecWeb" VerticalAlignment="Top" Fill ="#00000000" Width="400" Tapped="RecWeb_Tapped" />
         <TextBlock x:Name="UserName" HorizontalAlignment="Left" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="334" Text=""/>
-        <Image Name="UserImage" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="66"/>
+        <Image Name="UserImage" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="66" Tapped="UserImage_Tapped"/>
         <Grid HorizontalAlignment="Stretch" Height="40" VerticalAlignment="Bottom">
             <StackPanel Orientation="Horizontal">
                 <Button BorderThickness="0" Width="100" Name="Answer" FontFamily="Segoe MDL2 Assets" Content="&#xE90A;" Grid.Column="1" Click="Answer_Click"/>

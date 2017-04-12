@@ -152,6 +152,10 @@ namespace MastodonUWA
 
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            if (tootrefresh != null)
+            {
+                tootrefresh.Cancel();
+            }
             if (tapdisabled == 1)
             {
                 return;
@@ -214,6 +218,20 @@ args)
             dynamic st = StatusClass_new.GetStatus(GetToken.getAuthClass(), toot);
             var contentDialog = new ShowImage_Toot(st);
             await contentDialog.ShowAsync();
+        }
+
+        private void UserImage_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (tootrefresh != null)
+            {
+                tootrefresh.Cancel();
+            }
+            if (tapdisabled == 1)
+            {
+                return;
+            }
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(UserDetails), toot.account);
         }
     }
 }
