@@ -48,13 +48,15 @@ namespace MastodonUWA
             string servername = ServerBox.Text;
             string token = null;
             ApplicationTokenClass apptoken = new ApplicationTokenClass(servername, "Mastodon for Windows 10", "read write follow", "urn:ietf:wg:oauth:2.0:oob");
-            string starturi = "https://" + ServerBox.Text + "/oauth/authorize?response_type=code&client_id=" + apptoken.client_id+"&client_secret="+ apptoken.client_secret + "&redirect_uri=urn:ietf:wg:oauth:2.0:oob" + "&username=" + UserNameBox.Text;
+            string starturi = "https://" + ServerBox.Text + "/oauth/authorize?response_type=code&client_id=" + apptoken.client_id+"&client_secret="+ apptoken.client_secret + "&redirect_uri=urn:ietf:wg:oauth:2.0:oob" + "&username=" + UserNameBox.Text +"&";
             WebAuthenticationResult WebAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None,new Uri(starturi), new System.Uri("https://"+ ServerBox.Text + "/oauth/authorize/"));
             if (WebAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
             {
                 token = WebAuthenticationResult.ResponseData.ToString();
                 string[] tokensplit = token.Split('/');
                 token = tokensplit[tokensplit.Length - 1];
+                AuthenticateClass aclass = new AuthenticateClass(apptoken, token);
+                token = aclass.token;
             }
             else
             {

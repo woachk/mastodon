@@ -28,13 +28,13 @@ namespace MastodonAPI
         public string token;
         public string appname;
         public string server;
-        public AuthenticateClass(ApplicationTokenClass app_token, string username, string password)
+        public AuthenticateClass(ApplicationTokenClass app_token, string code)
         {
             HttpClient client = new HttpClient();
             string json;
             apptoken = app_token;
             server = apptoken.server;
-            string request = "client_id=" + apptoken.client_id + "&client_secret=" + apptoken.client_secret + "&grant_type=password" + "&username=" + username + "&password=" +password + "&scope=read write follow";
+            string request = "client_id=" + apptoken.client_id + "&client_secret=" + apptoken.client_secret + "&grant_type=authorization_code" + "&code=" + code + "&scope=read write follow";
             HttpContent content = new ByteArrayContent(System.Text.Encoding.UTF8.GetBytes(request));
             Task<HttpResponseMessage> msg = client.PostAsync("https://" + server + "/oauth/token", content);
             msg.Wait();
