@@ -45,7 +45,7 @@ namespace MastodonAPI
         {
             return JsonConvert.DeserializeObject<dynamic>(json);
         }
-        static public dynamic GetStatus(AuthenticateClass token, StatusClass ogstatus)
+        static public dynamic GetStatus(AuthenticateClass token, dynamic ogstatus)
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);

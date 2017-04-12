@@ -49,7 +49,7 @@ namespace MastodonUWA
             {
                 SPanel.Background = new SolidColorBrush(Windows.UI.Colors.DarkGray);
             }
-            dynamic toot_id = (StatusClass)e.Parameter;
+            dynamic toot_id = (dynamic)e.Parameter;
             AuthenticateClass token = GetToken.getAuthClass();
             dynamic statuses = StatusClass_new.GetStatusContext(token, toot_id);
             dynamic tootlist = statuses.ancestors;

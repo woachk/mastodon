@@ -51,11 +51,11 @@ namespace MastodonUWA
         {
             this.InitializeComponent();
             toot = status;
+            TootContents.NavigateToString((string)status.content);
             string acct = status.account.acct;
             string dname = status.account.display_name;
-            string content = status.content;
+            UserName.Text = dname + "\n" + acct;
             string avatar = status.account.avatar;
-            string id = ((int)status.id).ToString();
             string reblogged = status.reblogged;
             string favourited = status.favourited;
             if (reblogged == "1")
@@ -105,9 +105,9 @@ namespace MastodonUWA
             toot = status;
             string acct = status.account.acct;
             string dname = status.account.display_name;
-            string content = status.content;
+            UserName.Text = dname + "\n" + acct;
+            TootContents.NavigateToString((string)status.content);
             string avatar = status.account.avatar;
-            string id = ((int)status.id).ToString();
             string reblogged = status.reblogged;
             string favourited = status.favourited;
             if (reblogged == "1")
