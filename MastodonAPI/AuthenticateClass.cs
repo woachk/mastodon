@@ -34,7 +34,7 @@ namespace MastodonAPI
             string json;
             apptoken = app_token;
             server = apptoken.server;
-            string request = "client_id=" + apptoken.client_id + "&client_secret=" + apptoken.client_secret + "&grant_type=authorization_code" + "&code=" + code + "&scope=read write follow";
+            string request = "grant_type=authorization_code" + "&client_id=" + apptoken.client_id + "&client_secret=" + apptoken.client_secret + "&code=" + code + "&scope=read write follow" + "&redirect_uri=urn:ietf:wg:oauth:2.0:oob";
             HttpContent content = new ByteArrayContent(System.Text.Encoding.UTF8.GetBytes(request));
             Task<HttpResponseMessage> msg = client.PostAsync("https://" + server + "/oauth/token", content);
             msg.Wait();
