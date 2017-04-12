@@ -52,7 +52,7 @@ namespace MastodonUWA
         {
             this.InitializeComponent();
             toot = status;
-            TootContents.NavigateToString((string)status.content);
+            TootContents.NavigateToString(WebContentHelper.WrapHtml((string)status.content,350, 400));
             string acct = status.account.acct;
             string dname = status.account.display_name;
             UserName.Text = dname + "\n" + acct;
@@ -108,7 +108,7 @@ namespace MastodonUWA
             string acct = status.account.acct;
             string dname = status.account.display_name;
             UserName.Text = dname + "\n" + acct;
-            TootContents.NavigateToString((string)status.content);
+            TootContents.NavigateToString(WebContentHelper.WrapHtml((string)status.content,350, 400));
             string avatar = status.account.avatar;
             string reblogged = status.reblogged;
             string favourited = status.favourited;
