@@ -84,15 +84,7 @@ namespace MastodonUWA
             TootContainer.DataContext = TootCollectionBind;
             base.OnNavigatedTo(e);
             var settings = (string)e.Parameter;
-            AuthenticateClass token = new AuthenticateClass();
-            token.appname = null;
-            var authfile = ApplicationData.Current.LocalFolder.GetFileAsync("auth.txt");
-            authfile.AsTask().Wait();
-            var tokenfile = authfile.GetResults();
-            var ioop = FileIO.ReadTextAsync(tokenfile);
-            ioop.AsTask().Wait();
-            token.token = ioop.GetResults();
-            token.server = getServerName();
+            AuthenticateClass token = GetToken.getAuthClass();
             //List<StatusClass> tootlist = null;
             dynamic tootlist;
             string baseuri = "https://" + token.server;
@@ -143,17 +135,10 @@ namespace MastodonUWA
                                  stdata = stdata + st.ReadLine();
                              }
                              dynamic status = StatusClass_new.parseToot(stdata);
-                             string acct = status.account.acct;
-                             string dname = status.account.display_name;
-                             string content = status.content;
-                             string avatar = status.account.avatar;
-                             string id = ((int)status.id).ToString();
-                             string reblogged = status.reblogged;
-                             string favourited = status.favourited;
                              // Insert at the beginning
                              await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
                                 {
-                                    Toot toot = new Toot(acct, dname, content, avatar, id, reblogged, favourited);
+                                    Toot toot = new Toot(status);
                                     TootCollectionBind.Add(toot);
                                 }));
                         }
@@ -169,8 +154,8 @@ namespace MastodonUWA
                                          TextBlock block = new TextBlock();
                                          Toot toot;
                                          block.Text = notification.account.display_name + " favourited your post.";
-                                         toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.id, notification.status.reblogged, notification.status.favourited);
-                                         TootCollectionBind.Add(toot);
+                                         toot = new Toot(notification.status);
+                                         TootCollectionBind.Add(block);
                                          TootCollectionBind.Add(toot);
                                      }));
                                  }
@@ -181,8 +166,8 @@ namespace MastodonUWA
                                          TextBlock block = new TextBlock();
                                          Toot toot;
                                          block.Text = notification.account.display_name + " boosted your post.";
-                                         toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.id, notification.status.reblogged, notification.status.favourited);
-                                         TootCollectionBind.Add(toot);
+                                         toot = new Toot(notification.status);
+                                         TootCollectionBind.Add(block);
                                          TootCollectionBind.Add(toot);
                                      }));
                                  }
@@ -200,7 +185,7 @@ namespace MastodonUWA
                                      await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
                                      {
                                          Toot toot;
-                                         toot = new Toot(notification.status.account.acct, notification.status.account.display_name, notification.status.content, notification.status.account.avatar, notification.status.id, notification.status.reblogged, notification.status.favourited);
+                                         toot = new Toot(notification.status);
                                          TootCollectionBind.Add(toot);
                                      }));
                                  }
@@ -231,14 +216,7 @@ namespace MastodonUWA
                     Toot toot;
                     if (tootlist[i].account.acct != null)
                     {
-                        string acct = tootlist[i].account.acct;
-                        string dname = tootlist[i].account.display_name;
-                        string content = tootlist[i].content;
-                        string avatar = tootlist[i].account.avatar;
-                        string id = ((int)tootlist[i].id).ToString();
-                        string reblogged = tootlist[i].reblogged;
-                        string favourited = tootlist[i].favourited;
-                        toot = new Toot(acct, dname, content, avatar, id, reblogged, favourited);
+                        toot = new Toot(tootlist[i]);
                         TootCollectionBind.Add(toot);
                     }
                 }
@@ -254,15 +232,8 @@ namespace MastodonUWA
                         {
                             TextBlock block = new TextBlock();
                             Toot toot;
-                            string acct = notifications[i].status.account.acct;
-                            string dname = notifications[i].status.account.display_name;
-                            string content = notifications[i].status.content;
-                            string avatar = notifications[i].status.account.avatar;
-                            string id = ((int)notifications[i].status.id).ToString();
-                            string reblogged = notifications[i].status.reblogged;
-                            string favourited = notifications[i].status.favourited;
                             block.Text = notifications[i].account.display_name + " favourited your post.";
-                            toot = new Toot(acct, dname, content, avatar, id, reblogged, favourited);
+                            toot = new Toot(notifications[i].status);
                             TootCollectionBind.Add(block);
                             TootCollectionBind.Add(toot);
                         }
@@ -271,14 +242,7 @@ namespace MastodonUWA
                             TextBlock block = new TextBlock();
                             Toot toot;
                             block.Text = notifications[i].account.display_name + " boosted your post.";
-                            string acct = notifications[i].status.account.acct;
-                            string dname = notifications[i].status.account.display_name;
-                            string content = notifications[i].status.content;
-                            string avatar = notifications[i].status.account.avatar;
-                            string id = ((int)notifications[i].status.id).ToString();
-                            string reblogged = notifications[i].status.reblogged;
-                            string favourited = notifications[i].status.favourited;
-                            toot = new Toot(acct, dname, content, avatar, id, reblogged, favourited);
+                            toot = new Toot(notifications[i].status);
                             TootCollectionBind.Add(block);
                             TootCollectionBind.Add(toot);
                         }
@@ -291,14 +255,7 @@ namespace MastodonUWA
                         if (notifications[i].type == "mention")
                         {
                             Toot toot;
-                            string acct = notifications[i].status.account.acct;
-                            string dname = notifications[i].status.account.display_name;
-                            string content = notifications[i].status.content;
-                            string avatar = notifications[i].status.account.avatar;
-                            string id = ((int)notifications[i].status.id).ToString();
-                            string reblogged = notifications[i].status.reblogged;
-                            string favourited = notifications[i].status.favourited;
-                            toot = new Toot(acct, dname, content, avatar, id, reblogged, favourited);
+                            toot = new Toot(notifications[i].status);
                             TootCollectionBind.Add(toot);
                         }
                     }

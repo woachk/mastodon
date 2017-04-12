@@ -40,63 +40,23 @@ namespace MastodonUWA
     {
         public string toot_id;
         public string content;
-        string name;
-        string displayname;
-        string avatarpath;
-        string reblog;
-        string fav;
+        IAsyncAction tootrefresh;
+        dynamic toot;
+
         public Toot()
         {
             this.InitializeComponent();
         }
-        public Toot(string username, string display_name, string contents, string avatar, string id, string reblogged, string favourited)
+        public Toot(dynamic status, int principal)
         {
-            this.InitializeComponent();
-            content = contents;
-            string htcontent = WebContentHelper.WrapHtml(content, TootContents.Width, TootContents.Height);
-            TootContents.NavigateToString(htcontent);
-            UserName.Text = display_name + "\n" + "@" + username;
-            toot_id = id;
-            reblog = reblogged;
-            fav = favourited;
-            name = username;
-            displayname = display_name;
-            avatarpath = avatar;
-            if (reblogged == "1")
-            {
-                Retoot.Foreground = new SolidColorBrush(Windows.UI.Colors.Green);
-            }
-            if (favourited ==  "1")
-            {
-                Favorites.Foreground = new SolidColorBrush(Windows.UI.Colors.Yellow);
-            }
-            if (avatar != null)
-            {
-                if (avatar[0] == 'h') // HACK!!!
-                {
-                    UserImage.Source = new BitmapImage(new Uri(avatar));
-                }
-                else
-                {
-                    UserImage.Source = new BitmapImage(new Uri("https://" + MainPage.getServerName() + avatar));
-                }
-            }
-            TootContents.Settings.IsJavaScriptEnabled = false;
-            TootContents.Settings.IsIndexedDBEnabled = false;
-        }
-        public Toot(string username, string display_name, string contents, string avatar, string id, string reblogged, string favourited, int principal)
-        {
-            this.InitializeComponent();
-            content = contents;
-            string htcontent = WebContentHelper.WrapHtml(content, TootContents.Width, TootContents.Height);
-            TootContents.NavigateToString(htcontent);
-            UserName.Text = display_name + "\n" + "@" + username;
-            toot_id = id;
-            reblog = reblogged;
-            fav = favourited;
-            name = username;
-            displayname = display_name;
-            avatarpath = avatar;
+            toot = status;
+            string acct = status.account.acct;
+            string dname = status.account.display_name;
+            string content = status.content;
+            string avatar = status.account.avatar;
+            string id = ((int)status.id).ToString();
+            string reblogged = status.reblogged;
+            string favourited = status.favourited;
             if (reblogged == "1")
             {
                 Retoot.Foreground = new SolidColorBrush(Windows.UI.Colors.Green);
@@ -138,6 +98,38 @@ namespace MastodonUWA
                 RecWeb.Visibility = Visibility.Collapsed;
             }
         }
+        public Toot(dynamic status)
+        {
+            toot = status;
+            string acct = status.account.acct;
+            string dname = status.account.display_name;
+            string content = status.content;
+            string avatar = status.account.avatar;
+            string id = ((int)status.id).ToString();
+            string reblogged = status.reblogged;
+            string favourited = status.favourited;
+            if (reblogged == "1")
+            {
+                Retoot.Foreground = new SolidColorBrush(Windows.UI.Colors.Green);
+            }
+            if (favourited == "1")
+            {
+                Favorites.Foreground = new SolidColorBrush(Windows.UI.Colors.Yellow);
+            }
+            if (avatar != null)
+            {
+                if (avatar[0] == 'h') // HACK!!!
+                {
+                    UserImage.Source = new BitmapImage(new Uri(avatar));
+                }
+                else
+                {
+                    UserImage.Source = new BitmapImage(new Uri("https://" + MainPage.getServerName() + avatar));
+                }
+            }
+            TootContents.Settings.IsJavaScriptEnabled = false;
+            TootContents.Settings.IsIndexedDBEnabled = false;
+        }
         private async void Answer_Click(object sender, RoutedEventArgs e)
         {
             var contentDialog = new WritingToot(toot_id);
@@ -146,29 +138,18 @@ namespace MastodonUWA
 
         private void TootContents_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            StatusClass status = new StatusClass();
-            status.id = toot_id;
-            status.content = content;
-            status.account.acct = name;
-            status.account.display_name = displayname;
-            status.account.avatar = avatarpath;
+            if (tootrefresh != null)
+            {
+                tootrefresh.Cancel();
+            }
             Frame rootFrame = Window.Current.Content as Frame;
-            rootFrame.Navigate(typeof(TootDetails), status);
+            rootFrame.Navigate(typeof(TootDetails), toot);
         }
 
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            StatusClass status = new StatusClass();
-            status.account = new AccountClass();
-            status.id = toot_id;
-            status.reblogged = reblog;
-            status.favourited = fav;
-            status.content = content;
-            status.account.acct = name;
-            status.account.display_name = displayname;
-            status.account.avatar = avatarpath;
             Frame rootFrame = Window.Current.Content as Frame;
-            rootFrame.Navigate(typeof(TootDetails), status);
+            rootFrame.Navigate(typeof(TootDetails), toot);
         }
 
         private void TootContents_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
@@ -185,29 +166,13 @@ namespace MastodonUWA
 
         private void Retoot_Click(object sender, RoutedEventArgs e)
         {
-            var authfile = ApplicationData.Current.LocalFolder.GetFileAsync("auth.txt");
-            authfile.AsTask().Wait();
-            var tokenfile = authfile.GetResults();
-            var ioop = FileIO.ReadTextAsync(tokenfile);
-            AuthenticateClass token = new AuthenticateClass();
-            ioop.AsTask().Wait();
-            token.token = ioop.GetResults();
-            token.server = MainPage.getServerName();
-            StatusClass.boost_toot(toot_id, token);
+            StatusClass.boost_toot(toot_id, GetToken.getAuthClass());
             Retoot.Foreground = new SolidColorBrush(Windows.UI.Colors.Green);
         }
 
         private void Favorites_Click(object sender, RoutedEventArgs e)
         {
-            var authfile = ApplicationData.Current.LocalFolder.GetFileAsync("auth.txt");
-            authfile.AsTask().Wait();
-            var tokenfile = authfile.GetResults();
-            var ioop = FileIO.ReadTextAsync(tokenfile);
-            AuthenticateClass token = new AuthenticateClass();
-            ioop.AsTask().Wait();
-            token.token = ioop.GetResults();
-            token.server = MainPage.getServerName();
-            StatusClass.favourite_toot(toot_id, token);
+            StatusClass.favourite_toot(toot.id, GetToken.getAuthClass());
             Favorites.Foreground = new SolidColorBrush(Windows.UI.Colors.Yellow);
         }
         private async void TootContents_NavigationCompleted(WebView sender, WebViewNavigationCompletedEventArgs
@@ -238,18 +203,7 @@ args)
 
         private async void ImageShow_Click(object sender, RoutedEventArgs e)
         {
-            StatusClass ogstatus = new StatusClass();
-            ogstatus.id = toot_id;
-            AuthenticateClass token = new AuthenticateClass();
-            token.appname = null;
-            var authfile = ApplicationData.Current.LocalFolder.GetFileAsync("auth.txt");
-            authfile.AsTask().Wait();
-            var tokenfile = authfile.GetResults();
-            var ioop = FileIO.ReadTextAsync(tokenfile);
-            ioop.AsTask().Wait();
-            token.token = ioop.GetResults();
-            token.server = MainPage.getServerName();
-            dynamic st = StatusClass_new.GetStatus(token, ogstatus);
+            dynamic st = StatusClass_new.GetStatus(GetToken.getAuthClass(), toot);
             var contentDialog = new ShowImage_Toot(st);
             await contentDialog.ShowAsync();
         }
