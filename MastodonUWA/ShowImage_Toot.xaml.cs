@@ -47,7 +47,7 @@ namespace MastodonUWA
             }
             else
             {
-                TootImage.Source = new BitmapImage(new Uri(toot.media_attachments[0].preview_url));
+                TootImage.Source = new BitmapImage(new Uri((string)toot.media_attachments[0].preview_url));
             }
         }
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
