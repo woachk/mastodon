@@ -18,7 +18,10 @@ History:
 
 04/12/2017: Big code cleanup (v1.0.9.0)
 
+04/12/2017: Fix everything for .NET Native. Release builds were broken since v1.0.7.0. (v1.0.10.0)
+
 Unsupported features at this time:
 ==================================
 
-Push notifications.
+Push notifications & spoiler_text
+
