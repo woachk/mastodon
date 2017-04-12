@@ -44,28 +44,15 @@ namespace MastodonUWA
         {
             this.InitializeComponent();
             in_reply_to_id = replyto;
-        }
-        public string getServerName()
-        {
-            var serverfile = ApplicationData.Current.LocalFolder.GetFileAsync("server.txt");
-            serverfile.AsTask().Wait();
-            var serverfile_o = serverfile.GetResults();
-            var ioop = FileIO.ReadTextAsync(serverfile_o);
-            ioop.AsTask().Wait();
-            return ioop.GetResults();
+            AuthenticateClass token = GetToken.getAuthClass();
+            StatusClass_new status = new StatusClass_new();
+            status.id = in_reply_to_id;
+            TootContents.Text = (StatusClass_new.GetStatus(token, status)).account.acct + " ";
         }
         
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            AuthenticateClass token = new AuthenticateClass();
-            token.appname = null;
-            var authfile = ApplicationData.Current.LocalFolder.GetFileAsync("auth.txt");
-            authfile.AsTask().Wait();
-            var tokenfile = authfile.GetResults();
-            var ioop = FileIO.ReadTextAsync(tokenfile);
-            ioop.AsTask().Wait();
-            token.token = ioop.GetResults();
-            token.server = getServerName();
+            AuthenticateClass token = GetToken.getAuthClass();
             StatusClass.postStatus(token, TootContents.Text, in_reply_to_id, null, null, null);
             Hide();
         }
