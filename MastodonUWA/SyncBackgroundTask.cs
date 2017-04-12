@@ -60,7 +60,7 @@ namespace MastodonUWA
                     string stdata = new string((text3.Skip(5)).ToArray());
                     if (text2[1] == " notification")
                     {
-                        NotificationClass notification = NotificationClass.parseNotification(stdata);
+                        dynamic notification = NotificationClass_new.parseNotification(stdata);
                         if (notification.id != null)
                         {
                             if (notification.type == "favourite")
