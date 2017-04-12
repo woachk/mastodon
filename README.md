@@ -20,6 +20,8 @@ History:
 
 04/12/2017: Fix everything for .NET Native. Release builds were broken since v1.0.7.0. (v1.0.10.0)
 
+04/12/2017: Switch to OAuth-based login, add following functionallity, and add user descriptions. (v1.0.11.0)
+
 Unsupported features at this time:
 ==================================
 
