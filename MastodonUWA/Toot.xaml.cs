@@ -41,6 +41,7 @@ namespace MastodonUWA
         public string toot_id;
         public string content;
         IAsyncAction tootrefresh;
+        int tapdisabled = 0;
         dynamic toot;
 
         public Toot()
@@ -94,6 +95,7 @@ namespace MastodonUWA
             }
             else
             {
+                tapdisabled = 1;
                 TootContents.NavigationCompleted -= TootContents_NavigationCompleted;
                 TootContents.NavigationCompleted += TootContents_NavigationCompletedPrimaryToot;
                 RecWeb.Visibility = Visibility.Collapsed;
@@ -150,6 +152,10 @@ namespace MastodonUWA
 
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
+            if (tapdisabled == 1)
+            {
+                return;
+            }
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(TootDetails), toot);
         }

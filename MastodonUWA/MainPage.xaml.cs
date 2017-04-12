@@ -78,7 +78,7 @@ namespace MastodonUWA
             var isDark = Application.Current.RequestedTheme == ApplicationTheme.Dark;
             if (isDark)
             {
-                SPanel.Background = new SolidColorBrush(Windows.UI.Colors.DarkGray);
+                SPanel.Background = new SolidColorBrush(Windows.UI.Colors.Black);
             }
             TootCollectionBind = new ObservableCollection<object>();
             TootContainer.DataContext = TootCollectionBind;
