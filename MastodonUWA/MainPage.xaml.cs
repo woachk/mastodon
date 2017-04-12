@@ -214,7 +214,7 @@ namespace MastodonUWA
                 for (int i = tootlist.Count -1 ; i >= 0; i--)
                 {
                     Toot toot;
-                    if (tootlist[i].account.acct != null)
+                    if ((string)tootlist[i].account.acct != null)
                     {
                         toot = new Toot(tootlist[i]);
                         TootCollectionBind.Add(toot);
