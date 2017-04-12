@@ -50,6 +50,7 @@
             <ListView HorizontalAlignment="Center">
                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="163">
                     <Image Name="bgimage"></Image>
+                    <Button Name="Follow" Content="Follow" HorizontalAlignment="Right" VerticalAlignment="Top" Click="Follow_Click"></Button>
                 </Grid>
                 <Grid Height="50">
                     <TextBlock Name="Tootername"></TextBlock>

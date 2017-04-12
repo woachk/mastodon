@@ -39,6 +39,7 @@ namespace MastodonUWA
     /// </summary>
     public sealed partial class UserDetails : Page
     {
+        AccountClass account;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var isDark = Application.Current.RequestedTheme == ApplicationTheme.Dark;
@@ -46,7 +47,7 @@ namespace MastodonUWA
             {
                 SPanel.Background = new SolidColorBrush(Windows.UI.Colors.Black);
             }
-            AccountClass account = (AccountClass)e.Parameter;
+            account = (AccountClass)e.Parameter;
             if (account.header[0] == 'h')
             {
                 bgimage.Source = new BitmapImage(new Uri(account.header));
@@ -107,6 +108,12 @@ namespace MastodonUWA
         {
             var contentDialog = new WritingToot();
             await contentDialog.ShowAsync();
+        }
+
+        private void Follow_Click(object sender, RoutedEventArgs e)
+        {
+            AccountClass.follow(account, GetToken.getAuthClass());
+            Follow.IsEnabled = false;
         }
     }
 }
