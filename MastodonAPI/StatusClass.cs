@@ -29,6 +29,7 @@ namespace MastodonAPI
         public string uri { get; set; }
         public string url { get; set; }
         public AccountClass account { get; set; }
+        public MediaAttachmentsClass[] media_attachments { get; set; }
         public string in_reply_to_id { get; set; }
         public string in_reply_to_account_id { get; set; }
         //public StatusClass reblog { get; set; }
@@ -41,9 +42,10 @@ namespace MastodonAPI
         public string sensitive { get; set; }
         public string spoiler_text { get; set; }
         public string visiblity { get; set; }
-        static public dynamic parseToot(string json)
+        public string application { get; set; }
+        static public StatusClass_new parseToot(string json)
         {
-            return JsonConvert.DeserializeObject<dynamic>(json);
+            return JsonConvert.DeserializeObject<StatusClass_new>(json);
         }
         static public dynamic GetStatus(AuthenticateClass token, dynamic ogstatus)
         {
@@ -55,7 +57,7 @@ namespace MastodonAPI
             String json = (msg.Content).ReadAsStringAsync().Result;
             return parseToot(json);
         }
-        static public dynamic GetTimeline(AuthenticateClass token)
+        static public StatusClass_new[] GetTimeline(AuthenticateClass token)
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
@@ -63,10 +65,10 @@ namespace MastodonAPI
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
-            dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
+            StatusClass_new[] obj = JsonConvert.DeserializeObject<StatusClass_new[]>(json);
             return obj;
         }
-        static public dynamic GetPublicTimeline(AuthenticateClass token)
+        static public StatusClass_new[] GetPublicTimeline(AuthenticateClass token)
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
@@ -74,10 +76,10 @@ namespace MastodonAPI
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
-            dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
+            StatusClass_new[] obj = JsonConvert.DeserializeObject<StatusClass_new[]>(json);
             return obj;
         }
-        static public dynamic GetPublicLocalTimeline(AuthenticateClass token)
+        static public StatusClass_new[] GetPublicLocalTimeline(AuthenticateClass token)
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
@@ -85,10 +87,10 @@ namespace MastodonAPI
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
-            dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
+            StatusClass_new[] obj = JsonConvert.DeserializeObject<StatusClass_new[]>(json);
             return obj;
         }
-        static public dynamic GetStatusContext(AuthenticateClass token, dynamic ogstatus)
+        static public StatusContext GetStatusContext(AuthenticateClass token, dynamic ogstatus)
         {
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
@@ -96,7 +98,7 @@ namespace MastodonAPI
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
-            dynamic obj = JsonConvert.DeserializeObject<dynamic>(json);
+            StatusContext obj = JsonConvert.DeserializeObject<StatusContext>(json);
             return obj;
         }
     }

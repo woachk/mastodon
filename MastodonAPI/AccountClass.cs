@@ -20,19 +20,19 @@ namespace MastodonAPI
 {
     public class AccountClass
     {
-        public string id;
-        string username;
-        public string acct;
-        public string display_name;
-        string note;
-        string url;
-        public string avatar;
-        string header;
-        string locked;
-        string created_at;
-        string followers_count;
-        string following_count;
-        public string statuses_count;
+        public string id { get; set; }
+        public string username { get; set; }
+        public string acct { get; set; }
+        public string display_name { get; set; }
+        public string note { get; set; }
+        public string url { get; set; }
+        public string avatar { get; set; }
+        public string header { get; set; }
+        public string locked { get; set; }
+        public string created_at { get; set; }
+        public string followers_count { get; set; }
+        public string following_count { get; set; }
+        public string statuses_count { get; set; }
 
     }
 }

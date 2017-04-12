@@ -39,6 +39,7 @@ using Windows.UI.Core;
 using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Background;
 using System.Collections.ObjectModel;
+using Newtonsoft.Json.Linq;
 
 namespace MastodonUWA
 {
@@ -86,7 +87,7 @@ namespace MastodonUWA
             var settings = (string)e.Parameter;
             AuthenticateClass token = GetToken.getAuthClass();
             //List<StatusClass> tootlist = null;
-            dynamic tootlist;
+            StatusClass_new[] tootlist;
             string baseuri = "https://" + token.server;
             if (settings == "notifications")
             {
@@ -211,14 +212,11 @@ namespace MastodonUWA
                 {
                     tootlist = StatusClass_new.GetTimeline(token);
                 }
-                for (int i = tootlist.Count -1 ; i >= 0; i--)
+                for (int i = tootlist.Length -1 ; i >= 0; i--)
                 {
                     Toot toot;
-                    if ((string)tootlist[i].account.acct != null)
-                    {
-                        toot = new Toot(tootlist[i]);
-                        TootCollectionBind.Add(toot);
-                    }
+                    toot = new Toot(tootlist[i]);
+                    TootCollectionBind.Add(toot);
                 }
             }
             else

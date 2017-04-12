@@ -49,11 +49,11 @@ namespace MastodonUWA
             {
                 SPanel.Background = new SolidColorBrush(Windows.UI.Colors.Black);
             }
-            dynamic toot_id = (dynamic)e.Parameter;
+            StatusClass_new toot_id = (dynamic)e.Parameter;
             AuthenticateClass token = GetToken.getAuthClass();
-            dynamic statuses = StatusClass_new.GetStatusContext(token, toot_id);
-            dynamic tootlist = statuses.ancestors;
-            for (int i = 0; i < tootlist.Count; i++)
+            StatusContext statuses = StatusClass_new.GetStatusContext(token, toot_id);
+            StatusClass_new[] tootlist = statuses.ancestors;
+            for (int i = 0; i < tootlist.Length; i++)
             {
                 Toot toot;
                 if (tootlist[i].account.acct != null)
@@ -67,7 +67,7 @@ namespace MastodonUWA
             Toot firstoot = new Toot(toot_id, 1);
             firstoot.Height = 300;
             TootContainer.Items.Add(firstoot);
-            for (int i = 0; i < tootlist.Count; i++)
+            for (int i = 0; i < tootlist.Length; i++)
             {
                 Toot toot;
                 if (tootlist[i].account.acct != null)

@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mastodon.Xamarin.UWP", "Mas
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Mastodon.Xamarin\Mastodon.Xamarin\Mastodon.Xamarin.projitems*{177dec4f-cb1d-4793-94ab-730cfc8dde4d}*SharedItemsImports = 4
+		Mastodon.Xamarin\Mastodon.Xamarin\Mastodon.Xamarin.projitems*{20ed4254-49cf-4f7e-88ae-10f62aa9ec60}*SharedItemsImports = 4
 		Mastodon.Xamarin\Mastodon.Xamarin\Mastodon.Xamarin.projitems*{2993812c-1e14-4c32-813c-f67b732cb8ea}*SharedItemsImports = 13
 		Mastodon.Xamarin\Mastodon.Xamarin\Mastodon.Xamarin.projitems*{c993f57b-3ed0-41fa-9924-92aa94974405}*SharedItemsImports = 4
 	EndGlobalSection

@@ -30,7 +30,5 @@ namespace MastodonAPI
         public string created_at;
         public AccountClass account;
         public StatusClass status;
-        
-        
     }
 }

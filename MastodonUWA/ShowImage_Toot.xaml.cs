@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MastodonAPI;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -38,10 +39,10 @@ namespace MastodonUWA
         {
             this.InitializeComponent();
         }
-        public ShowImage_Toot(dynamic toot)
+        public ShowImage_Toot(StatusClass_new toot)
         {
             this.InitializeComponent();
-            if (toot.media_attachments.Count == 0)
+            if (toot.media_attachments.Length == 0)
             {
                 Title = "No image attached to this toot";
             }
