@@ -16,6 +16,8 @@ History:
 
 04/11/2017: Initial images support. (v1.0.8.0)
 
+04/12/2017: Big code cleanup (v1.0.9.0)
+
 Unsupported features at this time:
 ==================================
 
