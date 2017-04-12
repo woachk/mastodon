@@ -49,6 +49,7 @@ namespace MastodonUWA
         }
         public Toot(dynamic status, int principal)
         {
+            this.InitializeComponent();
             toot = status;
             string acct = status.account.acct;
             string dname = status.account.display_name;
@@ -100,6 +101,7 @@ namespace MastodonUWA
         }
         public Toot(dynamic status)
         {
+            this.InitializeComponent();
             toot = status;
             string acct = status.account.acct;
             string dname = status.account.display_name;
