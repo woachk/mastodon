@@ -11,7 +11,6 @@
         <TextBlock Height="144" Margin="10,10,282,0" TextWrapping="Wrap" Text="Login" VerticalAlignment="Top" FontSize="22"/>
         <TextBox Name="ServerBox" Height="40"  TextWrapping="Wrap" Text="" VerticalAlignment="Top" PlaceholderText="Server" Margin="0,161,0,0"/>
         <TextBox Name="UserNameBox" TextWrapping="Wrap" Text="" PlaceholderText="Email" Margin="0,226,0,0" Height="40" VerticalAlignment="Top" d:LayoutOverrides="LeftPosition, RightPosition" />
-        <PasswordBox Name="PasswordHereBox"  PlaceholderText="Password" Height="40" VerticalAlignment="Top" Margin="0,287,0,0"/>
         <Button Name="LoginButton" Click="LoginButton_Click" Content="Login&#xD;&#xA;" HorizontalAlignment="Stretch" Height="70" VerticalAlignment="Bottom" FontSize="22"/>
         <TextBlock Height="45" Margin="229,159,510,0" TextWrapping="Wrap" TextAlignment="Center" Name="FailedTextBox" VerticalAlignment="Top" Foreground="Red" FontSize="22"/>
     </Grid>

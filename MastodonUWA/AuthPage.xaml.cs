@@ -14,20 +14,21 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Storage;
 using MastodonAPI;
+using Windows.Security.Authentication.Web;
 /*  Copyright (C) 2017  my123 (@never_released)
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 // Pour plus d'informations sur le modèle d'élément Page vierge, consultez la page https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -45,17 +46,19 @@ namespace MastodonUWA
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string servername = ServerBox.Text;
+            string token = null;
             ApplicationTokenClass apptoken = new ApplicationTokenClass(servername, "Mastodon for Windows 10", "read write follow", "urn:ietf:wg:oauth:2.0:oob");
-            AuthenticateClass oauth_token = new AuthenticateClass(apptoken, UserNameBox.Text, PasswordHereBox.Password);
-            if (apptoken.client_id == null)
+            string starturi = "https://" + ServerBox.Text + "/oauth/authorize?response_type=code&client_id=" + apptoken.client_id+"&client_secret="+ apptoken.client_secret + "&redirect_uri=urn:ietf:wg:oauth:2.0:oob" + "&username=" + UserNameBox.Text;
+            WebAuthenticationResult WebAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None,new Uri(starturi), new System.Uri("https://"+ ServerBox.Text + "/oauth/authorize/"));
+            if (WebAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
             {
-                FailedTextBox.Text = "Login failed.";
-                return;
+                token = WebAuthenticationResult.ResponseData.ToString();
+                string[] tokensplit = token.Split('/');
+                token = tokensplit[tokensplit.Length - 1];
             }
-            if (oauth_token.token == null)
+            else
             {
-                FailedTextBox.Text = "Login failed.";
-                return;
+                return; // login failure
             }
             var clientid = await ApplicationData.Current.LocalFolder.CreateFileAsync("apptoken_clientid.txt");
             var clientsecret = await ApplicationData.Current.LocalFolder.CreateFileAsync("apptoken_clientsecret.txt");
@@ -63,7 +66,7 @@ namespace MastodonUWA
             var serverfile = await ApplicationData.Current.LocalFolder.CreateFileAsync("server.txt");
             await FileIO.WriteTextAsync(clientid, apptoken.client_id);
             await FileIO.WriteTextAsync(clientsecret, apptoken.client_secret);
-            await FileIO.WriteTextAsync(authfile, oauth_token.token);
+            await FileIO.WriteTextAsync(authfile, token);
             await FileIO.WriteTextAsync(serverfile, servername);
             Frame rootFrame = Window.Current.Content as Frame;
             rootFrame.Navigate(typeof(MainPage));
