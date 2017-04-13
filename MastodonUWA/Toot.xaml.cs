@@ -152,16 +152,7 @@ namespace MastodonUWA
 
         private void Grid_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (tootrefresh != null)
-            {
-                tootrefresh.Cancel();
-            }
-            if (tapdisabled == 1)
-            {
-                return;
-            }
-            Frame rootFrame = Window.Current.Content as Frame;
-            rootFrame.Navigate(typeof(TootDetails), toot);
+            
         }
 
         private void TootContents_NavigationStarting(WebView sender, WebViewNavigationStartingEventArgs args)
@@ -205,7 +196,16 @@ SetBodyOverFlowHiddenString });
         SetBodyOverFlowHidden();";
         private async void RecWeb_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            if (tootrefresh != null)
+            {
+                tootrefresh.Cancel();
+            }
+            if (tapdisabled == 1)
+            {
+                return;
+            }
+            Frame rootFrame = Window.Current.Content as Frame;
+            rootFrame.Navigate(typeof(TootDetails), toot);
         }
         private async void TootContents_NavigationCompletedPrimaryToot(WebView sender, WebViewNavigationCompletedEventArgs
 args)
