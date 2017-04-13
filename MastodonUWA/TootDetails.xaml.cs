@@ -49,8 +49,8 @@ namespace MastodonUWA
             {
                 SPanel.Background = new SolidColorBrush(Windows.UI.Colors.Black);
             }
-            StatusClass_new toot_id = (dynamic)e.Parameter;
-            AuthenticateClass token = GetToken.getAuthClass();
+            StatusClass_new toot_id = (StatusClass_new)e.Parameter;
+            HttpConnectionClass token = new HttpConnectionClass( GetToken.getAuthClass());
             StatusContext statuses = StatusClass_new.GetStatusContext(token, toot_id);
             StatusClass_new[] tootlist = statuses.ancestors;
             for (int i = 0; i < tootlist.Length; i++)

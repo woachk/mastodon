@@ -47,65 +47,53 @@ namespace MastodonAPI
         {
             return JsonConvert.DeserializeObject<StatusClass_new>(json);
         }
-        static public dynamic GetStatus(AuthenticateClass token, dynamic ogstatus)
+        static public StatusClass_new GetStatus(HttpConnectionClass token, StatusClass_new ogstatus)
         {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
-            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/statuses/" + ogstatus.id);
+            Task<HttpResponseMessage> message = token.client.GetAsync("https://" + token.auth.server + "/api/v1/statuses/" + ogstatus.id);
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
             return parseToot(json);
         }
-        static public StatusClass_new[] GetTimeline(AuthenticateClass token)
+        static public StatusClass_new[] GetTimeline(HttpConnectionClass token)
         {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
-            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/timelines/home");
+            Task<HttpResponseMessage> message = token.client.GetAsync("https://" + token.auth.server + "/api/v1/timelines/home");
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
             StatusClass_new[] obj = JsonConvert.DeserializeObject<StatusClass_new[]>(json);
             return obj;
         }
-        static public StatusClass_new[] GetAccountStatuses(AuthenticateClass token, AccountClass account)
+        static public StatusClass_new[] GetAccountStatuses(HttpConnectionClass token, AccountClass account)
         {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
-            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/accounts/"+ account.id + "/statuses");
+            Task<HttpResponseMessage> message = token.client.GetAsync("https://" + token.auth.server + "/api/v1/accounts/"+ account.id + "/statuses");
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
             StatusClass_new[] obj = JsonConvert.DeserializeObject<StatusClass_new[]>(json);
             return obj;
         }
-        static public StatusClass_new[] GetPublicTimeline(AuthenticateClass token)
+        static public StatusClass_new[] GetPublicTimeline(HttpConnectionClass token)
         {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
-            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/timelines/public/?local=true");
+            Task<HttpResponseMessage> message = token.client.GetAsync("https://" + token.auth.server + "/api/v1/timelines/public/?local=true");
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
             StatusClass_new[] obj = JsonConvert.DeserializeObject<StatusClass_new[]>(json);
             return obj;
         }
-        static public StatusClass_new[] GetPublicLocalTimeline(AuthenticateClass token)
+        static public StatusClass_new[] GetPublicLocalTimeline(HttpConnectionClass token)
         {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
-            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/timelines/public");
+            Task<HttpResponseMessage> message = token.client.GetAsync("https://" + token.auth.server + "/api/v1/timelines/public");
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
             StatusClass_new[] obj = JsonConvert.DeserializeObject<StatusClass_new[]>(json);
             return obj;
         }
-        static public StatusContext GetStatusContext(AuthenticateClass token, dynamic ogstatus)
+        static public StatusContext GetStatusContext(HttpConnectionClass token, StatusClass_new ogstatus)
         {
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
-            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/statuses/" + ogstatus.id + "/context");
+            Task<HttpResponseMessage> message = token.client.GetAsync("https://" + token.auth.server + "/api/v1/statuses/" + ogstatus.id + "/context");
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;

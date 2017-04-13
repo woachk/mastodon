@@ -47,7 +47,7 @@ namespace MastodonUWA
             AuthenticateClass token = GetToken.getAuthClass();
             StatusClass_new status = new StatusClass_new();
             status.id = in_reply_to_id;
-            TootContents.Text = (StatusClass_new.GetStatus(token, status)).account.acct + " ";
+            TootContents.Text = (StatusClass_new.GetStatus(new HttpConnectionClass( token), status)).account.acct + " ";
         }
         
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

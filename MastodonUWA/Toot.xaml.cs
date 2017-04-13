@@ -42,13 +42,13 @@ namespace MastodonUWA
         public string content;
         IAsyncAction tootrefresh;
         int tapdisabled = 0;
-        dynamic toot;
+        StatusClass_new toot;
 
         public Toot()
         {
             this.InitializeComponent();
         }
-        public Toot(dynamic status, int principal)
+        public Toot(StatusClass_new status, int principal)
         {
             this.InitializeComponent();
             toot = status;
@@ -101,7 +101,7 @@ namespace MastodonUWA
                 RecWeb.Visibility = Visibility.Collapsed;
             }
         }
-        public Toot(dynamic status)
+        public Toot(StatusClass_new status)
         {
             this.InitializeComponent();
             toot = status;
@@ -215,7 +215,7 @@ args)
 
         private async void ImageShow_Click(object sender, RoutedEventArgs e)
         {
-            dynamic st = StatusClass_new.GetStatus(GetToken.getAuthClass(), toot);
+            StatusClass_new st = StatusClass_new.GetStatus(new HttpConnectionClass(GetToken.getAuthClass()), toot);
             var contentDialog = new ShowImage_Toot(st);
             await contentDialog.ShowAsync();
         }

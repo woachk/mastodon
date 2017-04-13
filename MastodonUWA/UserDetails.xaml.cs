@@ -57,7 +57,7 @@ namespace MastodonUWA
                 bgimage.Source = new BitmapImage(new Uri("https://"+(GetToken.getServerName()) + account.header));
             }
             Tootername.Text = account.display_name + "\n" + account.acct;
-            StatusClass_new[] statuses = StatusClass_new.GetAccountStatuses(GetToken.getAuthClass(), account);
+            StatusClass_new[] statuses = StatusClass_new.GetAccountStatuses(new HttpConnectionClass( GetToken.getAuthClass()), account);
             for (int i = 0; i < statuses.Length; i++)
             {
                 Toot toot;

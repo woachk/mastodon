@@ -30,12 +30,10 @@ namespace MastodonAPI
         public string created_at { get; set; }
         public AccountClass account { get; set; }
         public StatusClass_new status { get; set; }
-        static public NotificationClass_new[] getNotifications(AuthenticateClass token)
+        static public NotificationClass_new[] getNotifications(HttpConnectionClass token)
         {
             List<NotificationClass> notifications = new List<NotificationClass>();
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
-            Task<HttpResponseMessage> message = client.GetAsync("https://" + token.server + "/api/v1/notifications");
+            Task<HttpResponseMessage> message = token.client.GetAsync("https://" + token.auth.server + "/api/v1/notifications");
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
@@ -44,7 +42,7 @@ namespace MastodonAPI
         }
         static public NotificationClass_new parseNotification(string json)
         {
-            dynamic obj = JsonConvert.DeserializeObject<NotificationClass_new>(json);
+            NotificationClass_new obj = JsonConvert.DeserializeObject<NotificationClass_new>(json);
             return obj;
         }
     }

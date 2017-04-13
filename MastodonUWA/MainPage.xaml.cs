@@ -85,10 +85,10 @@ namespace MastodonUWA
             TootContainer.DataContext = TootCollectionBind;
             base.OnNavigatedTo(e);
             var settings = (string)e.Parameter;
-            AuthenticateClass token = GetToken.getAuthClass();
+            HttpConnectionClass token = new HttpConnectionClass(GetToken.getAuthClass());
             //List<StatusClass> tootlist = null;
             StatusClass_new[] tootlist;
-            string baseuri = "https://" + token.server;
+            string baseuri = "https://" + token.auth.server;
             if (settings == "notifications")
             {
                 baseuri = baseuri + "/api/v1/streaming/user";
@@ -105,8 +105,7 @@ namespace MastodonUWA
             {
                 baseuri = baseuri + "/api/v1/streaming/user";
             }
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
+            HttpClient client = token.client;
             tootrefresh = ThreadPool.RunAsync(async (source) =>
              {
              var msg = await client.GetStreamAsync(baseuri);
@@ -135,7 +134,7 @@ namespace MastodonUWA
                              {
                                  stdata = stdata + st.ReadLine();
                              }
-                             dynamic status = StatusClass_new.parseToot(stdata);
+                             StatusClass_new status = StatusClass_new.parseToot(stdata);
                              // Insert at the beginning
                              await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
                                 {
@@ -145,7 +144,7 @@ namespace MastodonUWA
                         }
                         else if (text2[1] == " notification")
                          {
-                             dynamic notification = NotificationClass_new.parseNotification(stdata);
+                             NotificationClass_new notification = NotificationClass_new.parseNotification(stdata);
                              if (notification.id != null)
                              {
                                  if (notification.type == "favourite")
@@ -154,7 +153,14 @@ namespace MastodonUWA
                                      {
                                          TextBlock block = new TextBlock();
                                          Toot toot;
-                                         block.Text = notification.account.display_name + " favourited your post.";
+                                         if (notification.account.display_name != "")
+                                         {
+                                             block.Text = notification.account.display_name + " favourited your post.";
+                                         }
+                                         else
+                                         {
+                                             block.Text = notification.account.acct + " favourited your post.";
+                                         }
                                          toot = new Toot(notification.status);
                                          TootCollectionBind.Add(block);
                                          TootCollectionBind.Add(toot);
@@ -166,7 +172,14 @@ namespace MastodonUWA
                                      {
                                          TextBlock block = new TextBlock();
                                          Toot toot;
-                                         block.Text = notification.account.display_name + " boosted your post.";
+                                         if (notification.account.display_name != "")
+                                         {
+                                             block.Text = notification.account.display_name + " boosted your post.";
+                                         }
+                                         else
+                                         {
+                                             block.Text = notification.account.acct + " boosted your post.";
+                                         }
                                          toot = new Toot(notification.status);
                                          TootCollectionBind.Add(block);
                                          TootCollectionBind.Add(toot);
@@ -177,7 +190,14 @@ namespace MastodonUWA
                                      await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (() =>
                                      {
                                          TextBlock block = new TextBlock();
-                                         block.Text = notification.account.display_name + " now follows you.";
+                                         if (notification.account.display_name == "")
+                                         {
+                                             block.Text = notification.account.display_name + " now follows you.";
+                                         }
+                                         else
+                                         {
+                                             block.Text = notification.account.acct + " now follows you.";
+                                         }
                                          TootCollectionBind.Add(block);
                                      }));
                                  }
@@ -230,7 +250,10 @@ namespace MastodonUWA
                         {
                             TextBlock block = new TextBlock();
                             Toot toot;
-                            block.Text = notifications[i].account.display_name + " favourited your post.";
+                            if (notifications[i].account.display_name != "")
+                                block.Text = notifications[i].account.display_name + " favourited your post.";
+                            else
+                                block.Text = notifications[i].account.acct + " favourited your post.";
                             toot = new Toot(notifications[i].status);
                             TootCollectionBind.Add(block);
                             TootCollectionBind.Add(toot);
@@ -239,7 +262,10 @@ namespace MastodonUWA
                         {
                             TextBlock block = new TextBlock();
                             Toot toot;
-                            block.Text = notifications[i].account.display_name + " boosted your post.";
+                            if (notifications[i].account.display_name != "")
+                                block.Text = notifications[i].account.display_name + " boosted your post.";
+                            else
+                                block.Text = notifications[i].account.acct + " boosted your post.";
                             toot = new Toot(notifications[i].status);
                             TootCollectionBind.Add(block);
                             TootCollectionBind.Add(toot);
@@ -247,7 +273,10 @@ namespace MastodonUWA
                         if (notifications[i].type == "follow")
                         {
                             TextBlock block = new TextBlock();
-                            block.Text = notifications[i].account.display_name + " now follows you.";
+                            if (notifications[i].account.display_name != "")
+                                block.Text = notifications[i].account.display_name + " now follows you.";
+                            else
+                                block.Text = notifications[i].account.acct + " now follows you.";
                             TootCollectionBind.Add(block);
                         }
                         if (notifications[i].type == "mention")
