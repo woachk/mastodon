@@ -1,0 +1,7 @@
+﻿<Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
+  <Application>
+  </Application>  
+  <Library Name="Extensions">
+    <Assembly Name="MastodonAPI" Dynamic="Required Public" Serialize="Required Public"></Assembly>
+  </Library> 
+</Directives>  
