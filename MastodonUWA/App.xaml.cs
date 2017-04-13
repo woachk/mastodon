@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.HockeyApp;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+
 /*  Copyright (C) 2017  my123 (@never_released)
 
     This program is free software: you can redistribute it and/or modify
@@ -43,6 +45,7 @@ namespace MastodonUWA
         /// </summary>
         public App()
         {
+            Microsoft.HockeyApp.HockeyClient.Current.Configure("5199eba8bc914c4ab416aa8513d62826");
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
@@ -51,7 +54,7 @@ namespace MastodonUWA
         /// Invoqué lorsque l'application est lancée normalement par l'utilisateur final.  D'autres points d'entrée
         /// seront utilisés par exemple au moment du lancement de l'application pour l'ouverture d'un fichier spécifique.
         /// </summary>
-        /// <param name="e">Détails concernant la requête et le processus de lancement.</param>
+        /// <param name = "e">Détails concernant la requête et le processus de lancement.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
@@ -61,12 +64,10 @@ namespace MastodonUWA
             {
                 // Créez un Frame utilisable comme contexte de navigation et naviguez jusqu'à la première page
                 rootFrame = new Frame();
-
                 rootFrame.NavigationFailed += OnNavigationFailed;
-
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    //TODO: chargez l'état de l'application précédemment suspendue
+                //TODO: chargez l'état de l'application précédemment suspendue
                 }
 
                 // Placez le frame dans la fenêtre active
@@ -88,16 +89,18 @@ namespace MastodonUWA
                     }
                     catch
                     {
-                        rootFrame.Navigate(typeof(AuthPage), e.Arguments);
+                        rootFrame.Navigate(typeof (AuthPage), e.Arguments);
                         AuthPage auth = (AuthPage)rootFrame.Content;
                         Window.Current.Activate();
                         return;
                     }
+
                     if (file != null)
                     {
-                        rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                        rootFrame.Navigate(typeof (MainPage), e.Arguments);
                     }
                 }
+
                 // Vérifiez que la fenêtre actuelle est active
                 Window.Current.Activate();
             }
@@ -106,8 +109,8 @@ namespace MastodonUWA
         /// <summary>
         /// Appelé lorsque la navigation vers une page donnée échoue
         /// </summary>
-        /// <param name="sender">Frame à l'origine de l'échec de navigation.</param>
-        /// <param name="e">Détails relatifs à l'échec de navigation</param>
+        /// <param name = "sender">Frame à l'origine de l'échec de navigation.</param>
+        /// <param name = "e">Détails relatifs à l'échec de navigation</param>
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
@@ -118,8 +121,8 @@ namespace MastodonUWA
         /// sans savoir si l'application pourra se fermer ou reprendre sans endommager
         /// le contenu de la mémoire.
         /// </summary>
-        /// <param name="sender">Source de la requête de suspension.</param>
-        /// <param name="e">Détails de la requête de suspension.</param>
+        /// <param name = "sender">Source de la requête de suspension.</param>
+        /// <param name = "e">Détails de la requête de suspension.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
