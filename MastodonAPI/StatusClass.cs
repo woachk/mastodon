@@ -52,6 +52,10 @@ namespace MastodonAPI
             Task<HttpResponseMessage> message = token.client.GetAsync("https://" + token.auth.server + "/api/v1/statuses/" + ogstatus.id);
             message.Wait();
             HttpResponseMessage msg = message.Result;
+            if (!msg.IsSuccessStatusCode)
+            {
+                return new StatusClass_new();
+            }
             String json = (msg.Content).ReadAsStringAsync().Result;
             return parseToot(json);
         }
@@ -61,6 +65,10 @@ namespace MastodonAPI
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
+            if (!msg.IsSuccessStatusCode)
+            {
+                return new StatusClass_new[0];
+            }
             StatusClass_new[] obj = JsonConvert.DeserializeObject<StatusClass_new[]>(json);
             return obj;
         }
@@ -70,6 +78,10 @@ namespace MastodonAPI
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
+            if (!msg.IsSuccessStatusCode)
+            {
+                return new StatusClass_new[0];
+            }
             StatusClass_new[] obj = JsonConvert.DeserializeObject<StatusClass_new[]>(json);
             return obj;
         }
@@ -79,6 +91,10 @@ namespace MastodonAPI
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
+            if (!msg.IsSuccessStatusCode)
+            {
+                return new StatusClass_new[0];
+            }
             StatusClass_new[] obj = JsonConvert.DeserializeObject<StatusClass_new[]>(json);
             return obj;
         }
@@ -88,6 +104,10 @@ namespace MastodonAPI
             message.Wait();
             HttpResponseMessage msg = message.Result;
             String json = (msg.Content).ReadAsStringAsync().Result;
+            if (!msg.IsSuccessStatusCode)
+            {
+                return new StatusClass_new[0];
+            }
             StatusClass_new[] obj = JsonConvert.DeserializeObject<StatusClass_new[]>(json);
             return obj;
         }
@@ -96,6 +116,14 @@ namespace MastodonAPI
             Task<HttpResponseMessage> message = token.client.GetAsync("https://" + token.auth.server + "/api/v1/statuses/" + ogstatus.id + "/context");
             message.Wait();
             HttpResponseMessage msg = message.Result;
+            if (!msg.IsSuccessStatusCode)
+            {
+                return new StatusContext
+                {
+                    ancestors = new StatusClass_new[0],
+                    descendants = new StatusClass_new[0]
+                };
+            }
             String json = (msg.Content).ReadAsStringAsync().Result;
             StatusContext obj = JsonConvert.DeserializeObject<StatusContext>(json);
             return obj;
