@@ -2,6 +2,6 @@
   <Application>
   </Application>  
   <Library Name="Extensions">
-    <Assembly Name="MastodonAPI" Dynamic="Required Public" Serialize="Required Public"></Assembly>
+    <Assembly Name="MastodonAPI" Serialize="Required Public"></Assembly>
   </Library> 
 </Directives>  
