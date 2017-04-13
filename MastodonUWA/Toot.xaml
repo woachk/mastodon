@@ -9,19 +9,19 @@
     BorderThickness="1"
     BorderBrush="Gray"
     d:DesignHeight="350"
-    d:DesignWidth="400">
+    d:DesignWidth="360">
 
     <Grid IsTapEnabled="True" Tapped="Grid_Tapped">
-        <WebView Name="TootContents" HorizontalAlignment="Left" Height="194" VerticalAlignment="Top" Width="400" Margin="0,61,0,20" NavigationStarting="TootContents_NavigationStarting" NavigationCompleted="TootContents_NavigationCompleted" />
-        <Rectangle Margin="0,61,0,20" Height="{Binding Height, ElementName=TootContents}" Name="RecWeb" VerticalAlignment="Top" Fill ="#00000000" Width="400" Tapped="RecWeb_Tapped" />
-        <TextBlock x:Name="UserName" HorizontalAlignment="Left" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="334" Text=""/>
+        <WebView Name="TootContents" HorizontalAlignment="Left" Height="194" VerticalAlignment="Top" Width="360" Margin="0,61,0,20" NavigationStarting="TootContents_NavigationStarting" NavigationCompleted="TootContents_NavigationCompleted" />
+        <Rectangle Margin="0,61,0,20" Height="{Binding Height, ElementName=TootContents}" Name="RecWeb" VerticalAlignment="Top" Fill ="#00000000" Width="360" Tapped="RecWeb_Tapped" />
+        <TextBlock x:Name="UserName" HorizontalAlignment="Left" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="295" Text=""/>
         <Image Name="UserImage" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="66" Tapped="UserImage_Tapped"/>
         <Grid HorizontalAlignment="Stretch" Height="40" VerticalAlignment="Bottom">
             <StackPanel Orientation="Horizontal">
-                <Button BorderThickness="0" Width="100" Name="Answer" FontFamily="Segoe MDL2 Assets" Content="&#xE90A;" Grid.Column="1" Click="Answer_Click"/>
-                <Button Click="Retoot_Click" Width="100" Grid.Column="2" BorderThickness="0" Name="Retoot" FontFamily="Segoe MDL2 Assets" Content="&#xE8EB;"  />
-                <Button Click="Favorites_Click" Width="100" Grid.Column="3" BorderThickness="0" Name="Favorites" FontFamily="Segoe MDL2 Assets" Content="&#xE734;" />
-                <Button Width="100" Grid.Column="3" BorderThickness="0" Name="ImageShow" FontFamily="Segoe MDL2 Assets" Content="&#xE723;" Click="ImageShow_Click"/>
+                <Button BorderThickness="0" Width="90" Name="Answer" FontFamily="Segoe MDL2 Assets" Content="&#xE90A;" Grid.Column="1" Click="Answer_Click"/>
+                <Button Click="Retoot_Click" Width="90" Grid.Column="2" BorderThickness="0" Name="Retoot" FontFamily="Segoe MDL2 Assets" Content="&#xE8EB;"  />
+                <Button Click="Favorites_Click" Width="90" Grid.Column="3" BorderThickness="0" Name="Favorites" FontFamily="Segoe MDL2 Assets" Content="&#xE734;" />
+                <Button Width="90" Grid.Column="3" BorderThickness="0" Name="ImageShow" FontFamily="Segoe MDL2 Assets" Content="&#xE723;" Click="ImageShow_Click"/>
             </StackPanel>
         </Grid>
     </Grid>
