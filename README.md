@@ -4,25 +4,11 @@ Mastodon UWP app
 This repository has a Mastodon UWP app written in C#.
 It requires Windows build 14393(Anniversary Update or later)
 
+Downloads:
+==========
 
-History:
-========
+https://rink.hockeyapp.net/apps/5199eba8bc914c4ab416aa8513d62826
 
-04/11/2017: Initial release (v1.0.5.0)
-
-04/11/2017: Invert everything to chronological order, to work around XAML bugs. (v1.0.6.0)
-
-04/11/2017: New JSON backend. Should fix a lot of bugs, especially in showing toot details (v1.0.7.0)
-
-04/11/2017: Initial images support. (v1.0.8.0)
-
-04/12/2017: Big code cleanup (v1.0.9.0)
-
-04/12/2017: Fix everything for .NET Native. Release builds were broken since v1.0.7.0. (v1.0.10.0)
-
-04/12/2017: Switch to OAuth-based login, add following functionallity, and add user descriptions. (v1.0.11.0)
-
-04/13/2017: Completely ditch usage of dynamic. (v1.0.12.0)
 
 Unsupported features at this time:
 ==================================
