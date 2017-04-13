@@ -103,6 +103,7 @@
     <Compile Include="AuthPage.xaml.cs">
       <DependentUpon>AuthPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DivisionConverter.cs" />
     <Compile Include="GetToken.cs" />
     <Compile Include="ShowImage_Toot.xaml.cs">
       <DependentUpon>ShowImage_Toot.xaml</DependentUpon>
