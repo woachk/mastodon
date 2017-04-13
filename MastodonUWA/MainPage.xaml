@@ -46,15 +46,21 @@
             </StackPanel>
         </SplitView.Pane>
         <SplitView.Content>
-            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
                 <Grid HorizontalAlignment="Center">
-                    <e:RefreshableListView x:Name="TootContainer" ShowsScrollingPlaceholders="true" ItemsSource="{Binding}" >
+                    <ListView x:Name="TootContainer" ShowsScrollingPlaceholders="true" ItemsSource="{Binding}" >
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>
-                                <ItemsStackPanel ItemsUpdatingScrollMode="KeepLastItemInView" />
+                                <ItemsStackPanel VerticalAlignment="Top"  Orientation="Vertical" ItemsUpdatingScrollMode="KeepLastItemInView">
+                                </ItemsStackPanel>
                             </ItemsPanelTemplate>
                         </ListView.ItemsPanel>
-                    </e:RefreshableListView>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
                 </Grid>
             </ScrollViewer>
         </SplitView.Content>

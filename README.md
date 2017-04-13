@@ -22,6 +22,8 @@ History:
 
 04/12/2017: Switch to OAuth-based login, add following functionallity, and add user descriptions. (v1.0.11.0)
 
+04/13/2017: Completely ditch usage of dynamic. (v1.0.12.0)
+
 Unsupported features at this time:
 ==================================
 
