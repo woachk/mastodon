@@ -8,6 +8,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -103,6 +104,15 @@ namespace MastodonUWA
         }
         public Toot(StatusClass_new status)
         {
+            var bounds = ApplicationView.GetForCurrentView().VisibleBounds;
+            if (bounds.Width < 400 + 50)
+            {
+                Width = bounds.Width - 75; // leave some spare pixels
+            }
+            else
+            {
+                Width = 400;
+            }
             this.InitializeComponent();
             toot = status;
             string acct = status.account.acct;

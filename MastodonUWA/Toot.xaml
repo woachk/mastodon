@@ -9,7 +9,6 @@
     BorderThickness="1"
     BorderBrush="Gray"
     Name="OneToot"
-    Width="400"
     d:DesignHeight="350">
     <UserControl.Resources>
         <local:DivisionConverter x:Key="DivisionConverter"/>
