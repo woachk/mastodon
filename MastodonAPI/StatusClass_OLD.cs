@@ -26,27 +26,9 @@ namespace MastodonAPI
 {
     public class StatusClass
     {
-        public string id;
-        public string uri;
-        public string url;
-        public AccountClass account;
-        string in_reply_to_id;
-        string in_reply_to_account_id;
-        StatusClass reblog;
-        public string content;
-        string created_at;
-        string reblogs_count;
-        string favorites_count;
-        public string reblogged;
-        public string favourited;
-        string sensitive;
-        string spoiler_text;
-        string visiblity;
-        //string media_attachments;
-        ApplicationClass application;
-        static public StatusClass postStatus(AuthenticateClass token, string content, string in_reply_to_id, string media_ids, string sensitive, string spoiler_text)
+        static public StatusClass_new postStatus(AuthenticateClass token, string content, string in_reply_to_id, string media_ids, string sensitive, string spoiler_text)
         {
-            StatusClass status = new StatusClass();
+            StatusClass_new status = new StatusClass_new();
             HttpClient client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.token);
             string request = "status=" + content;

@@ -32,7 +32,7 @@ namespace MastodonAPI
         public StatusClass_new status { get; set; }
         static public NotificationClass_new[] getNotifications(HttpConnectionClass token)
         {
-            List<NotificationClass> notifications = new List<NotificationClass>();
+            List<NotificationClass_new> notifications = new List<NotificationClass_new>();
             Task<HttpResponseMessage> message = token.client.GetAsync("https://" + token.auth.server + "/api/v1/notifications");
             message.Wait();
             HttpResponseMessage msg = message.Result;
