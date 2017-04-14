@@ -1,4 +1,5 @@
 ﻿using MastodonAPI;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,11 +33,8 @@ namespace Mastodon.WPF
             ApplicationTokenClass apptoken = new ApplicationTokenClass(servername, "Mastodon for Windows", "read write follow", "urn:ietf:wg:oauth:2.0:oob");
 
             AuthenticateClass oauth_token = new AuthenticateClass(apptoken, UserNameBox.Text, PasswordHereBox.Password);
-
             if (apptoken.client_id == null)
-
             {
-
                 FailedTextBox.Text = "Login failed.";
 
                 return;
@@ -48,6 +46,9 @@ namespace Mastodon.WPF
                 FailedTextBox.Text = "Login failed.";
                 return;
             }
+            var rkey = (Registry.CurrentUser.OpenSubKey("Software", true)).OpenSubKey("Mastodon");
+            rkey.SetValue("ServerName", servername);
+            rkey.SetValue("Token", oauth_token.token);
         }
     }
 }
