@@ -24,10 +24,6 @@ namespace Mastodon.WPF
         public MainWindow()
         {
             InitializeComponent();
-        }
-        public override void BeginInit()
-        {
-            base.BeginInit();
             HttpConnectionClass token = null;
             int logged_in = 1;
             try
@@ -52,5 +48,9 @@ namespace Mastodon.WPF
                 }
             }
         }
+        public override void BeginInit()
+        {
+            base.BeginInit();
+        }   
     }
 }
