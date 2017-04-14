@@ -62,10 +62,17 @@
     </ApplicationDefinition>
     <Compile Include="DivisionConverter.cs" />
     <Compile Include="GetToken.cs" />
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Toot.xaml.cs">
       <DependentUpon>Toot.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebContentHelper.cs" />
+    <Page Include="LoginWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -28,14 +28,28 @@ namespace Mastodon.WPF
         public override void BeginInit()
         {
             base.BeginInit();
-            HttpConnectionClass token = new HttpConnectionClass(GetToken.getAuthClass());
-            string baseuri = "https://" + token.auth.server;
-            var tootlist = StatusClass_new.GetPublicTimeline(token);
-            for (int i = 0; i < tootlist.Length - 1 ; i++)
+            HttpConnectionClass token = null;
+            int logged_in = 1;
+            try
             {
-                Toot toot;
-                toot = new Toot(tootlist[i]);
-                Toots.Items.Insert(0, toot);
+                token = new HttpConnectionClass(GetToken.getAuthClass());
+            }
+            catch
+            {
+                logged_in = 0;
+                LoginWindow window = new LoginWindow();
+                window.Show();
+            }
+            if (logged_in == 1)
+            {
+                string baseuri = "https://" + token.auth.server;
+                var tootlist = StatusClass_new.GetPublicTimeline(token);
+                for (int i = 0; i < tootlist.Length - 1; i++)
+                {
+                    Toot toot;
+                    toot = new Toot(tootlist[i]);
+                    Toots.Items.Insert(0, toot);
+                }
             }
         }
     }
