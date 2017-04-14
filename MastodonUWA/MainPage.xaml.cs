@@ -105,17 +105,55 @@ namespace MastodonUWA
             {
                 baseuri = baseuri + "/api/v1/streaming/user";
             }
+            
             HttpClient client = token.client;
             tootrefresh = ThreadPool.RunAsync(async (source) =>
-             {
-             var msg = await client.GetStreamAsync(baseuri);
-             while (1 == 1)
-             {
-                 var st = new StreamReader(msg);
-                     string text = st.ReadLine();
-                     if (text == null)
-                     { 
+            {
+            Stream msg;
+            try
+            {
+                msg = await client.GetStreamAsync(baseuri);
+            }
+            catch
+            {
+                await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (async () =>
+                {
+                    var errorDialog = new ContentDialog
+                    {
+                        Name = "Connection error",
+                        Title = "Streaming doesn't currently work properly. The app will work with reduced functionallity.",
+                        IsPrimaryButtonEnabled = false,
+                        SecondaryButtonText = "ok"
+                    };
+                    await errorDialog.ShowAsync();
+                }));
+                return;
+            }
+            while (1 == 1)
+            {
+                var st = new StreamReader(msg);
+                string text = st.ReadLine();
+                if (text == null)
+                {
+                    try
+                    {
                         msg = await client.GetStreamAsync(baseuri); // reset the connection
+                    }
+                    catch
+                    {
+                        await CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, (async () =>
+                        {
+                            var errorDialog = new ContentDialog
+                            {
+                                Name = "Connection error",
+                                Title = "Streaming doesn't currently work properly. The app will work with reduced functionallity.",
+                                IsPrimaryButtonEnabled = false,
+                                SecondaryButtonText = "ok"
+                            };
+                            await errorDialog.ShowAsync();
+                        }));
+                            return;
+                        }
                      }
                      else if ((text.ToArray())[0] != ':')
                      {
