@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:Mastodon.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <local:DivisionConverter x:Key="DivisionConverter"></local:DivisionConverter>
+    </UserControl.Resources>
     <Grid>
         <Grid>
             <WebBrowser Name="TootContents" HorizontalAlignment="Left" Height="194" VerticalAlignment="Top" Width="{Binding Width, ElementName=OneToot}" Margin="0,61,0,20" Navigating="TootContents_NavigationStarting" Navigated="TootContents_NavigationCompleted" />

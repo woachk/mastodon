@@ -75,7 +75,7 @@ namespace Mastodon.WPF
 
         }
 
-        private void TootContents_NavigationStarting(WebBrowser sender, System.Windows.Navigation.NavigationEventArgs args)
+        private void TootContents_NavigationStarting(object sender, NavigatingCancelEventArgs args)
         {
             if (args.Uri == null)
             {
@@ -83,7 +83,7 @@ namespace Mastodon.WPF
             }
             else
             {
-                sender.GoBack();
+                args.Cancel = true;
             }
         }
 
@@ -98,7 +98,7 @@ namespace Mastodon.WPF
             StatusClass.favourite_toot(toot.id, GetToken.getAuthClass());
             Favorites.Foreground = new SolidColorBrush(Colors.Yellow);
         }
-        private async void TootContents_NavigationCompleted(WebBrowser sender, System.Windows.Navigation.NavigationEventArgs
+        private async void TootContents_NavigationCompleted(object sender, NavigationEventArgs
 args)
         {
             object returnStr =
