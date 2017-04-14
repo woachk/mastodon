@@ -46,7 +46,7 @@ namespace Mastodon.WPF
                 FailedTextBox.Text = "Login failed.";
                 return;
             }
-            var rkey = (Registry.CurrentUser.OpenSubKey("Software", true)).OpenSubKey("Mastodon");
+            var rkey = (Registry.CurrentUser.OpenSubKey("Software", true)).CreateSubKey("Mastodon");
             rkey.SetValue("ServerName", servername);
             rkey.SetValue("Token", oauth_token.token);
         }
