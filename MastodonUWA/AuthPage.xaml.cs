@@ -45,33 +45,47 @@ namespace MastodonUWA
         }
         private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            string servername = ServerBox.Text;
-            string token = null;
-            ApplicationTokenClass apptoken = new ApplicationTokenClass(servername, "Mastodon for Windows 10", "read write follow", "urn:ietf:wg:oauth:2.0:oob");
-            string starturi = "https://" + ServerBox.Text + "/oauth/authorize?response_type=code&client_id=" + apptoken.client_id+"&client_secret="+ apptoken.client_secret + "&redirect_uri=urn:ietf:wg:oauth:2.0:oob" + "&username=" + UserNameBox.Text +"&";
-            WebAuthenticationResult WebAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None,new Uri(starturi), new System.Uri("https://"+ ServerBox.Text + "/oauth/authorize/"));
-            if (WebAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
+            try
             {
-                token = WebAuthenticationResult.ResponseData.ToString();
-                string[] tokensplit = token.Split('/');
-                token = tokensplit[tokensplit.Length - 1];
-                AuthenticateClass aclass = new AuthenticateClass(apptoken, token);
-                token = aclass.token;
+                string servername = ServerBox.Text;
+                string token = null;
+                ApplicationTokenClass apptoken = new ApplicationTokenClass(servername, "Mastodon for Windows 10", "read write follow", "urn:ietf:wg:oauth:2.0:oob");
+                string starturi = "https://" + ServerBox.Text + "/oauth/authorize?response_type=code&client_id=" + apptoken.client_id + "&client_secret=" + apptoken.client_secret + "&redirect_uri=urn:ietf:wg:oauth:2.0:oob" + "&username=" + UserNameBox.Text + "&";
+                WebAuthenticationResult WebAuthenticationResult = await WebAuthenticationBroker.AuthenticateAsync(WebAuthenticationOptions.None, new Uri(starturi), new System.Uri("https://" + ServerBox.Text + "/oauth/authorize/"));
+                if (WebAuthenticationResult.ResponseStatus == WebAuthenticationStatus.Success)
+                {
+                    token = WebAuthenticationResult.ResponseData.ToString();
+                    string[] tokensplit = token.Split('/');
+                    token = tokensplit[tokensplit.Length - 1];
+                    AuthenticateClass aclass = new AuthenticateClass(apptoken, token);
+                    token = aclass.token;
+                }
+                else
+                {
+                    return; // login failure
+                }
+                var clientid = await ApplicationData.Current.LocalFolder.CreateFileAsync("apptoken_clientid.txt");
+                var clientsecret = await ApplicationData.Current.LocalFolder.CreateFileAsync("apptoken_clientsecret.txt");
+                var authfile = await ApplicationData.Current.LocalFolder.CreateFileAsync("auth.txt");
+                var serverfile = await ApplicationData.Current.LocalFolder.CreateFileAsync("server.txt");
+                await FileIO.WriteTextAsync(clientid, apptoken.client_id);
+                await FileIO.WriteTextAsync(clientsecret, apptoken.client_secret);
+                await FileIO.WriteTextAsync(authfile, token);
+                await FileIO.WriteTextAsync(serverfile, servername);
+                Frame rootFrame = Window.Current.Content as Frame;
+                rootFrame.Navigate(typeof(MainPage));
             }
-            else
+            catch
             {
-                return; // login failure
+                var errorDialog = new ContentDialog
+                {
+                    Name = "Connection error",
+                    Title = "Wrong credentials. Connection failure",
+                    IsPrimaryButtonEnabled = false,
+                    SecondaryButtonText = "ok"
+                };
+                await errorDialog.ShowAsync();
             }
-            var clientid = await ApplicationData.Current.LocalFolder.CreateFileAsync("apptoken_clientid.txt");
-            var clientsecret = await ApplicationData.Current.LocalFolder.CreateFileAsync("apptoken_clientsecret.txt");
-            var authfile = await ApplicationData.Current.LocalFolder.CreateFileAsync("auth.txt");
-            var serverfile = await ApplicationData.Current.LocalFolder.CreateFileAsync("server.txt");
-            await FileIO.WriteTextAsync(clientid, apptoken.client_id);
-            await FileIO.WriteTextAsync(clientsecret, apptoken.client_secret);
-            await FileIO.WriteTextAsync(authfile, token);
-            await FileIO.WriteTextAsync(serverfile, servername);
-            Frame rootFrame = Window.Current.Content as Frame;
-            rootFrame.Navigate(typeof(MainPage));
         }
     }
 }
