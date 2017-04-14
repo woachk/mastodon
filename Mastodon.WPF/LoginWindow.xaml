@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mastodon.WPF"
         mc:Ignorable="d"
-        Title="LoginWindow" Height="300" Width="300">
+        Title="LoginWindow" Height="800" Width="480">
     <Grid>
         <TextBlock Height="144" Margin="10,10,282,0" TextWrapping="Wrap" Text="Login" VerticalAlignment="Top" FontSize="22"/>
 

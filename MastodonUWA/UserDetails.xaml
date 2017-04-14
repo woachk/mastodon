@@ -12,35 +12,35 @@
                CompactPaneLength="50" OpenPaneLength="200">
         <SplitView.Pane>
             <StackPanel Name="SPanel" Background="LightGray">
-                <Button x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
+                <Button x:Name="HamburgerButton" BorderThickness="0" FontFamily="Segoe MDL2 Assets" Content="&#xE700;"
                     Width="50" Height="50" Background="Transparent" Click="HamburgerButton_Click"/>
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="MenuButton1" FontFamily="Segoe MDL2 Assets" Content="&#xE710;"
+                    <Button x:Name="MenuButton1" BorderThickness="0" FontFamily="Segoe MDL2 Assets" Content="&#xE710;"
                     Width="50" Height="50" Background="Transparent" Click="MenuButton1_Click"/>
                     <TextBlock Text="New toot" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="MenuButton5" FontFamily="Segoe MDL2 Assets" Content="&#xE712;"
+                    <Button x:Name="MenuButton5" BorderThickness="0" FontFamily="Segoe MDL2 Assets" Content="&#xE712;"
                     Width="50" Height="50" Background="Transparent" Click="MenuButton5_Click"/>
                     <TextBlock Text="Timeline" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="MenuButton2" FontFamily="Segoe MDL2 Assets" Content="&#xE80F;"
+                    <Button x:Name="MenuButton2" BorderThickness="0" FontFamily="Segoe MDL2 Assets" Content="&#xE80F;"
                         Width="50" Height="50" Background="Transparent" Click="MenuButton2_Click"/>
                     <TextBlock Text="Local toots" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="MenuButton4" FontFamily="Segoe MDL2 Assets" Content="&#59252;"
+                    <Button x:Name="MenuButton4" BorderThickness="0" FontFamily="Segoe MDL2 Assets" Content="&#59252;"
                         Width="50" Height="50" Background="Transparent" Click="MenuButton4_Click" />
                     <TextBlock Text="Network Toots" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="MenuButton3" FontFamily="Segoe MDL2 Assets" Content="&#xE895;"
+                    <Button x:Name="MenuButton3" BorderThickness="0" FontFamily="Segoe MDL2 Assets" Content="&#xE895;"
                         Width="50" Height="50" Background="Transparent" Click="MenuButton3_Click"/>
                     <TextBlock Text="Notifications" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="MenuButton6" FontFamily="Segoe MDL2 Assets" Content="&#xE713;"
+                    <Button x:Name="MenuButton6"  BorderThickness="0" FontFamily="Segoe MDL2 Assets" Content="&#xE713;"
                         Width="50" Height="50" Background="Transparent" Click="MenuButton6_Click"/>
                     <TextBlock Text="Settings" FontSize="18" VerticalAlignment="Center" />
                 </StackPanel>

@@ -39,7 +39,40 @@ namespace Mastodon.WPF
             if (logged_in == 1)
             {
                 string baseuri = "https://" + token.auth.server;
-                var tootlist = StatusClass_new.GetPublicTimeline(token);
+                var tootlist = StatusClass_new.GetTimeline(token);
+                for (int i = 0; i < tootlist.Length - 1; i++)
+                {
+                    Toot toot;
+                    toot = new Toot(tootlist[i]);
+                    Toots.Items.Insert(0, toot);
+                }
+            }
+        }
+        public MainWindow(string @Type)
+        {
+            InitializeComponent();
+            HttpConnectionClass token = null;
+            int logged_in = 1;
+            try
+            {
+                token = new HttpConnectionClass(GetToken.getAuthClass());
+            }
+            catch
+            {
+                logged_in = 0;
+                LoginWindow window = new LoginWindow();
+                window.Show();
+            }
+            if (logged_in == 1)
+            {
+                string baseuri = "https://" + token.auth.server;
+                StatusClass_new[] tootlist = null;
+                if (@Type == "LocalPublicTimeline")
+                    tootlist = StatusClass_new.GetPublicLocalTimeline(token);
+                else if (@Type == "PublicTimeline")
+                    tootlist = StatusClass_new.GetPublicTimeline(token);
+                else if (@Type == "AccountTimeline")
+                    tootlist = StatusClass_new.GetTimeline(token);
                 for (int i = 0; i < tootlist.Length - 1; i++)
                 {
                     Toot toot;
@@ -51,6 +84,36 @@ namespace Mastodon.WPF
         public override void BeginInit()
         {
             base.BeginInit();
-        }   
+        }
+
+        private void MenuButton1_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuButton5_Click(object sender, RoutedEventArgs e)
+        {
+            (new MainWindow("Timeline")).Show();
+        }
+
+        private void MenuButton2_Click(object sender, RoutedEventArgs e)
+        {
+            (new MainWindow("LocalPublicTimeline")).Show();
+        }
+
+        private void MenuButton4_Click(object sender, RoutedEventArgs e)
+        {
+            (new MainWindow("PublicTimeline")).Show();
+        }
+
+        private void MenuButton3_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuButton6_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

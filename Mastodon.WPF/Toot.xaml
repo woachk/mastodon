@@ -4,14 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Mastodon.WPF"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             Name="OneToot"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <local:DivisionConverter x:Key="DivisionConverter"></local:DivisionConverter>
     </UserControl.Resources>
     <Grid>
         <Grid>
-            <WebBrowser Name="TootContents" HorizontalAlignment="Left" Height="194" VerticalAlignment="Top" Width="{Binding Width, ElementName=OneToot}" Margin="0,61,0,20" Navigating="TootContents_NavigationStarting" Navigated="TootContents_NavigationCompleted" />
+            <WebBrowser Name="TootContents" HorizontalAlignment="Left" Height="180" VerticalAlignment="Top" Width="{Binding Width, ElementName=OneToot}" Margin="0,61,0,20" Navigating="TootContents_NavigationStarting" Navigated="TootContents_NavigationCompleted" />
             <Rectangle Margin="0,61,0,20" Height="{Binding Height, ElementName=TootContents}" Name="RecWeb" VerticalAlignment="Top" Fill ="#00000000" Width="{Binding Width, ElementName=OneToot}" >
                 <Rectangle.InputBindings>
                     <MouseBinding Gesture="LeftClick" Command="{Binding RecWeb_Tapped}"/>

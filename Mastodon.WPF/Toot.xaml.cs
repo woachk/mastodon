@@ -27,7 +27,6 @@ namespace Mastodon.WPF
         StatusClass_new toot;
         public Toot(StatusClass_new status)
         {
-            InitializeComponent();
             Width = 400;
             this.InitializeComponent();
             toot = status;
@@ -101,8 +100,8 @@ namespace Mastodon.WPF
         private async void TootContents_NavigationCompleted(object sender, NavigationEventArgs
 args)
         {
-            object returnStr =
-           TootContents.InvokeScript("eval", new object[] { SetBodyOverFlowHiddenString });
+           // object returnStr =
+           //TootContents.InvokeScript("eval", new string[] { SetBodyOverFlowHiddenString });
         }
         string SetBodyOverFlowHiddenString =
        @"function SetBodyOverFlowHidden()
