@@ -4,11 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Background;
+using Windows.Networking.PushNotifications;
 using Windows.Storage;
 using Windows.System.Threading;
 using Windows.UI.Notifications;
@@ -31,6 +33,44 @@ namespace MastodonUWA
 {
     class SyncBackgroundTask : IBackgroundTask
     {
+        static async public void NotificationSetup()
+        {
+            PushNotificationChannel channel = null;
+
+            try
+            {
+                channel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
+            }
+
+            catch (Exception exception)
+            {
+                // Could not create a channel. 
+            }
+
+            String serverUrl = "http://www.contoso.com";
+
+            // Create the web request.
+            HttpWebRequest webRequest = (HttpWebRequest)HttpWebRequest.Create(serverUrl);
+            webRequest.Method = "POST";
+            webRequest.ContentType = "application/x-www-form-urlencoded";
+            byte[] channelUriInBytes = System.Text.Encoding.UTF8.GetBytes("ChannelUri=" + channel.Uri);
+
+            // Write the channel URI to the request stream.
+            Stream requestStream = await webRequest.GetRequestStreamAsync();
+            requestStream.Write(channelUriInBytes, 0, channelUriInBytes.Length);
+            try
+            {
+                // Get the response from the server.
+                WebResponse response = await webRequest.GetResponseAsync();
+                StreamReader requestReader = new StreamReader(response.GetResponseStream());
+                String webResponse = requestReader.ReadToEnd();
+            }
+
+            catch (Exception ex)
+            {
+                // Could not send channel URI to server.
+            }
+        }
         void IBackgroundTask.Run(IBackgroundTaskInstance taskInstance)
         {
             AuthenticateClass token = new AuthenticateClass();

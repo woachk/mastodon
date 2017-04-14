@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Mastodon.WPF.Toot"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Mastodon.WPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid>
+            <WebBrowser Name="TootContents" HorizontalAlignment="Left" Height="194" VerticalAlignment="Top" Width="{Binding Width, ElementName=OneToot}" Margin="0,61,0,20" Navigating="TootContents_NavigationStarting" Navigated="TootContents_NavigationCompleted" />
+            <Rectangle Margin="0,61,0,20" Height="{Binding Height, ElementName=TootContents}" Name="RecWeb" VerticalAlignment="Top" Fill ="#00000000" Width="{Binding Width, ElementName=OneToot}" >
+                <Rectangle.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding RecWeb_Tapped}"/>
+                </Rectangle.InputBindings>
+            </Rectangle>
+            <TextBlock x:Name="UserName" HorizontalAlignment="Left" Margin="66,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="56" Width="295" Text=""/>
+            <Image Name="UserImage" HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="66">
+                <Image.InputBindings>
+                    <MouseBinding Gesture="LeftClick" Command="{Binding UserImage_Tapped}"/>
+                </Image.InputBindings>
+            </Image>
+            <Grid HorizontalAlignment="Stretch" Height="40" VerticalAlignment="Bottom">
+                <StackPanel Orientation="Horizontal">
+                    <Button BorderThickness="0" Width="{Binding Width, ElementName=OneToot, Converter={StaticResource DivisionConverter},ConverterParameter=4}" Name="Answer" FontFamily="Segoe MDL2 Assets" Content="&#xE90A;" Grid.Column="1" Click="Answer_Click"/>
+                    <Button Click="Retoot_Click" Width="{Binding Width, ElementName=OneToot, Converter={StaticResource DivisionConverter},ConverterParameter=4}" Grid.Column="2" BorderThickness="0" Name="Retoot" FontFamily="Segoe MDL2 Assets" Content="&#xE8EB;"  />
+                    <Button Click="Favorites_Click" Width="{Binding Width, ElementName=OneToot, Converter={StaticResource DivisionConverter},ConverterParameter=4}" Grid.Column="3" BorderThickness="0" Name="Favorites" FontFamily="Segoe MDL2 Assets" Content="&#xE734;" />
+                    <Button Width="{Binding Width, ElementName=OneToot, Converter={StaticResource DivisionConverter},ConverterParameter=4}" Grid.Column="3" BorderThickness="0" Name="ImageShow" FontFamily="Segoe MDL2 Assets" Content="&#xE723;" Click="ImageShow_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
