@@ -89,23 +89,45 @@ namespace MastodonUWA
             //List<StatusClass> tootlist = null;
             StatusClass_new[] tootlist;
             string baseuri = "https://" + token.auth.server;
-            if (settings == "notifications")
+            if (baseuri != "https://mamot.fr")
             {
-                baseuri = baseuri + "/api/v1/streaming/user";
-            }
-            else if (settings == "PublicTimeline")
-            {
-                baseuri = baseuri + "/api/v1/streaming/public";
-            }
-            else if (settings == "LocalPublicTimeline")
-            {
-                baseuri = baseuri + "/api/v1/streaming/public?local=true";
+                if (settings == "notifications")
+                {
+                    baseuri = baseuri + "/api/v1/streaming/user";
+                }
+                else if (settings == "PublicTimeline")
+                {
+                    baseuri = baseuri + "/api/v1/streaming/public";
+                }
+                else if (settings == "LocalPublicTimeline")
+                {
+                    baseuri = baseuri + "/api/v1/streaming/public?local=true";
+                }
+                else
+                {
+                    baseuri = baseuri + "/api/v1/streaming/user";
+                }
             }
             else
             {
-                baseuri = baseuri + "/api/v1/streaming/user";
+                if (settings == "notifications")
+                {
+                    baseuri = baseuri + "/api/v1/streaming/user";
+                }
+                else if (settings == "PublicTimeline")
+                {
+                    baseuri = baseuri + "/api/v1/streaming/public";
+                }
+                else if (settings == "LocalPublicTimeline")
+                {
+                    baseuri = baseuri + "/api/v1/streaming/public?local=true";
+                }
+                else
+                {
+                    // even this doesn't work on the LQDN instance... it's just broken
+                    baseuri = baseuri + "/api/v1/streaming/?&access_token=" + token.auth.token +"&stream=user";
+                }
             }
-            
             HttpClient client = token.client;
             tootrefresh = ThreadPool.RunAsync(async (source) =>
             {
