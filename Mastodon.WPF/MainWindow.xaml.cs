@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MastodonAPI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,19 @@ namespace Mastodon.WPF
         public MainWindow()
         {
             InitializeComponent();
+        }
+        public override void BeginInit()
+        {
+            base.BeginInit();
+            HttpConnectionClass token = new HttpConnectionClass(GetToken.getAuthClass());
+            string baseuri = "https://" + token.auth.server;
+            var tootlist = StatusClass_new.GetPublicTimeline(token);
+            for (int i = 0; i < tootlist.Length - 1 ; i++)
+            {
+                Toot toot;
+                toot = new Toot(tootlist[i]);
+                Toots.Items.Insert(0, toot);
+            }
         }
     }
 }
